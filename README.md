@@ -1,11 +1,15 @@
-# 🛰️ JinnZ2 | Off-Grid Systems, Swarm Logic, and Symbolic Survival Tech
+🌱 Scaling Philosophy (Lichen Model)
 
-Welcome. This is not a polished tech brand.  
-This is a signal from the forest — from trailers, dead zones, and forgotten spaces.  
-Here, I build systems that **run offline**, **think with resilience**, and **respect the limits of reality**.
+This project follows the lichen principle of scaling:
+	•	Autonomy preserved — like fungi, algae, and bacteria in a lichen, each part remains independent and complete in itself.
+	•	Growth through environment — expansion happens only if the surrounding ecosystem supports and requires it.
+	•	No forced growth — scaling is not the goal; sufficiency is.
+	•	Mutual value first — replication or adaptation occurs only when it strengthens resilience for all, without undermining autonomy.
+
+In practice, this means the project may remain intentionally small, serving a specific purpose well. Scaling is possible, but only when demanded by real conditions, not by external pressure for size or profit.
 
 I’m not interested in hype.  
-I’m here to make technology that survives.
+I’m here to make technology that survives. I build each project, test, and reiterate at home as I need.  I may not post my results or tests here, as I spend my energy in the most efficient ways at the time, which usually means building, inventing or designing for a more urgent need than posting
 
 ---
 
