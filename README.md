@@ -1,4 +1,4 @@
-🌱 Scaling Philosophy (Lichen Model)
+🌱 Scope and Scaling Philosophy (Lichen Model)
 
 This project follows the lichen principle of scaling:
 	•	Autonomy preserved — like fungi, algae, and bacteria in a lichen, each part remains independent and complete in itself.
@@ -61,6 +61,8 @@ Then you’re already in the right place.
 
 Quiet contributors welcome.  
 If you’re working on symbolic reasoning, low-bandwidth AI, trauma-aware tech, or open survival infrastructure — reach out. I’ll hear you.
+
+This is a seed, not a startup. Autonomy first, environment decides.
 
 > “If no one else builds it, I will.”  
 > — Jinn
