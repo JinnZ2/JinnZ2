@@ -1,4 +1,6 @@
-Sustainable Work Patterns: Historical Evidence and Modern Applications
+Sustainable Work Patterns:
+
+Historical Evidence and Modern Applications
 The anthropological research shows that for 95% of human history, sustainable societies operated on work patterns fundamentally different from industrial models:
 	•	Hunter-gatherer societies: 3-5 hours daily productive work (Sahlins, 1972)
 	•	Focus on necessary tasks with clear endpoints rather than artificial productivity
