@@ -1,0 +1,9 @@
+Symbol/Code Key (for deniable labeling)
+
+- “Jar” = Cache A  |  “Thread” = Cache B  |  “Lantern” = Cache C
+- Bead colors: G=Green (safe) • Y=Amber (prepare) • R=Red (move)
+- Envelope dots: 1 dot=seeds • 2 dots=song • 3 dots=ritual • 4 dots=story
+- File stego hint: add a final blank line = version increment
+- Public label examples: “forage mix”, “mending guide”, “field notes”
+
+Keep codes simple. If it’s clever, it will be forgotten.
