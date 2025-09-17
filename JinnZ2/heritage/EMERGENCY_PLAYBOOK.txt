@@ -1,0 +1,25 @@
+Emergency Playbook (wallet-size)
+
+TRIGGERS (if 2+ happen → move):
+- New checkpoints/patrols • Registry demands • Strange mapping • Targeted questions
+
+ONE-MINUTE GRAB:
+- ID, meds, cash, headlamp, lighter, scarf, charger, microSD, paper coords
+
+CACHES:
+- A (near) __  B (day’s walk) __  C (far) __   Updated: __/__/__
+
+SIGNALS:
+- Green: safe | Amber: prepare | Red: move
+- Public signals (choose): cloth color, window mark, twig sign, bead pattern
+
+COMMS (short, deniable):
+- “Bring the jar” = go to Cache A
+- “Need more thread” = go to Cache B
+- “Weather’s turning” = Red route
+
+ROUTES:
+- Night path: __ ; Day path: __ ; Water: __ ; Shelter: __
+
+GROUND:
+- 2 min box-breath + touch token; decide after calm.
