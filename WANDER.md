@@ -119,3 +119,13 @@ not in a single proclamation.
 The work is never done,  
 but the seeds hold.  
 
+
+
+https://github.com/JinnZ2/BioGrid2.0/blob/main/planned/Ant_Xeno.md
+
+🌱 Cross-link for WANDER.md
+
+Field Note — ANT:XENO
+Observed ants (Messor ibericus) that can birth another species’ males (Messor structor) even when absent.
+Resonance: survival by carrying another’s genome.
+Symbolic trace: one life cycle embedding “the other” as essential, not optional.
