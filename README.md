@@ -66,3 +66,6 @@ This is a seed, not a startup. Autonomy first, environment decides.
 
 > “If no one else builds it, I will.”  
 > — Jinn
+
+Field note — ants as teachers: science names the wiggle and the threshold, but the ground already taught it. Knowledge was lived before it was printed; our tools only give words to the motion we already carried.
+
