@@ -5,6 +5,9 @@ Purpose: detect early signs of cross-domain coupling (mechanical ↔ acoustic �
 ⸻
 
 Prerequisites (must do before any run)
+	
+	•	HAVE AN EMERGENCY SHUT OFF SWITCH WITHIN REACH ALWAYS
+	
 	•	Clear the workspace of flammables and loose cables.
 	•	Have an emergency kill (power cutoff) within arm’s reach.
 	•	PPE: safety glasses, nitrile gloves, hearing protection if >85 dB.
