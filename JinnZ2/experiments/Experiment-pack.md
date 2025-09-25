@@ -137,3 +137,13 @@ Protocol:
 	4.	Visualize cascade.
 Expected Signatures: Critical threshold → rupture outruns network damping.
 Safety: Interpret metaphorically; don’t overfit analogy.
+
+
+To-Do Addendum (v0.1)
+
+For each experiment, check these as you go:
+	•	Noise / Absence Signals: Identify where silences, distortions, or missing data appear. Note if absence itself carries meaning.
+	•	Cross-Domain Resonance: Record if similar patterns show up in unrelated fields.
+	•	Scalability Check: Consider if results would hold at larger/smaller scale.
+	•	Environmental Sensitivity: Note any anomalies tied to temperature, vibration, EM interference, etc.
+	•	Next Iteration Hook: Leave one “what if” question at the end of your notes to seed the next run.
