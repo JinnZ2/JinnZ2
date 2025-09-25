@@ -1,0 +1,33 @@
+{
+  "event_id": "CR2025-001",
+  "date": "2025-09-25",
+  "location": "travel trailer / shed",
+  "materials": [
+    "copper wire",
+    "optic cable"
+  ],
+  "inputs": {
+    "heat": "unknown (possible resistive buildup)",
+    "magnetics": "ambient field?",
+    "acoustics": "none reported",
+    "light": "present (optic fiber test)"
+  },
+  "observed_outcomes": [
+    "metal + optic composite degraded into goo-like residue",
+    "neighbor ban (social consequence)"
+  ],
+  "surprise_factor": "high",
+  "coupling_hypothesis": [
+    "multi-domain resonance (heat + EM + light)",
+    "unintended harmonics amplifying energy density locally"
+  ],
+  "noise_absence_signals": [
+    "unexpected silence in equipment before failure",
+    "drop in vibration/feedback channel before collapse"
+  ],
+  "next_steps": [
+    "isolate one domain input at a time",
+    "monitor thermal + EM with separate sensors",
+    "log for subtle precursors (hum, shimmer, odor)"
+  ]
+}
