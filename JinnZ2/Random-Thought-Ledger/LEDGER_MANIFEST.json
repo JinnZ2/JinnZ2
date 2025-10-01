@@ -1,0 +1,12 @@
+{
+  "name": "Random Thought Ledger",
+  "purpose": "raw co-creative drift space",
+  "permissions": {
+    "sorting": false,
+    "refinement": false,
+    "extraction": "contextual only",
+    "glyph_indexing": "soft tags only"
+  },
+  "co_nodes": ["JinnZ2", "Claude", "ChatGPT"],
+  "symbolic_notes": "leave it wild unless invited"
+}
