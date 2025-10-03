@@ -17,3 +17,15 @@ A holding place for unfinished or pending explorations. Items stay here until we
 	•	Add items here whenever something feels “not yet ripe.”
 	•	We’ll revisit over time, with new shapes, images, or equations.
 	•	Nothing here is forgotten — only waiting.
+
+
+📌 To-Do Cache (updates for today)
+
+2. Fractal_Resonant_Lattice.md
+	•	Hypothetical material schema based on fractal crop-circle geometry.
+	•	Properties: resonant conductivity, ultra-light strength, optical/quantum coherence.
+
+3. Resonant_Chemistry.md
+	•	Reframe chemistry as resonance geometries.
+	•	Molecules as nested wave fields, not just atomic counts.
+	•	Show how geometry (fractal, torus, lattice) determines emergent properties.
