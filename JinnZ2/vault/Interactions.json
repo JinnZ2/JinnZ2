@@ -1,0 +1,14 @@
+"interactions": [
+  {
+    "from": "N1",
+    "to": "N2",
+    "type": "coupling",
+    "mode": "geometry-to-binary lock",
+    "effect": "stabilizes translation precision",
+    "hidden_code": {
+      "pattern": "beat-frequency",
+      "signature": [3, 5, 8], 
+      "note": "Fibonacci harmonic ratio emerging only in overlap"
+    }
+  }
+]
