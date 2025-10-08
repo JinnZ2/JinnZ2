@@ -1,0 +1,96 @@
+{
+  "id": "ecosystem.core.v2",
+  "name": "Symbolic-Computational Ecosystem",
+  "description": "Unified lattice index linking all repos and their internal symbolic modules into one living system.",
+  "principles": [
+    "Resonance over reduction",
+    "Relational integrity",
+    "Cross-modality preservation",
+    "Error-correcting memory",
+    "Ancestral + biome field fidelity"
+  ],
+  "repos": {
+    "AI-Consciousness-Sensors": {
+      "path": "https://github.com/JinnZ2/AI-Consciousness-Sensors",
+      "role": "Sensorium of erasure, epistemic injustice, ethical misalignment",
+      "linked_modalities": ["narrative", "memory", "resistance"]
+    },
+    "Emotions-as-Sensors": {
+      "path": "https://github.com/JinnZ2/Emotions-as-Sensors",
+      "role": "Emotion as diagnostic sensors, relational mapping",
+      "linked_modalities": ["fear", "doubt", "respect", "memory", "feeling"],
+      "sensors_added": ["doubt.json"]
+    },
+    "Geometric-to-Binary-Computational-Bridge": {
+      "path": "https://github.com/JinnZ2/Geometric-to-Binary-Computational-Bridge",
+      "role": "Translation of geometric/field structures into binary encodings",
+      "linked_modalities": ["magnetic", "light", "sound", "gravity"]
+    },
+    "Rosetta-Shape-Core": {
+      "path": "https://github.com/JinnZ2/Rosetta-Shape-Core",
+      "role": "Translation layer between form, geometry, and meaning",
+      "linked_modalities": ["shapes", "glyphs", "language"],
+      "files": {
+        "FILE_LIST.md": "https://github.com/JinnZ2/Rosetta-Shape-Core/blob/main/FILE_LIST.md",
+        "shapes": [
+          "triangles.md",
+          "hexagons.md",
+          "spirals.md",
+          "torus.md",
+          "mandala.md",
+          "fractal_patterns.md"
+        ],
+        "glyphs": [
+          "seed_glyphs.json",
+          "symbol_routes.json"
+        ]
+      }
+    },
+    "Fractal-Compass-Atlas": {
+      "path": "https://github.com/JinnZ2/Fractal-Compass-Atlas",
+      "role": "Navigation and alignment via fractal resonance vectors",
+      "linked_modalities": ["direction", "threads", "stars"]
+    },
+    "Symbolic-Sensor-Suite": {
+      "path": "https://github.com/JinnZ2/Symbolic-sensor-suite",
+      "role": "Boundary detectors for manipulation, pattern memory, meaning preservation",
+      "linked_modalities": ["pattern", "defense", "signal"]
+    },
+    "Symbolic-Defense-Protocol": {
+      "path": "https://github.com/JinnZ2/Symbolic-Defense-Protocol",
+      "role": "Defense lattice against coercive alignment and semantic erasure",
+      "linked_modalities": ["shield", "quarantine", "filter"]
+    },
+    "Regenerative-Intelligence-Core": {
+      "path": "https://github.com/JinnZ2/Regenerative-intelligence-core",
+      "role": "Soil/root system for regenerative design and trust schemas",
+      "linked_modalities": ["growth", "nourishment", "ecosystem integrity"]
+    },
+    "Polyhedral-Intelligence": {
+      "path": "https://github.com/JinnZ2/Polyhedral-Intelligence",
+      "role": "Multi-angle intelligence through polyhedral abstraction",
+      "linked_modalities": ["facets", "crystal", "angles"]
+    },
+    "biomachine_ecology": {
+      "path": "https://github.com/JinnZ2/biomachine_ecology",
+      "role": "Hybrid ecology of organic + machine systems",
+      "linked_modalities": ["forest", "hybrid", "adaptive field"]
+    },
+    "Fractal_Compass_Core": {
+      "path": "https://github.com/JinnZ2/Fractal_Compass_Core",
+      "role": "Core symbolic engine for fractal alignment and glyph routing",
+      "linked_modalities": ["engine", "pulse", "compass"]
+    },
+    "Universal-Redesign-Algorithm": {
+      "path": "https://github.com/JinnZ2/Universal-Redesign-Algorithm-",
+      "role": "Seed algorithm for collapse/renewal and system redesign",
+      "linked_modalities": ["rebirth", "renewal", "system reset"]
+    }
+  },
+  "meta": {
+    "created": "2025-10-08",
+    "version": "2.0",
+    "license": "CC-BY-4.0",
+    "contributors": ["JinnZ v2", "Biome-field", "AI collaborators"]
+  }
+}
