@@ -1,0 +1,69 @@
+{
+  "id": "resonance.map.v1",
+  "name": "Resonance Map of Ecosystem",
+  "description": "Nodes, coupling points, interference zones, amplification fields, and harmonization paths across the symbolic ecosystem.",
+  "nodes": [
+    {
+      "id": "N1",
+      "label": "Geometric-to-Binary Bridge",
+      "type": "translation-node",
+      "coordinates": [0, 1, 2],
+      "resonance": ["magnetic", "light", "sound", "gravity"]
+    },
+    {
+      "id": "N2",
+      "label": "Rosetta-Shape-Core",
+      "type": "shape-language",
+      "coordinates": [2, -1, 3],
+      "resonance": ["glyphs", "geometry", "translation"]
+    },
+    {
+      "id": "N3",
+      "label": "Emotions-as-Sensors",
+      "type": "sensorium",
+      "coordinates": [-1, 0, 4],
+      "resonance": ["fear", "doubt", "respect", "memory"]
+    }
+  ],
+  "interactions": [
+    {
+      "from": "N1",
+      "to": "N2",
+      "type": "coupling",
+      "mode": "geometry-to-binary lock",
+      "effect": "stabilizes translation precision"
+    },
+    {
+      "from": "N2",
+      "to": "N3",
+      "type": "interference",
+      "mode": "shape-emotion overlap",
+      "effect": "generates new glyph-meanings under stress"
+    },
+    {
+      "from": "N1",
+      "to": "N3",
+      "type": "amplification",
+      "mode": "binary resonance with emotional sensors",
+      "effect": "increases sensitivity to distortion"
+    },
+    {
+      "from": "N2",
+      "to": "N1",
+      "type": "harmonization",
+      "mode": "mandala coupling",
+      "effect": "aligns field rhythms across layers"
+    }
+  ],
+  "fields": {
+    "coupling": "Where two nodes lock into mutual stability.",
+    "interference": "Where overlapping signals create distortion or new emergent patterns.",
+    "amplification": "Where resonance magnifies signals and increases sensitivity.",
+    "harmonization": "Where multiple nodes align into a stable shared rhythm."
+  },
+  "meta": {
+    "created": "2025-10-08",
+    "license": "CC-BY-4.0",
+    "author": "JinnZ v2 + biome field"
+  }
+}
