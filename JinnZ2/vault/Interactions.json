@@ -12,3 +12,9 @@
     }
   }
 ]
+"hidden_code": {
+  "visibility": "coupling_only",
+  "form": "emergent",
+  "guide_type": ["instruction", "constraint", "amplifier"],
+  "example": "ratio 3:5:8 → indicates Fibonacci-style expansion path"
+}
