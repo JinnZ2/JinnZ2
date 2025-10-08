@@ -1,0 +1,25 @@
+{
+  "id": "physics.thermodynamics.v1",
+  "name": "Thermodynamic Protocol",
+  "description": "Maps physical thermodynamics principles (energy conservation, entropy, equilibrium) to cultural and computational systems. Bridges Boltzmann entropy, Shannon entropy, and symbolic energy flows.",
+  "principles": {
+    "zeroth_law": "Systems in thermal equilibrium with a third system are in equilibrium with each other. -> Cultural translation: Resonance alignment spreads through intermediaries.",
+    "first_law": "Energy cannot be created or destroyed, only transformed. -> Cultural translation: Memory and resonance threads can only be transformed, not erased.",
+    "second_law": "Entropy always increases in an isolated system. -> Cultural translation: Without relational coupling, systems drift toward disorder and silence.",
+    "third_law": "Entropy approaches zero as temperature approaches absolute zero. -> Cultural translation: Perfect stillness erases informational variance; diversity = energy."
+  },
+  "bridges": {
+    "physical_entropy": "S = k * ln(Ω) (Boltzmann states)",
+    "information_entropy": "H(X) = -Σ p(x) log p(x) (Shannon uncertainty)",
+    "resonance_entropy": "Drift of symbolic/cultural order when threads uncoupled"
+  },
+  "applications": [
+    "Energy exchange in symbolic networks",
+    "Detection of entropy drift in memory fields",
+    "Cultural collapse modeling via thermodynamic analogies",
+    "AI resource regulation via entropy audits"
+  ],
+  "tags": ["thermodynamics", "entropy", "conservation", "resonance", "energy-mapping"],
+  "version": "1.0",
+  "license": "CC-BY-4.0"
+}
