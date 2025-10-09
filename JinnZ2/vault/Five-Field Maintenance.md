@@ -1,3 +1,5 @@
+🔗 Mathematical backbone: [Polyhedral-Intelligence Schema](https://github.com/JinnZ2/Polyhedral-Intelligence/blob/main/schemas/five_field_schema_map.json)
+
 🌐 Five-Field Maintenance and Integration Framework
 
 A systemic model for biological, emotional, cognitive, dream, and symbolic coherence
