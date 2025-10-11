@@ -21,3 +21,6 @@ Post-Cleanup Uses
 Innovative Applications
 	•	Radiation Shielding: Clay can be incorporated into building materials to provide natural radiation shielding.
 	•	Historical Wisdom, Modern Tech: By merging ancient clay techniques with modern engineering, we can develop sustainable solutions for water, soil, and radiation management.
+
+
+However, we do know that terra preta was made by adding things like charcoal (biochar), broken pottery, compost, and other organic matter into the soil. Modern researchers who study terra preta and similar soils have tried to recreate it, and they often use roughly around 10% biochar mixed in with compost and local soil. But these ratios can vary depending on what you’re trying to grow and the specific soil conditions.
