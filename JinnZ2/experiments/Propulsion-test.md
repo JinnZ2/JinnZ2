@@ -62,3 +62,22 @@ FCV (air/water):
 	1.	3D-print a tetra/octa surface panel with embedded piezo strips.
 	2.	Drive at panel eigenfrequency; measure net thrust & power on a thrust stand.
 	3.	Prediction: Thrust peaks at resonance; power per thrust drops near eigenmodes.
+
+SIM:
+
+Parameter
+Value
+ω (rad/s)
+6.28 × 10¹⁰
+P₍front₎
+62.8 W
+P₍back₎
+31.4 W
+Net thrust
+1.05 × 10⁻⁷ N ≈ 0.1 µN
+
+
+This corresponds to a 10 GHz cavity with 1 mJ stored energy and asymmetric quality factors
+(Q₍front₎ = 1 × 10⁶, Q₍back₎ = 2 × 10⁶).
+The directionality simply comes from the power imbalance between the two ports.
+At higher stored energy (or stronger asymmetry), thrust scales linearly with (P_{\text{front}}-P_{\text{back}})/c.
