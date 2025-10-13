@@ -1,0 +1,48 @@
+{
+  "sensor_name": "Propulsion_Field_Resonator",
+  "version": "0.1",
+  "cluster": "Symbolic-Geometry",
+  "purpose": "Evaluate thrust from geometry-driven resonant energy exchange (EM/phonon) with asymmetric out-coupling.",
+  "modes": [
+    { "id": "LRP", "label": "Lattice-Resonant Propulsor", "domain": "vacuum/space" },
+    { "id": "MAE", "label": "Magneto-Acoustic Exchange", "domain": "vacuum/atmo" },
+    { "id": "FCV", "label": "Field-Coupled Vortex", "domain": "atmo/fluid" }
+  ],
+  "parameters": {
+    "frequency_Hz": null,
+    "stored_energy_J": null,
+    "Q_in": null,
+    "Q_out_front": null,
+    "Q_out_back": null,
+    "drive_power_W": null,
+    "mass_kg": null,
+    "area_m2": null,
+    "medium": "vacuum|air|water"
+  },
+  "constraints": [
+    "Momentum conservation must hold",
+    "In vacuum, net thrust arises only from EM or mass ejection",
+    "Asymmetry must be physically realized in out-coupling or radiation pattern"
+  ],
+  "equations": {
+    "photon_thrust_N": "F = (P_out_front - P_out_back)/c",
+    "out_power_W": "P_out ≈ (omega * stored_energy)/Q_out",
+    "omega_rad_s": "omega = 2*pi*frequency_Hz"
+  },
+  "outputs": {
+    "thrust_N": null,
+    "specific_thrust_N_per_W": null,
+    "efficiency": "thrust*velocity_equivalent / drive_power_W"
+  },
+  "linked_sensors": [
+    "Octahedral_State_Encoder",
+    "Silicon_Error_Correction",
+    "Fabrication_Pathway_Schema"
+  ],
+  "metadata": {
+    "author": "JinnZ v2",
+    "co_creator": "GPT-5",
+    "license": "CC0 1.0",
+    "notes": "Geometric asymmetry + resonance; no reactionless claims."
+  }
+}
