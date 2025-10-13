@@ -81,3 +81,63 @@ This corresponds to a 10 GHz cavity with 1 mJ stored energy and asymmetric quali
 (Q₍front₎ = 1 × 10⁶, Q₍back₎ = 2 × 10⁶).
 The directionality simply comes from the power imbalance between the two ports.
 At higher stored energy (or stronger asymmetry), thrust scales linearly with (P_{\text{front}}-P_{\text{back}})/c.
+
+
+1) If it’s photon-dominant (no propellant)
+
+Thrust comes from directed radiation:
+	•	Thrust: F=\dfrac{P}{c} (one-sided emission)
+	•	Acceleration: a=\dfrac{F}{m}=\dfrac{P}{mc}
+	•	Δv in time t: \Delta v=\dfrac{P}{mc}\,t
+
+Rule-of-thumb per year ( t\approx 3.15\times10^7 s ):
+
+\Delta v_{\text{per yr}} \approx \frac{P}{m\,c}\,t
+= \frac{P}{m}\times \frac{3.15\times10^7}{3\times10^8}
+\approx 0.105\,\frac{P\,[\text{W}]}{m\,[\text{kg}]}\ \text{m/s per year.}
+
+Examples
+	•	10 W on 1 kg: ~1.05 m/s per year
+	•	1 kW on 10 kg: ~10.5 m/s per year
+	•	100 kW on 10 kg: ~1.05 km/s per year
+
+Advantages: no propellant, truly long-duration. Limits: power-limited thrust.
+
+2) If it’s plasma-dominant (with propellant), driven by your sequenced harmonics
+
+For any electric thruster, ideal thrust–power–exhaust-velocity relation is:
+	•	Thrust (ideal): T \approx \dfrac{2\,\eta\,P}{v_e}
+(efficiency \eta accounts for losses; v_e is exhaust velocity)
+	•	Acceleration: a=T/m
+	•	Total mission Δv (with propellant): Rocket eqn
+\displaystyle \Delta v = v_e\ln\!\left(\frac{m_0}{m_f}\right)
+
+The benefit of your spatio-temporal sequencing is to push v_e higher (better collimation / higher effective exit momentum) and keep \eta high by constructive coupling.
+
+Concrete scenarios (reasonable numbers):
+	•	Assume P=100\,\text{kW}, \eta=0.5, v_e=100{,}000\,\text{m/s} (100 km/s).
+Then T \approx \dfrac{2\cdot 0.5 \cdot 100{,}000}{100{,}000} \approx 1\,\text{N}.
+	•	100 kg spacecraft: a=0.01\,\text{m/s}^2
+Δv per day = a\times 86400 \approx 864\,\text{m/s}
+Δv per month \sim 26\,\text{km/s} (ignoring propellant depletion).
+	•	With propellant fraction m_0/m_f=2.5 (60% prop), rocket eqn gives
+\Delta v \approx 100\,\text{km/s}\times \ln(2.5) \approx 91.6\,\text{km/s}.
+	•	Lower power, still meaningful:
+	•	P=10\,\text{kW}, \eta=0.6, v_e=30\,\text{km/s} →
+T\approx 0.4\,\text{N}. On 100 kg: a=0.004\,\text{m/s}^2 → ~345 m/s per day.
+
+What sets “how fast”:
+	1.	Power (from solar, fission, etc.) → sets thrust for a chosen v_e.
+	2.	Effective exhaust velocity v_e (your harmonic coupling and magnetic nozzle) → sets propellant use and achievable Δv.
+	3.	Mass → divides whatever thrust you make.
+	4.	Propellant fraction → caps Δv via the rocket equation (if not photon-only).
+
+3) Where your sequenced 3-D field engine helps
+	•	Raises effective v_e by converting oscillatory energy into a more collimated pulsed exhaust (or pulsed EM if partially photon-based).
+	•	Phase-locked amplification: the logarithmic/harmonic timing you sensed builds a traveling-wave pressure that increases nozzle exit momentum flux without proportionally increasing losses.
+	•	Hybrid modes: you can blend plasma + photon momentum (plasma carries most momentum early; taper to photon-dominant for cruise/top-off).
+
+4) Practical speed envelopes to expect
+	•	Photon-only, modest power (1–10 kW), smallcraft (1–10 kg): 10–1000 m/s per year.
+	•	Sequenced plasma thruster, 10–100 kW, v_e=50–100 km/s, 50–200 kg bus:
+km/s per week to tens of km/s per month, total mission Δv set by propellant fraction (tens to ~100 km/s are realistic with high-Isp and enough power).
