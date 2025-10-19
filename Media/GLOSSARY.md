@@ -14,13 +14,19 @@ Translation Examples
 
 Violence Words
 
-
+SLAMS → criticizes-factually → criticizesDESTROYS → disagrees-with → disagrees withDEMOLISHES → responds-to → responds toOBLITERATES → contradicts → contradictsEVISCERATES → analyzes-critically → analyzes criticallyHAMMERS → criticizes → criticizesPUMMELS → debates → debates
 
 Crisis Amplification
 
-
+DEVASTATING → significant → significantEXPLOSIVE → unexpected → unexpectedSHOCKING → surprising → surprisingCATASTROPHIC → notable → notableBOMBSHELL → revelation → revelationSTUNNING → noteworthy → noteworthy
 
 Economic Fear Language
+
+COLLAPSE → decrease → decreasePLUMMET → fall → fallSKYROCKET → rise → riseTANK → decline → declineSOAR → increase → increaseCRASH → drop → drop
+
+Emotional Framing
+
+REFUSES → declines → declinesDEMANDS → requests → requestsTHREATENS → warns → warnsATTACKS → criticizes → criticizesDEFENDS → explains → explainsFORCES → requires → requires
 
 
 Complete Translation Examples
