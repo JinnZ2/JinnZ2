@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "matrix_version": "0.1.0",
+    "generated_at": "2025-10-20T09:00:00Z",
+    "update_frequency": "weekly"
+  },
+
+  "axes": {
+    "E": "Energy",
+    "M": "Materials",
+    "C": "Climate",
+    "S": "Society",
+    "T": "Technology"
+  },
+
+  "sources": [
+    {
+      "axis": "E",
+      "api_name": "EIA Open Data",
+      "endpoint": "https://api.eia.gov/series/?series_id=TOTAL.USA.NGPROD.M",
+      "update_interval_days": 7,
+      "metrics_used": ["NGPROD", "ELEC.GEN.RENEW"],
+      "weighting": 0.25
+    },
+    {
+      "axis": "M",
+      "api_name": "USGS Mineral Commodity",
+      "endpoint": "https://data.usgs.gov/api/v1/minerals/",
+      "update_interval_days": 30,
+      "metrics_used": ["copper_price", "scrap_recovery"],
+      "weighting": 0.25
+    },
+    {
+      "axis": "C",
+      "api_name": "NOAA Climate API",
+      "endpoint": "https://www.ncdc.noaa.gov/cdo-web/api/v2/data",
+      "update_interval_days": 7,
+      "metrics_used": ["temperature_anomaly", "precip_anomaly"],
+      "weighting": 0.25
+    },
+    {
+      "axis": "S",
+      "api_name": "World Bank Governance Indicators",
+      "endpoint": "https://api.worldbank.org/v2/en/indicator/GE.EST",
+      "update_interval_days": 30,
+      "metrics_used": ["political_stability", "rule_of_law"],
+      "weighting": 0.15
+    },
+    {
+      "axis": "T",
+      "api_name": "OECD R&D Intensity",
+      "endpoint": "https://data.oecd.org/rd/gross-domestic-expenditure-on-r-d.htm",
+      "update_interval_days": 30,
+      "metrics_used": ["rd_percent_gdp", "patent_growth"],
+      "weighting": 0.10
+    }
+  ]
+}
