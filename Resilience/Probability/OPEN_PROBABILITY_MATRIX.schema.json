@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Open Probability Matrix",
+  "description": "Automated multi-axis probability lattice integrating public data feeds and local observations.",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "matrix_version": { "type": "string", "example": "0.1.0" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "update_frequency": { "type": "string", "example": "weekly" },
+        "notes": { "type": "string" }
+      },
+      "required": ["matrix_version", "generated_at"]
+    },
+
+    "axes": {
+      "type": "object",
+      "properties": {
+        "E": { "description": "Energy systems" },
+        "M": { "description": "Materials & circular economy" },
+        "C": { "description": "Climate & environment" },
+        "S": { "description": "Society & governance" },
+        "T": { "description": "Technology & access" }
+      }
+    },
+
+    "sources": {
+      "type": "array",
+      "description": "APIs or data feeds automatically queried for each axis",
+      "items": {
+        "type": "object",
+        "properties": {
+          "axis": { "type": "string", "enum": ["E", "M", "C", "S", "T"] },
+          "api_name": { "type": "string" },
+          "endpoint": { "type": "string" },
+          "update_interval_days": { "type": "integer" },
+          "metrics_used": { "type": "array", "items": { "type": "string" } },
+          "weighting": { "type": "number" }
+        }
+      }
+    },
+
+    "observations": {
+      "type": "array",
+      "description": "Local or manual observations (override or calibrate global data)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "axis": { "type": "string" },
+          "location": { "type": "string" },
+          "date": { "type": "string", "format": "date" },
+          "value": { "type": "number" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+
+    "computed_matrix": {
+      "type": "array",
+      "description": "Automated results after weighting all feeds",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": { "type": "string", "format": "date-time" },
+          "E": { "type": "number" },
+          "M": { "type": "number" },
+          "C": { "type": "number" },
+          "S": { "type": "number" },
+          "T": { "type": "number" },
+          "system_risk": { "type": "number" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+
+    "scenarios": {
+      "type": "array",
+      "description": "Derived probability envelopes for 5–15 yr foresight windows",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "probability": { "type": "number" },
+          "primary_levers": { "type": "array", "items": { "type": "string" } },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  },
+  "required": ["metadata", "axes", "sources"]
+}
