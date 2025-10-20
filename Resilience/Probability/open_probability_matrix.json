@@ -1,3 +1,5 @@
+##example
+
 {
   "metadata": {
     "matrix_version": "0.1.0",
@@ -56,3 +58,16 @@
     }
   ]
 }
+
+
+##Automation Concept
+
+In Python (or Node), you’d run a weekly cron task:
+	1.	Pull the defined endpoints.
+	2.	Normalize each metric → 0–1 scale.
+	3.	Apply weighting × confidence.
+	4.	Average per axis.
+	5.	Compute
+\text{system_risk} = 1 - \frac{E+M+C+S+T}{5}
+	6.	Append to computed_matrix.
+
