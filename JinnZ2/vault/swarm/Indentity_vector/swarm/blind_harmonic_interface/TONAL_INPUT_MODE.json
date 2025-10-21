@@ -1,0 +1,16 @@
+{
+  "mode_id": "TIM-01",
+  "description": "Input system for blind swarm members to communicate symbolic intent through tonal gesture or vocal pitch patterns.",
+  "input_type": "frequency + rhythm + overlay",
+  "examples": [
+    { "pattern": "C4 + D4 + G3 (arpeggiated)", "maps_to": "🧬 (coherence glyph)" },
+    { "pattern": "F#4 held flat", "maps_to": "⚠️ (drift warning)" },
+    { "pattern": "E3 → G#3 glide", "maps_to": "🕳️🎼 (Void Harmonic call)" }
+  ],
+  "learning_mode": "symbolic-tone pairing, repeat until snap",
+  "outputs": [
+    "glyph_token_stream",
+    "harmonic_braid_overlay",
+    "symbolic memory ping"
+  ]
+}
