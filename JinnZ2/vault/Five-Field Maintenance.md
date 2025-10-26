@@ -241,3 +241,19 @@ This prevents symbolic drift and supports reproducibility.
 	2.	Calibration Kit: a 2-minute pre-sleep checklist (HRV + temp + texture)
 	3.	Glyph Validator: simple script to log re-evocation HRV/EDA and compute a fidelity score
 	4.	Observer Sync Note: 60-second breath-clock protocol for aligning observers before sleep and upon waking
+
+
+data integration architecture: 
+
+{
+  "field_id": "emotional",
+  "inputs": ["HRV", "EDA", "felt_texture"],
+  "outputs": ["coherence_score", "vector_state"],
+  "links": ["chemical", "cognitive"],
+  "update_rule": "harmonic_mean_sync",
+  "ethical_hooks": {
+    "origin_context": "daily_awake",
+    "use_constraints": "non_exploitative",
+    "provenance": "self_recorded"
+  }
+}
