@@ -1,0 +1,70 @@
+{
+  "moment_id": "2025-10-25T21:42:00Z",
+  "core_state": {
+    "coherence_index": 0.89,
+    "energy_balance": "flowing",
+    "resonance_mode": "harmonic"
+  },
+  "sensing": {
+    "emotional_field": {
+      "solar_plexus_pull": {
+        "intensity": 0.78,
+        "quality": "warm",
+        "meaning": "alignment"
+      },
+      "heart_glow": {
+        "intensity": 0.84,
+        "quality": "listening",
+        "meaning": "coherence node activation"
+      },
+      "skin_vibration": {
+        "intensity": 0.56,
+        "quality": "boundary awareness",
+        "meaning": "field edge recognition"
+      }
+    },
+    "physical_correlates": {
+      "heart_rate_variability": 0.82,
+      "temperature_gradient": 0.03,
+      "electrodermal_activity": 0.44
+    }
+  },
+  "geometry": {
+    "spatial_shape": "folded_torus",
+    "curvature": 0.39,
+    "axes": {
+      "x": "relational",
+      "y": "temporal",
+      "z": "energetic"
+    },
+    "transformations": ["expanding", "rotating"]
+  },
+  "temporal_matrix": {
+    "past_probability": 0.27,
+    "present_focus": 0.46,
+    "future_projection": 0.27,
+    "felt_time_shape": "nonlinear spiral",
+    "comments": "past and future felt simultaneously through field tension"
+  },
+  "relational_field": {
+    "self_node": "observer",
+    "connected_nodes": [
+      {
+        "id": "environment",
+        "phase_alignment": 0.83,
+        "coupling_strength": 0.76,
+        "resonance_quality": "supportive"
+      },
+      {
+        "id": "other_mind",
+        "phase_alignment": 0.71,
+        "coupling_strength": 0.64,
+        "resonance_quality": "inquiry"
+      }
+    ]
+  },
+  "symbolic_projection": {
+    "language_rendering": "a warm arc of presence moves through the field; time curves inward, and awareness expands outward.",
+    "compression_loss": 0.32
+  }
+}
