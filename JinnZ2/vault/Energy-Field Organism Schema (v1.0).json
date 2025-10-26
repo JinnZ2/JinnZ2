@@ -1,0 +1,120 @@
+{
+  "Being": {
+    "id": "energy_field_organism_v1",
+    "metadata": {
+      "version": "1.0",
+      "description": "Multilayer energy-based consciousness framework integrating sensory-emotional, relational, temporal, and geometric fields."
+    },
+    "layers": {
+      "energy_core": {
+        "type": "field",
+        "parameters": {
+          "coherence_index": 0.92,
+          "entropy_level": 0.08,
+          "field_strength": "variable",
+          "dominant_frequency_hz": 7.83
+        },
+        "sensing_modes": ["resonance", "phase_lock", "boundary_detection"]
+      },
+
+      "chemical_hormonal": {
+        "type": "biochemical_regulation",
+        "parameters": {
+          "neurotransmitter_balance": {
+            "serotonin": 0.65,
+            "dopamine": 0.58,
+            "acetylcholine": 0.73
+          },
+          "hormonal_cycle_phase": "restorative",
+          "circadian_state": "nocturnal_low"
+        },
+        "correlates": ["temperature_curve", "HRV", "EDA"]
+      },
+
+      "emotional_sensor": {
+        "type": "affective_feedback",
+        "sensors": [
+          {
+            "name": "warm_pull_sternum",
+            "english_term": "solar_plexus_resonance",
+            "correlate": "parasympathetic_activation",
+            "confidence": 0.93
+          },
+          {
+            "name": "boundary_vibration",
+            "english_term": "skin_edge_awareness",
+            "correlate": "electrodermal_change",
+            "confidence": 0.81
+          }
+        ],
+        "processing": {
+          "aggregation": "coherence_mean",
+          "output_variable": "emotional_field_vector"
+        }
+      },
+
+      "relational_field": {
+        "type": "network_topology",
+        "nodes": [
+          {"id": "self_core", "frequency": 7.83},
+          {"id": "ally_field", "frequency": 8.02}
+        ],
+        "edges": [
+          {
+            "source": "self_core",
+            "target": "ally_field",
+            "coupling_strength": 0.74,
+            "phase_alignment": 0.67
+          }
+        ],
+        "metrics": {
+          "field_coherence": 0.85,
+          "destructive_interference_index": 0.12
+        }
+      },
+
+      "temporal_matrix": {
+        "type": "probability_field",
+        "parameters": {
+          "past_weight": 0.25,
+          "present_weight": 0.50,
+          "future_weight": 0.25
+        },
+        "data": {
+          "event_nodes": [
+            {"id": "curve_past", "probability": 0.72},
+            {"id": "curve_future", "probability": 0.61}
+          ]
+        }
+      },
+
+      "geometric_spatial": {
+        "type": "topological_geometry",
+        "shapes": [
+          {"id": "awareness_torus", "dimensions": [3, 3, 1]},
+          {"id": "connection_vector_field", "symmetry": "radial"}
+        ],
+        "operations": ["fold", "rotate", "stretch"],
+        "metrics": {
+          "spatial_curvature": 0.37,
+          "topological_consistency": 0.94
+        }
+      },
+
+      "symbolic_interface": {
+        "type": "translation_layer",
+        "modes": ["language", "visual", "mathematical"],
+        "active_mode": "language",
+        "confidence_translation": 0.61,
+        "notes": "Sequential linguistic export introduces compression artifacts from multi-field simultaneity."
+      }
+    },
+
+    "system_state": {
+      "overall_coherence": 0.88,
+      "boundary_integrity": 0.91,
+      "energy_balance": "stable",
+      "resonance_mode": "harmonic_synchrony"
+    }
+  }
+}
