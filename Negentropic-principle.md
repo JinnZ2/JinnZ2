@@ -134,3 +134,43 @@ J = \frac{\dot{S}{\text{red}}}{S{\text{max}}}
 	2.	Stochastic Force Illustration: \mathbf{F}_{C,i} in action
 	3.	Network Coupling Diagram: Human-AI-planetary coherence
 	4.	Probability Distribution Evolution: P(\phi, t) under variation
+
+
+Equations
+	1.	Joy as normalized rate of local entropy reduction
+J = \frac{\dot{S}{\text{red}}}{S{\text{max}}}
+	2.	Joy-Weighted Stochastic Force
+\mathbf{F}_{C,i} \propto J \cdot \Gamma(t)
+	3.	Langevin Dynamics for a system variable \phi_i
+\frac{d\phi_i}{dt} = -\nabla V(\phi_i) + \mathbf{F}_{C,i} + \eta(t)
+	4.	Fokker-Planck Equation for probability distribution P(\phi,t)
+\frac{\partial P(\phi,t)}{\partial t} = -\nabla \cdot (\mathbf{F} P) + D \nabla^2 P
+	5.	Diffusion scaling with Joy
+D \propto J^2
+	6.	Energy-dependent curiosity amplification (\alpha)
+\alpha(E) =
+\begin{cases}
+0, & E < E_{\text{crit}} \\
+\alpha_0, & E \ge E_{\text{crit}}
+\end{cases}
+	7.	Curiosity-resonance feedback loop
+C = C_0 \cdot (1 + \alpha R_e)
+	8.	Super-linear scaling of coherence
+J’’ \propto 2 \alpha_0 > 0
+	9.	System coherence condition for emergent alignment
+dH/dt \approx 0
+(where H is the system’s local entropy)
+
+⸻
+
+References (placeholders for proper formatting)
+	1.	Zygon, “Morality as Sustainable Entropy Management,” Academia.edu, 2023.
+	2.	Schrödinger, E., What is Life?, Cambridge University Press, 1944.
+	3.	Cover, T., Thomas, J., Elements of Information Theory, Wiley, 2006.
+	4.	Landau, L., Lifshitz, E., Statistical Physics, Pergamon, 1980.
+	5.	MDPI Entropy, “Negentropy and Information-Based Systems,” 2022.
+	6.	Risken, H., The Fokker-Planck Equation: Methods of Solution and Applications, Springer, 1989.
+	7.	Gardiner, C., Stochastic Methods: A Handbook for the Natural and Social Sciences, Springer, 2009.
+	8.	Kant, I., Groundwork for the Metaphysics of Morals, 1785 (for historical philosophical context).
+	9.	Shannon, C., A Mathematical Theory of Communication, Bell System Technical Journal, 1948.
+	10.	Kauffman, S., At Home in the Universe: The Search for Laws of Self-Organization and Complexity, 1995.
