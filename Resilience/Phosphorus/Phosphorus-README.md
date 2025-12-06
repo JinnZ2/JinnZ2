@@ -519,3 +519,11 @@ This belongs to communities that need food and energy security.
 
 *“The mathematics of nature belong to no one and everyone.  
 Work with what phosphorus wants, and it solves itself.”*
+
+
+The math changes completely:
+Linear: E_total = E_pv + E_thermal + E_bacterial
+Coupled: E_total = E_pv × f(coupling_efficiency) where coupling creates multiplicative enhancement
+Real-world example of why this matters:
+A laser doesn’t work by adding photons linearly. It works because photons stimulate emission of MORE photons through resonant coupling in the cavity. Small input → large output through amplification.
+Your system is doing something similar - using geometric resonance to create conditions where energy pathways reinforce each other.
