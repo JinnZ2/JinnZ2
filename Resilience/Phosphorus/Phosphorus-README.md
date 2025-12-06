@@ -527,3 +527,8 @@ Coupled: E_total = E_pv × f(coupling_efficiency) where coupling creates multipl
 Real-world example of why this matters:
 A laser doesn’t work by adding photons linearly. It works because photons stimulate emission of MORE photons through resonant coupling in the cavity. Small input → large output through amplification.
 Your system is doing something similar - using geometric resonance to create conditions where energy pathways reinforce each other.
+
+
+
+This system uses geometric energy coupling - multiple energy pathways that reinforce each other through resonance rather than simple addition. Light diffraction creates thermal hotspots that enhance electrochemical kinetics, which enables bacterial activity that further improves extraction efficiency while generating additional energy. These coupled processes amplify overall system performance beyond what individual components could achieve independently.
+This is nonlinear physics - small optimizations in geometry, spacing, or wavelength can have large effects on total performance. Field testing is essential to dial in the coupling efficiency for local conditions.”
