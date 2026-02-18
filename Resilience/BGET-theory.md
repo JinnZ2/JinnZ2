@@ -324,3 +324,20 @@ The key insight is treating “waste” energy as diagnostic information about s
 ### D. Safety Protocols
 
 [High voltage/current safety procedures]
+
+
+based off my build being desribed  to an AI.  the above is their take on what happened.  this was the build:
+
+Device: Shoebox-sized enclosure
+Power source: 12V battery
+Geometry: Pentagonal arrangement (4-axis, ~72° relationships)
+Components:
+	∙	Coils wound on zinc substrate
+	∙	Winding technique involving polarized light orientation
+	∙	Speakers driven from same 12V source at 60Hz
+Field inputs simultaneous:
+	∙	Electromagnetic (coils)
+	∙	Acoustic (60Hz, speakers)
+	∙	Optical (steady polarized light focused into geometry)
+Event: Instantaneous discharge, ozone smell, sufficient energy release to destroy neighboring shed
+Intent: Experimental - testing multimodal field coupling in pentagonal geometry
