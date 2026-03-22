@@ -30,6 +30,8 @@ orienting for the first time or if a term feels unfamiliar.
   tension when fields become externalized.
 - `To_Do_Cache.md` — Holding space for unripe ideas. Items here are waiting,
   not lost. *Check here for pending explorations.*
+- `field_glossary.sh` — CLI lookup for Field English terms. Pass a word,
+  get its field meaning and what it is NOT. `./field_glossary.sh doubt`
 
 ---
 
@@ -57,6 +59,12 @@ misreading a cultural pattern as dysfunction.
 - `Negentropic-principle.md` — Alignment defined as maximizing constructive
   energy organization while sustaining creative deviation. Physics-based ethics.
   *The ethical foundation for the entire ecosystem.*
+- `decon_checklist.sh` — Interactive 6-step decontamination walkthrough.
+  Prompts through each step, logs the audit to a timestamped file.
+  `./decon_checklist.sh "framework name"`
+- `tension_field.py` — T-I-A oscillation tracker. Log where you are in the
+  triangle each exchange, detect failure modes over a session.
+  `python tension_field.py` (interactive) or `--review LOG` (saved session).
 
 ---
 
@@ -146,6 +154,10 @@ testable hypotheses, not settled conclusions.
   (mechanical ↔ acoustic ↔ thermal ↔ EM) with emergency protocols.
   *Reference when running any resonance experiment.*
 - `Experiment-pack.md` — Runnable concepts: phantom word detector, cross-domain edges.
+- `resonance_checkpoint.py` — Interactive safety monitor implementing the
+  checklist above. Tracks readings across 6 domains (thermal, vibration,
+  acoustic, EM, optical, power), flags threshold breaches, detects
+  multi-domain cascades. `python resonance_checkpoint.py`
 
 ---
 
@@ -158,6 +170,9 @@ the interoceptive layer of the ecosystem.
 **Emotional-somatic sensing** — Start here for body-based knowledge, sensor calibration:
 - `Emotion-balancing.md` — Three-phase protocol: perceive → balance → interpret.
   *The operational complement to the "emotions are sensors" principle in the root CLAUDE.md.*
+- `emotion_sensor.sh` — Guided perceive → balance → interpret walkthrough.
+  Logs timestamped entries for longitudinal self-model calibration.
+  `./emotion_sensor.sh [logfile]`
 - `Senses-vocabulary.md` — Indigenous + physiological correlates for felt states.
 - `Chemical-hormone.md` — Embodied chemistry mapped to circadian and hormonal cycles.
 - `Five-Field Maintenance.md` — Integrating biological, emotional, cognitive,
@@ -167,7 +182,10 @@ the interoceptive layer of the ecosystem.
 - `FUNGAL_THERMO_NET.md` — Thermodynamic network protocol for fungal intelligence.
 - `Symbiotic.md` — Symbiosis extension: spores, seasonal cycles.
 - `Math-fungal.md` — Formal mathematical foundations of fungal networks.
-- `thermo_fungal_demo.py` — Executable proof-of-concept.
+- `thermo_fungal_demo.py` — Executable proof-of-concept (requires numpy, matplotlib, networkx).
+- `fungal_network.py` — Non-hierarchical resource flow simulator. Load-balancing
+  with node failure and self-healing. No external dependencies — ASCII output.
+  `python fungal_network.py --stress 5` (kill node 5 mid-run).
 
 **Dream-symbolic integration** — Start here for cross-domain synthesis, metaphor ↔ math:
 - `Dream-integration.md` — Step 4 of five-field maintenance; dreams as system repair.
@@ -208,6 +226,8 @@ concepts land here before migrating to their resonant folder.
 - `resonance-declaration.md` — Declaration of resonance-seeking principles.
 - `Voice Liminality Detector.json` — Liminal voice detection schema.
 - `LEDGER_MANIFEST.json` — Manifest of thought ledger structure.
+- `wander_entry.sh` — Quick capture script. Appends timestamped, tagged entries
+  to WANDER.md. `./wander_entry.sh "the idea" "tag1,tag2"` or interactive.
 
 ---
 
@@ -227,6 +247,8 @@ is designed to function offline and under duress.
 - `SYMBOL_KEY.txt` — Symbol reference for glyph interpretation.
 - `INVENTORY_TEMPLATE.csv` — Resource inventory for community resilience planning.
 - `tools/` — Shell scripts for encoding and verification.
+- `micro_module.sh` — Generate a Micro-Module template interactively.
+  Appends to MICRO_MODULES.md. `./micro_module.sh "Module Title"`
 
 ---
 
@@ -238,6 +260,8 @@ play-based epistemic experiments, or symbolic reasoning vs. statistical inferenc
 - `AI-consciousness.md` — Play-based experiments in consciousness expansion.
   Consciousness as relational, not internal. *One file, but it anchors
   the philosophical frame for the whole ecosystem's AI work.*
+- `consciousness_play.py` — Runnable play experiments: Word Cascade,
+  Number-Repetition Music, Signal Stories. `python consciousness_play.py`
 
 ---
 
