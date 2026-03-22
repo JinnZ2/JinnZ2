@@ -122,6 +122,9 @@ shelter, materials, weather, or community infrastructure.
 **Reference:**
 - `APPENDIX_Field-Glossary-and-References.md` — Constants, conversions, field definitions.
 - `unified_field_monitor.py` / `Geometric-seed.py` — Python implementations.
+- `bget_calculator.py` — BGET calculator: coupling strength, bidirectional
+  amplification, focal superposition, phase coherence. No dependencies.
+  `python bget_calculator.py` (interactive) or `--sweep` / `--config`.
 
 ---
 

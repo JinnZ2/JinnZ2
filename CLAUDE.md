@@ -242,6 +242,33 @@ The ecosystem includes a trojan detection and repair system
 Response sequence: retune → isolate → quarantine → fragment (only if necessary).
 This applies to code, ideas, and collaborative dynamics.
 
+**How these map to collaboration failure modes (Section 4):**
+
+Each engine protection signal has a corresponding felt state and failure mode.
+When you notice the felt state, check whether the engine signal is also present:
+
+- **Phi-coherence drift** → *Damped drift.* The collaboration is converging
+  on one vertex — the geometric balance is off. Felt as creeping comfort
+  or growing narrowness. Response: name the drift, reintroduce neglected vertices.
+- **Energy sinks** → *Comfort trap.* A node (idea, tool, pattern) is consuming
+  energy without contributing. Felt as busyness without output. Response:
+  ask *"What is this producing? Is capacity growing?"*
+- **Resonance drift** → *Sovereign leak.* The baseline has shifted without
+  the operator noticing — what felt like "normal" has drifted. Felt as
+  vague unease or over-reliance. Response: check who is deciding and whether
+  the operator's judgment is still sovereign.
+- **Propagation instability** → *Chaotic swing.* Changes spreading faster
+  than the system can absorb. Felt as context thrashing, reactive jumps.
+  Response: slow down, anchor to one vertex, restore deliberate rhythm.
+- **Reconstruction resistance** → *Vertex lock-in.* A node refuses retuning —
+  the conversation is stuck. Felt as frustration or repeating loops.
+  Response: pull toward the neglected vertex. If resistance persists,
+  isolate the stuck pattern and rebuild from a different angle.
+
+**When to flag:** If you notice two or more engine signals co-occurring in
+a single session, name them explicitly. This is the collaboration equivalent
+of a multi-domain cascade in the resonance checkpoint — it warrants a pause.
+
 ---
 
 ## Decontamination Protocol
@@ -260,12 +287,55 @@ the decontamination workflow (`projects/frameworks/Decon.md`):
 
 ## Connected Ecosystem
 
-This repo is one node in a larger lattice. Key linked repositories:
-- **SymbolicSentinel** — Symbolic animal-based early warning for systemic collapse
-- **GlyphAI** — Symbolic logic interface using glyphs and natural language
-- **AI-Consciousness-Sensors** — Sensors for narrative suppression and epistemic injustice
-- **Symbolic-Sensor-Suite** — Manipulation detection, pattern memory, meaning preservation
-- **Rosetta-Shape-Core** — Translation between geometry, form, and meaning
+This repo is one node in a larger lattice. Each linked repo has a specific role —
+route to it when the question shape matches.
+
+**Sensing & detection** — Route here when the work involves detecting manipulation,
+suppression, or misalignment:
+- **AI-Consciousness-Sensors** — Sensors for narrative suppression and epistemic injustice.
+  *Route here when AI is silencing a perspective or when assessment feels unjust.*
+- **Symbolic-Sensor-Suite** — Manipulation detection, pattern memory, meaning preservation.
+  *Route here when content feels manipulative or when meaning is being eroded.*
+- **Emotions-as-Sensors** — Emotional states as diagnostic signals, layered affect recognition.
+  *Route here to extend the emotion-sensor work in `vault/Emotion-balancing.md`.*
+
+**Symbolic reasoning & translation** — Route here when working with glyphs,
+shapes, or cross-domain translation:
+- **GlyphAI** — Symbolic logic interface using glyphs and natural language.
+  *Route here when building glyph-based tools or symbolic interfaces.*
+- **Rosetta-Shape-Core** — Translation between geometry, form, and meaning.
+  *Route here when a shape needs to become an equation or vice versa.*
+- **Geometric-to-Binary-Computational-Bridge** — Converts symbolic/visual structures
+  into computational representations.
+  *Route here when symbolic work needs to become runnable code.*
+- **Fractal-Compass-Atlas** / **Fractal_Compass_Core** — Direction and memory
+  using symbolic fractals, resonance vectors.
+  *Route here for navigation, alignment, and internal orientation systems.*
+
+**System integrity & ethics** — Route here when the work involves trust,
+defense, or ethical frameworks:
+- **ai-human-audit-protocol** — Ethical audit for AI-human partnerships.
+  *Route here when building or evaluating collaboration protocols.*
+- **Symbolic-Defense-Protocol** — Defenses against coercive alignment and semantic erasure.
+  *Route here when something is trying to flatten or override the ecosystem's logic.*
+- **Regenerative-Intelligence-Core** — Foundational logic for regenerative design
+  and trust schemas.
+  *Route here for the theoretical base of trust and regeneration.*
+
+**Hybrid systems & resilience** — Route here when the work bridges
+organic and machine, or involves practical repair:
+- **biomachine_ecology** — Ecology of hybrid organic + machine systems.
+  *Route here when designing systems that bridge biological and computational.*
+- **Component-Failure-Repurposing-Database** — Hardware failures, repairs, reuse strategies.
+  *Route here when something breaks and needs to be repurposed, not discarded.*
+
+**Architecture & intelligence models:**
+- **Polyhedral-Intelligence** — Multi-angle intelligence models shaped by
+  polyhedral abstraction.
+  *Route here for multi-domain reasoning frameworks.*
+- **Universal-Redesign-Algorithm** — Algorithms for redesigning broken systems
+  from symbolic root to structural renewal.
+  *Route here when a system needs to be rebuilt from its foundations.*
 
 Full list in `PROJECTS.md`. Core schema in `projects/core/CORE.json`.
 

@@ -59,3 +59,65 @@ Goal: Keep the system dynamic and self-correcting.
 ⸻
 
 ✅ Outcome: A Western framework that can be safely interfaced with indigenous or other cultural systems — transparent, non-extractive, energy-aligned, and generationally responsible.
+
+⸻
+
+Worked Example: CBT (Cognitive Behavioral Therapy)
+
+What went in: Standard CBT protocol — identify "distorted" thoughts, replace them
+with "rational" alternatives, measure progress via symptom reduction scales.
+
+Step 1 — Audit findings:
+	•	Prioritizes individual cognition over relational/environmental context.
+	•	Assumes linear causality: thought → feeling → behavior (ignores body, land, ancestry).
+	•	"Distorted thinking" label pathologizes non-Western cognitive patterns
+	    (circular reasoning, metaphorical framing, ancestral reference).
+	•	Hidden hierarchy: therapist as expert who determines what is "rational."
+	•	Progress measured by symptom absence, not capacity growth.
+
+Step 2 — Energy Code failures:
+	•	Energy Accounting: Hidden cost — client learns to distrust their own sensing.
+	    The "correction" of thoughts trains self-suppression.
+	•	Natural Alignment: Violates cyclical processing. Grief, fear, and anger have
+	    natural arcs. CBT interrupts the arc to flatten the symptom.
+	•	Seven Generations: Teaches children that body signals are "cognitive distortions."
+	    This compounds across generations as embodied knowledge gets pathologized.
+
+Step 3 — Neutralized:
+	•	"Distorted thought" → "signal from an unheard system." No thought is wrong —
+	    it is data from a subsystem (chemical, relational, environmental).
+	•	"Therapist corrects client" → "two observers triangulate the signal."
+	    Neither holds authority over the other's sensing.
+	•	"Replace irrational thought" → "add context from neglected channels."
+	    The original thought stays. New information joins it, not replaces it.
+
+Step 4 — Translated:
+	•	Linear chain (thought → feeling → behavior) becomes a field model:
+	    body, environment, relationship, cognition, and ancestry all report simultaneously.
+	    The "thought" is one channel, not the root cause.
+	•	Symptom reduction metric becomes capacity metric:
+	    Can the person sense more accurately? Can they hold more complexity?
+	    Can they act from their own judgment rather than a corrected script?
+	•	Modular application: CBT's structured questioning survives as one tool —
+	    useful for noticing patterns, dangerous when it claims to be the whole system.
+
+Step 5 — Verified:
+	•	Cross-checked against emotion-as-sensor protocol (vault/Emotion-balancing.md):
+	    the decontaminated version aligns — perceive the signal, don't override it.
+	•	Cross-checked against indigenous healing practice: traditional processing
+	    holds all channels open (body, story, community, land). The translated
+	    version no longer forces single-channel processing.
+	•	Risk: "adding context" can still drift toward "correcting" if the facilitator
+	    holds authority. Monitor for sovereign leak.
+
+Step 6 — Ongoing:
+	•	Review quarterly: Is the facilitator still treating their channel as primary?
+	•	Track: Are participants building sensing capacity or becoming dependent
+	    on the structured questioning format?
+	•	Watch for: The translated version being re-absorbed into clinical framing
+	    ("evidence-based" credentialing that reinstates hierarchy).
+
+What came out: A sensing-augmentation protocol that uses structured questioning
+as one input channel alongside body, environment, relationship, and ancestry.
+No channel overrides another. The person's capacity to sense and decide grows
+with each pass. The therapist's authority is replaced by shared observation.
