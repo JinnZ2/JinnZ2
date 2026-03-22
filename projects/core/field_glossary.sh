@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # field_glossary.sh — Look up Field English terms
 # Pipe in a word or pass as argument. Returns field meaning + what it is NOT.
-# Offline, no dependencies. Follows LANGUAGE_NOTES.md definitions.
+# Offline, no dependencies. Follows language-notes.md definitions.
 #
 # Usage:
 #   ./field_glossary.sh doubt
@@ -37,7 +37,7 @@ lookup() {
         echo "    NOT this      : ${NOT_THIS[$term]}"
         echo ""
     else
-        echo "  $term — not in glossary. Check projects/core/LANGUAGE_NOTES.md"
+        echo "  $term — not in glossary. Check projects/core/language-notes.md"
         echo ""
     fi
 }
@@ -60,5 +60,5 @@ else
     for term in "${!FIELD_MEANING[@]}"; do
         lookup "$term"
     done
-    echo "Source: projects/core/LANGUAGE_NOTES.md"
+    echo "Source: projects/core/language-notes.md"
 fi

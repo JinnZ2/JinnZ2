@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# wander_entry.sh — Quick capture for WANDER.md
+# wander_entry.sh — Quick capture for wander.md
 # Appends a timestamped entry with optional tags.
 # Designed for fast fragment capture — integrate later.
 #
@@ -11,7 +11,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-WANDER="${SCRIPT_DIR}/WANDER.md"
+WANDER="${SCRIPT_DIR}/wander.md"
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 DATE_SHORT=$(date -u +"%Y-%m-%d")
@@ -34,7 +34,7 @@ append_entry() {
         echo "_Captured: ${TIMESTAMP}_"
     } >> "$WANDER"
 
-    echo "Logged to WANDER.md"
+    echo "Logged to wander.md"
     echo "  ${content:0:60}$([ ${#content} -gt 60 ] && echo '...' || echo '')"
 }
 

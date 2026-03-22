@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # decon_checklist.sh — Western Framework Decontamination Workflow
-# Interactive walkthrough of the 6-step process from Decon.md.
+# Interactive walkthrough of the 6-step process from decon.md.
 # Logs each step's findings to a timestamped file.
 #
 # Usage: ./decon_checklist.sh [framework-name]

@@ -3,7 +3,7 @@
 ## Extension Module: Symbiosis, Spores & Seasonal Cycles
 
 Version: 1.1  
-Extends: FUNGAL_THERMO_NET v1.0  
+Extends: fungal-thermo-net v1.0  
 Status: Experimental Design
 
 -----

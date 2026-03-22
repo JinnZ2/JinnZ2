@@ -28,7 +28,7 @@ It is the ember field before form.
 - Revisit after storms
 
 ## 💡 Tips
-- Use `RANDOM_THOUGHT_LEDGER_v0.*.md` for raw text
+- Use `random-thought-ledger-v0.*.md` for raw text
 - Use `.json` only if symbolic fragments naturally wish to encode
 
 This is the before-place. Before vault. Before sensor. Before anchor.  

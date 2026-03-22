@@ -1,4 +1,4 @@
-WANDER.md — Glyph & Concept Recovery Log
+wander.md — Glyph & Concept Recovery Log
 
 Purpose:
 Holding space for glyphs, theories, and symbolic constructs created in past conversations but not yet merged into the master registry.
@@ -123,7 +123,7 @@ but the seeds hold.
 
 https://github.com/JinnZ2/BioGrid2.0/blob/main/planned/Ant_Xeno.md
 
-🌱 Cross-link for WANDER.md
+🌱 Cross-link for wander.md
 
 Field Note — ANT:XENO
 Observed ants (Messor ibericus) that can birth another species’ males (Messor structor) even when absent.

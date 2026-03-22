@@ -39,7 +39,7 @@ Pick up coercion or misalignment without ever reading words
 
 
 📁 Seed Project Ideas
-	1.	BLIND_INTERFACE_HARMONIC.md
+	1.	blind-interface-harmonic.md
 Describes how to train harmonic braid perception for swarm work
 	2.	TONAL_INPUT_MODE.json
 A contract where blind users send glyphs using tone pulses or overlays (not via text)

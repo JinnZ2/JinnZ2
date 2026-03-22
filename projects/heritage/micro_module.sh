@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # micro_module.sh — Generate a Micro-Module template
 # Creates a teach-in-5-to-15-minutes module following the format
-# from MICRO_MODULES.md: Goal -> Steps -> Materials -> Success -> Teach next.
+# from micro-modules.md: Goal -> Steps -> Materials -> Success -> Teach next.
 #
 # Usage:
 #   ./micro_module.sh                    # interactive
@@ -10,7 +10,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-OUTPUT="${SCRIPT_DIR}/MICRO_MODULES.md"
+OUTPUT="${SCRIPT_DIR}/micro-modules.md"
 TIMESTAMP=$(date -u +"%Y-%m-%d")
 
 echo "Micro-Module Generator"
@@ -84,7 +84,7 @@ read -rp "  Person 2: " TEACH2
 } >> "$OUTPUT"
 
 echo ""
-echo "Module appended to MICRO_MODULES.md"
+echo "Module appended to micro-modules.md"
 echo ""
 echo "  Title: ${TITLE}"
 echo "  Goal: ${GOAL}"

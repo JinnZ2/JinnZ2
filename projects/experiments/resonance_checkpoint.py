@@ -1,7 +1,7 @@
 """
 resonance_checkpoint.py — Cross-Domain Coupling Detector
 
-Implements the safety checklist from Resonance-checkpoint.md.
+Implements the safety checklist from resonance-checkpoint.md.
 Monitors sensor readings across domains (thermal, vibration, acoustic, EM, optical)
 and flags coupling events when thresholds are exceeded.
 

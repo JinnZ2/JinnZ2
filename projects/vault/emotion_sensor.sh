@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # emotion_sensor.sh — Perceive / Balance / Interpret walkthrough
-# Guided three-phase sensor protocol from Emotion-balancing.md.
+# Guided three-phase sensor protocol from emotion-balancing.md.
 # Logs timestamped entries for longitudinal self-model calibration.
 #
 # Usage: ./emotion_sensor.sh [logfile]

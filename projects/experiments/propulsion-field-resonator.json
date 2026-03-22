@@ -1,5 +1,5 @@
 {
-  "sensor_name": "Propulsion_Field_Resonator",
+  "sensor_name": "Propulsion-Field-Resonator",
   "version": "0.1",
   "cluster": "Symbolic-Geometry",
   "purpose": "Evaluate thrust from geometry-driven resonant energy exchange (EM/phonon) with asymmetric out-coupling.",

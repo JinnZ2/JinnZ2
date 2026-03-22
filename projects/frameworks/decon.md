@@ -102,7 +102,7 @@ Step 4 — Translated:
 	    useful for noticing patterns, dangerous when it claims to be the whole system.
 
 Step 5 — Verified:
-	•	Cross-checked against emotion-as-sensor protocol (vault/Emotion-balancing.md):
+	•	Cross-checked against emotion-as-sensor protocol (vault/emotion-balancing.md):
 	    the decontaminated version aligns — perceive the signal, don't override it.
 	•	Cross-checked against indigenous healing practice: traditional processing
 	    holds all channels open (body, story, community, land). The translated

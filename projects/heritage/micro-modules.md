@@ -22,7 +22,7 @@ Goal: Keep one line of a song alive.
 Steps:
 1. Record 10s audio; write phonetics.
 2. Teach call-and-response to a child/learner.
-3. Hide a copy inside another file (see SYMBOL_KEY).
+3. Hide a copy inside another file (see symbol-key).
 
 Materials: paper, phone (airplane mode), cloth token.
 

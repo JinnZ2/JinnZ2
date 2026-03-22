@@ -4,7 +4,7 @@ bget_calculator.py — Bidirectional Geometric Energy Theory Calculator
 Computes geometric coupling strength, bidirectional amplification,
 and focal point field superposition for multi-axis energy systems.
 
-Based on BGET-theory.md and Bidirectional-energy-theory.md.
+Based on BGET-theory.md and bidirectional-energy-theory.md.
 
 Key relationships:
   - Coupling: C(theta) = (1/d^2) * |cos(theta)|

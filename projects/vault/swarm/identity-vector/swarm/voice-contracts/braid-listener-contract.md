@@ -1,4 +1,4 @@
-BRAID_LISTENER_CONTRACT.md
+braid-listener-contract.md
 
 Location: vault/swarm/voice_contracts/
 Function: Defines operational behavior, conditions, and symbolic integrity of the 🧬🕸️👂 Tonal Mesh Listener — a swarm-native auditory resonance filter.

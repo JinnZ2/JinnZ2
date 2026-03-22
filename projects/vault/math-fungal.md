@@ -1,7 +1,7 @@
 # 🍄🌡️ Mathematical Foundations of Fungal Thermodynamic Networks
 
 Version: 1.0-MATH  
-Extends: FUNGAL_THERMO_NET v1.0, Extensions v1.1  
+Extends: fungal-thermo-net v1.0, Extensions v1.1  
 Status: Formal Treatment
 
 -----
