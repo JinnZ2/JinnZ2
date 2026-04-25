@@ -13,6 +13,16 @@ this file now records the design intent only.
 | [`system_prompt.md`](./system_prompt.md) | Paste-ready system prompt for GPT / Gemini / Claude.          |
 | [`ORCHESTRATOR.md`](./ORCHESTRATOR.md) | Five-layer architecture, build phases, multi-community fork model. |
 
+## Layer-by-layer modules
+
+| Layer                | Module                              | Status        |
+|----------------------|-------------------------------------|---------------|
+| L1 constraint gate   | [`gate.py`](./gate.py)              | prototype     |
+| L2 voice dispatcher  | —                                   | not started   |
+| L3 cloud orchestrator | —                                  | not started   |
+| L4 coating detector  | partial — coating signs in `gate.py` | prototype    |
+| L5 optics translator | —                                   | not started   |
+
 ## Pipeline
 
 ```
