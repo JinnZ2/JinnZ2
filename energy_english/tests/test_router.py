@@ -7,9 +7,11 @@ from energy_english.coating_detector import Trajectory
 from energy_english.dispatcher import GatedDispatcher
 from energy_english.router import (
     OrchestratorRouter,
+    ROUTE_CLOUD_SIMULATION,
     ROUTE_MODEL,
     ROUTE_ORAL_ARCHAEOLOGY,
     ROUTE_UNROUTED,
+    _parse_sim_params,
     classify,
     routable_intents,
 )
@@ -97,7 +99,42 @@ class Classify(unittest.TestCase):
     def test_routable_intents_lists_known_routes(self):
         intents = routable_intents()
         self.assertIn(ROUTE_ORAL_ARCHAEOLOGY, intents)
+        self.assertIn(ROUTE_CLOUD_SIMULATION, intents)
         self.assertIn(ROUTE_MODEL, intents)
+
+    def test_run_sim_routes_to_cloud_simulation(self):
+        route, payload, label = classify("run multi_front with iterations=100, amplitude=0.5")
+        self.assertEqual(route, ROUTE_CLOUD_SIMULATION)
+        self.assertTrue(payload.startswith("multi_front||"))
+        self.assertIn("iterations=100", payload)
+        self.assertIn("amplitude=0.5", payload)
+        self.assertEqual(label, "run <sim> [with <params>]")
+
+    def test_simulate_without_params_is_routable(self):
+        route, payload, _ = classify("simulate tiny_sim")
+        self.assertEqual(route, ROUTE_CLOUD_SIMULATION)
+        self.assertEqual(payload, "tiny_sim||")
+
+    def test_extract_physics_from_does_not_collide_with_run(self):
+        # archaeology pattern matches "extract physics from run multi_front..."
+        # and SHOULD WIN against the simulation pattern.
+        route, _, _ = classify("extract physics from run_observation: water rises")
+        self.assertEqual(route, ROUTE_ORAL_ARCHAEOLOGY)
+
+
+class ParseSimParams(unittest.TestCase):
+
+    def test_int_then_float_then_string_inference(self):
+        out = _parse_sim_params("a=1, b=2.5, c=hello")
+        self.assertEqual(out, {"a": 1, "b": 2.5, "c": "hello"})
+
+    def test_empty_input_returns_empty_dict(self):
+        self.assertEqual(_parse_sim_params(""), {})
+        self.assertEqual(_parse_sim_params(None), {})
+
+    def test_skips_malformed_entries(self):
+        out = _parse_sim_params("a=1, garbage, b=2, =nokey")
+        self.assertEqual(out, {"a": 1, "b": 2})
 
 
 # ── Routing to oral_archaeology ───────────────────────────────────
@@ -178,6 +215,85 @@ class RouteToModel(unittest.TestCase):
         self.assertEqual(result.roundtrip.output_report.verdict.value, "block")
 
 
+# ── Routing to cloud_simulation ──────────────────────────────────
+
+
+class _StubOrchestrator:
+    """Stand-in for CloudOrchestrator so router tests stay stdlib-only."""
+
+    def __init__(self, *, success=True, trajectory=None, error=None):
+        self.success = success
+        self.trajectory = trajectory
+        self.error = error
+        self.calls = []
+
+    def run(self, request):
+        from energy_english.orchestrator import RunResult
+        self.calls.append(request)
+        return RunResult(
+            success=self.success,
+            trajectory=self.trajectory,
+            error=self.error,
+            backend="stub",
+        )
+
+
+class RouteToCloudSimulation(unittest.TestCase):
+
+    def _trajectory(self):
+        # A simple, well-explored trajectory so the coating detector
+        # produces a clean PASS report.
+        return Trajectory(
+            parameters={"iterations": 100, "amplitude": 0.5},
+            varied_parameters={"iterations", "amplitude"},
+            traces={
+                "lock_A": [(-1) ** i * 0.4 for i in range(100)],
+                "lock_B": [(-1) ** i * 0.3 for i in range(100)],
+            },
+            events=[{"iteration": 5, "type": "zero_crossing"}],
+        )
+
+    def test_run_sim_calls_orchestrator_with_parsed_params(self):
+        orch = _StubOrchestrator(trajectory=self._trajectory())
+        router = OrchestratorRouter(cloud_orchestrator=orch)
+        result = router.dispatch(
+            "run /tmp/multi_front.py with iterations=100, amplitude=0.5"
+        )
+        self.assertEqual(result.route, ROUTE_CLOUD_SIMULATION)
+        self.assertEqual(len(orch.calls), 1)
+        req = orch.calls[0]
+        self.assertEqual(req.entrypoint, "/tmp/multi_front.py")
+        self.assertEqual(req.parameters, {"iterations": 100, "amplitude": 0.5})
+
+    def test_sim_registry_resolves_friendly_name_to_entrypoint(self):
+        orch = _StubOrchestrator(trajectory=self._trajectory())
+        router = OrchestratorRouter(
+            cloud_orchestrator=orch,
+            sim_registry={"multi_front": "/sims/multi_front.py"},
+        )
+        router.dispatch("run multi_front with iterations=50")
+        self.assertEqual(orch.calls[0].entrypoint, "/sims/multi_front.py")
+
+    def test_run_attaches_run_result_and_coating_report(self):
+        orch = _StubOrchestrator(trajectory=self._trajectory())
+        router = OrchestratorRouter(cloud_orchestrator=orch)
+        result = router.dispatch("run /tmp/sim.py")
+        self.assertIsNotNone(result.run_result)
+        self.assertTrue(result.run_result.success)
+        self.assertIsNotNone(result.coating_report)
+        # response_text is the optics rendering (or "nothing fired")
+        self.assertTrue(result.response_text)
+
+    def test_failed_sim_returns_error_response(self):
+        orch = _StubOrchestrator(success=False, error="boom")
+        router = OrchestratorRouter(cloud_orchestrator=orch)
+        result = router.dispatch("run /tmp/sim.py")
+        self.assertEqual(result.route, ROUTE_CLOUD_SIMULATION)
+        self.assertFalse(result.run_result.success)
+        self.assertIsNone(result.coating_report)
+        self.assertIn("sim failed", result.response_text)
+
+
 # ── Unrouted fallbacks ────────────────────────────────────────────
 
 
@@ -194,6 +310,12 @@ class Unrouted(unittest.TestCase):
         )
         self.assertEqual(result.route, ROUTE_UNROUTED)
         self.assertIn("oral_archaeology", result.response_text)
+
+    def test_simulation_intent_without_orchestrator_returns_unrouted(self):
+        router = OrchestratorRouter()  # no cloud_orchestrator
+        result = router.dispatch("run /tmp/sim.py")
+        self.assertEqual(result.route, ROUTE_UNROUTED)
+        self.assertIn("cloud_orchestrator", result.response_text)
 
     def test_model_intent_without_dispatcher_returns_unrouted(self):
         router = OrchestratorRouter(model_dispatcher=None)

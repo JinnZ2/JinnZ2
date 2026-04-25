@@ -18,8 +18,9 @@ this file now records the design intent only.
 | Layer                | Module                              | Status        |
 |----------------------|-------------------------------------|---------------|
 | L1 constraint gate         | [`gate.py`](./gate.py)              | prototype     |
-| L2 router                  | [`router.py`](./router.py)          | prototype (intent → backend) |
+| L2 router                  | [`router.py`](./router.py)          | prototype — three routes: oral_archaeology / cloud_simulation / model |
 | L2 gated-call subroutine   | [`dispatcher.py`](./dispatcher.py)  | prototype (used by the model route) |
+| L2 interactive shell       | [`cli.py`](./cli.py) (`python -m energy_english`) | prototype |
 | L3 cloud orchestrator      | [`orchestrator/`](./orchestrator)   | prototype — runtime-agnostic (LocalRuntime + DockerRuntime + HTTPRuntime real; AWSLambdaRuntime + ModalRuntime stubbed) |
 | L4 coating detector        | [`coating_detector.py`](./coating_detector.py) | prototype (synthetic-trajectory tested) |
 | L5 oral archaeology plugin | [`../oral_archaeology/`](../oral_archaeology) | prototype, 3 domains, 5 physics signatures |
