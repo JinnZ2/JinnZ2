@@ -24,7 +24,7 @@ for speaking to Kavik. Different audiences, different shapes.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from energy_english.findings import (
     Finding,
@@ -32,6 +32,7 @@ from energy_english.findings import (
     SEVERITY_BLOCK,
     SEVERITY_INFO,
     SEVERITY_WARN,
+    Verdict,
 )
 
 
@@ -312,3 +313,148 @@ class OpticsTranslator:
             return
         seen.add(key)
         bucket.append(line)
+
+
+# ── Ensemble helper ──────────────────────────────────────────────
+#
+# When two or more detectors run on the same input (regex primary +
+# graph twin, statistical primary + info-divergence twin, etc.) you
+# get N reports. The optics translator already absorbs and dedups
+# their findings — the ensemble helper adds the *vote* layer on top:
+# a per-report verdict list, a unanimous-or-None consensus, and the
+# set of categories where the reports diverged.
+#
+# Disagreement is its own signal — the design doc names it the
+# tail-risk surface where each twin's wins live. Surface it, don't
+# average it away.
+
+
+@dataclass
+class EnsembleResult:
+    """
+    Aggregate of N reports + the optics view across them.
+
+    ``verdicts``                — one Verdict per input report, in input order.
+    ``consensus``               — the verdict if all reports agree, else None.
+    ``disagreement_categories`` — categories that are present in some
+                                  reports but not others, OR present in
+                                  all reports but at different severities.
+    ``optics``                  — Optics returned by ``OpticsTranslator.translate``
+                                  on the same reports (dedups across them).
+    """
+
+    verdicts: List[Verdict]
+    consensus: Optional[Verdict]
+    disagreement_categories: List[str]
+    optics: Optics
+
+    @property
+    def unanimous(self) -> bool:
+        return self.consensus is not None
+
+
+def ensemble(
+    *reports: Any,
+    translator: Optional[OpticsTranslator] = None,
+) -> EnsembleResult:
+    """
+    Run the optics translator over ``*reports`` and compute the vote
+    layer (per-report verdict, unanimous-or-None consensus, and the
+    set of categories where the reports diverged).
+
+    No router changes required to use this — it's a pure function over
+    Report-shaped inputs. Skips ``None`` reports cleanly.
+
+    ``ArchaeologyReport`` inputs are accepted (the translator absorbs
+    them); their verdict is taken from ``physics_validation`` when
+    present, else from ``trajectory_validation``, else PASS. That keeps
+    the vote consistent across mixed report types.
+    """
+    real_reports = [r for r in reports if r is not None]
+    tr = translator or OpticsTranslator()
+    optics = tr.translate(*real_reports)
+
+    verdicts = [_extract_verdict(r) for r in real_reports]
+    consensus = _consensus(verdicts)
+    disagreement_categories = _disagreement_categories(real_reports)
+
+    return EnsembleResult(
+        verdicts=verdicts,
+        consensus=consensus,
+        disagreement_categories=disagreement_categories,
+        optics=optics,
+    )
+
+
+def _extract_verdict(report: Any) -> Verdict:
+    if hasattr(report, "verdict") and isinstance(getattr(report, "verdict"), Verdict):
+        return report.verdict
+    # ArchaeologyReport — pick the strongest validation verdict.
+    for attr in ("physics_validation", "trajectory_validation"):
+        sub = getattr(report, attr, None)
+        if sub is not None and hasattr(sub, "verdict"):
+            return sub.verdict
+    return Verdict.PASS
+
+
+def _consensus(verdicts: List[Verdict]) -> Optional[Verdict]:
+    if not verdicts:
+        return None
+    first = verdicts[0]
+    return first if all(v is first for v in verdicts) else None
+
+
+def _disagreement_categories(reports: List[Any]) -> List[str]:
+    """
+    Categories that fired in some reports but not all, or fired in all
+    reports but at different severities.
+    """
+    if len(reports) < 2:
+        return []
+
+    # Collect (category, severity) per report. Reports without
+    # ``findings`` (e.g. ArchaeologyReport) are walked via their
+    # validation sub-reports.
+    per_report_severity: List[Dict[str, str]] = []
+    for r in reports:
+        sev_by_cat: Dict[str, str] = {}
+        for f in _iter_findings(r):
+            existing = sev_by_cat.get(f.category)
+            if existing is None or _sev_rank(f.severity) > _sev_rank(existing):
+                sev_by_cat[f.category] = f.severity
+        per_report_severity.append(sev_by_cat)
+
+    all_categories: set = set()
+    for sev_by_cat in per_report_severity:
+        all_categories.update(sev_by_cat.keys())
+
+    out: List[str] = []
+    seen: set = set()
+    for cat in sorted(all_categories):
+        seen_in = [sev_by_cat.get(cat) for sev_by_cat in per_report_severity]
+        if any(s is None for s in seen_in) and any(s is not None for s in seen_in):
+            # category fired in some but not all
+            if cat not in seen:
+                out.append(cat)
+                seen.add(cat)
+        elif len({s for s in seen_in}) > 1:
+            # all reports have the category but at different severities
+            if cat not in seen:
+                out.append(cat)
+                seen.add(cat)
+    return out
+
+
+def _iter_findings(report: Any) -> List[Finding]:
+    findings: List[Finding] = []
+    if hasattr(report, "findings"):
+        findings.extend(report.findings)
+    for attr in ("physics_validation", "trajectory_validation"):
+        sub = getattr(report, attr, None)
+        if sub is not None and hasattr(sub, "findings"):
+            findings.extend(sub.findings)
+    return findings
+
+
+def _sev_rank(severity: str) -> int:
+    return {"info": 0, "warn": 1, "block": 2}.get(severity, 0)

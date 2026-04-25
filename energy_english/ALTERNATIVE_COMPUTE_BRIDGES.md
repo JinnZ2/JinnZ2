@@ -251,8 +251,17 @@ like at the source-tree level.
       compatibility through `OpticsTranslator.translate(*reports)`.**
 - [ ] Write `examples/oral_tensor_walkthrough.md`.
 - [ ] Update this document with cross-references to landed twins.
-- [ ] Add ensemble-vote helper to `optics.py` (no API change — just a
-      convenience wrapper over `OpticsTranslator.translate(*reports)`).
+- [x] Add ensemble-vote helper to `optics.py`. **Landed.** ``ensemble(*reports)``
+      returns an ``EnsembleResult`` with: per-report ``verdicts``, a
+      unanimous-or-None ``consensus``, the ``disagreement_categories``
+      list (categories present in some reports but not others, OR
+      present in all but at different severities), and the
+      ``optics`` view. 13 unit tests in
+      ``tests/test_ensemble.py`` cover the empty / unanimous / divergent
+      paths and exercise both real headline disagreements (the graph
+      twin's tempered closure; the info-divergence twin's nonlinear
+      coupling). Pure function over Report-shaped inputs; no router
+      changes required to use it.
 
 ## What [1] proved out
 
