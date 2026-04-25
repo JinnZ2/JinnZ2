@@ -209,8 +209,15 @@ like at the source-tree level.
 
 ## Next-build-cycle TODO
 
-- [ ] Implement `gate_as_constraint_graph.py` per priority [1].
-- [ ] Add mirror-tests that share fixtures with `tests/test_gate.py`.
+- [x] Implement `gate_as_constraint_graph.py` per priority [1]. **Landed.**
+- [x] Add mirror-tests that share fixtures with `tests/test_gate.py`. **Landed
+      as `tests/test_gate_as_constraint_graph.py` with 20 tests covering
+      graph construction, mirror-blocking + mirror-flagging cases, the
+      story-arc motif rationale, context-aware closure (the headline
+      disagreement with the regex primary: closer + falsifier in same
+      graph drops BLOCK to WARN), subgraph-overlap coating, intent
+      traversal, permissive input mode, and ensemble compatibility via
+      `OpticsTranslator.translate(*reports)`.**
 - [ ] Write `examples/gate_graph_walkthrough.md`.
 - [ ] Implement `coating_as_information_divergence.py` per priority [2].
 - [ ] Add mirror-tests that share fixtures with `tests/test_coating_detector.py`.
@@ -219,5 +226,25 @@ like at the source-tree level.
 - [ ] Update this document with cross-references to landed twins.
 - [ ] Add ensemble-vote helper to `optics.py` (no API change — just a
       convenience wrapper over `OpticsTranslator.translate(*reports)`).
+
+## What [1] proved out
+
+The graph twin demonstrates the contract works in practice: same input
+shape, same `Report` shape, same finding categories, same severity
+convention as the regex primary, and the optics translator absorbs
+both reports without modification. The reasoning paths diverge, and
+the twin's context-aware findings (closure tempered by an in-graph
+falsifier; story-arc motif when opener and closer are
+sequential-reachable; coating as content-subgraph overlap;
+intent-triple traversal cited explicitly) give a graph-reasoner real
+purchase that a regex-only path cannot reach.
+
+Patterns to repeat in priorities [2] and [3]:
+- node-kind / edge-kind constants; build-graph-then-traverse split.
+- mirror-tests prove agreement on obvious cases.
+- one or two **disagreement fixtures** capture the wins explicitly so
+  contributors see what each twin gets that the others miss.
+- ensemble-via-`OpticsTranslator` is the integration point; no router
+  changes required.
 
 All deliverables are CC0.

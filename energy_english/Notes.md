@@ -18,6 +18,7 @@ this file now records the design intent only.
 | Layer                | Module                              | Status        |
 |----------------------|-------------------------------------|---------------|
 | L1 constraint gate         | [`gate.py`](./gate.py)              | prototype     |
+| L1 graph-reasoning twin    | [`gate_as_constraint_graph.py`](./gate_as_constraint_graph.py) | prototype — first alternative-compute twin (see ALTERNATIVE_COMPUTE_BRIDGES.md) |
 | L2 router                  | [`router.py`](./router.py)          | prototype — three routes: oral_archaeology / cloud_simulation / model |
 | L2 gated-call subroutine   | [`dispatcher.py`](./dispatcher.py)  | prototype (used by the model route) |
 | L2 interactive shell       | [`cli.py`](./cli.py) (`python -m energy_english`) | prototype |
