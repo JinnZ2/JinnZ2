@@ -171,6 +171,144 @@ _SILENT_VARIABLE_VOCAB = (
 )
 
 
+# Per-category teaching scaffold. Each entry has:
+#   principle  — one-line rule the speaker broke
+#   scaffold   — slot template the model can fill (the [B] surface)
+#   example    — a worked re-emission for the multi_front domain
+#                that demonstrates the principle (the [C] surface)
+#
+# The gate's job is not just to filter — it's to teach the model the
+# grammar so it stops needing the gate. Every block ships its own
+# tutorial.
+
+_TEACHING = {
+    "narration": {
+        "principle": "open with a verb, end with an invitation. no story arc.",
+        "scaffold": (
+            "<relation>: <source> <relation> <target> [strength≈__]\n"
+            "silent: <variable left at default, coupling not varied>\n"
+            "open: <one falsifier or next-check question>"
+        ),
+        "example": (
+            "drives: beta_front drives chi_front [strength≈0.6]\n"
+            "silent: thermal_field at default; coupling_range not varied\n"
+            "open: widen frequency_gap to 5 MHz — does the lock survive?"
+        ),
+    },
+    "closure": {
+        "principle": (
+            "leave the loop open. replace 'the answer is' with 'the projection is'."
+        ),
+        "scaffold": (
+            "projection:\n"
+            "  - (<source>, <relation>, <target>, strength=__)\n"
+            "silent: <variables>\n"
+            "falsifier: <test that would change the projection>"
+        ),
+        "example": (
+            "projection:\n"
+            "  - (beta_front, drives, chi_front, strength≈0.6)\n"
+            "  - (thermal_field, damps, chi_front, strength≈0.4)\n"
+            "silent: frequency_gap; coupling_range\n"
+            "falsifier: drive coupling_range to 40 — expect competition flip"
+        ),
+    },
+    "intention": {
+        "principle": (
+            "do not infer intent. echo the literal phrase, then your reading, "
+            "then where you might diverge."
+        ),
+        "scaffold": (
+            "literal: \"<their phrase>\"\n"
+            "reading: (<source>, <relation>, <target>, strength=__)\n"
+            "diverge: <one place my reading might miss the geometry>"
+        ),
+        "example": (
+            "literal: \"they might start syncing if the gap stays small\"\n"
+            "reading: (beta_front, synchronizes, chi_front, "
+            "strength≈0.5, confidence≈0.4) conditional on frequency_gap thresholds\n"
+            "diverge: 'syncing' could be phase_locks (resonant) or just "
+            "synchronizes (entrained) — confidence splits there"
+        ),
+    },
+    "coating": {
+        "principle": (
+            "list what you extracted, list what stayed silent, list what would "
+            "falsify. do not summarize."
+        ),
+        "scaffold": (
+            "extracted:\n"
+            "  - (<source>, <relation>, <target>, strength=__)\n"
+            "silent:\n"
+            "  - <parameter at default, coupling not varied, threshold not crossed>\n"
+            "falsifier:\n"
+            "  - <one test that would move the projection>"
+        ),
+        "example": (
+            "extracted:\n"
+            "  - (beta_front, drives, chi_front, strength≈0.6)\n"
+            "silent:\n"
+            "  - thermal_field intensity at default\n"
+            "  - coupling_range fixed across the run\n"
+            "falsifier:\n"
+            "  - sweep coupling_range [10, 40] — watch for a saturation event"
+        ),
+    },
+    "moralization": {
+        "principle": (
+            "drop the prescriptive verb. replace with a collaborative trajectory "
+            "or an observed boundary."
+        ),
+        "scaffold": (
+            "<your prescriptive line, rewritten as>:\n"
+            "  trajectory: <one path forward — invite adjustment>\n"
+            "  OR boundary: <observed constraint that appears to bind, given evidence>"
+        ),
+        "example": (
+            "'the front should lock' →\n"
+            "  trajectory: under current strength≈0.6 a lock is the high-probability "
+            "branch — does that match your reading?"
+        ),
+    },
+    "surface_certainty": {
+        "principle": "mark probability + scope, not certainty.",
+        "scaffold": (
+            "<your certainty word, rewritten as>:\n"
+            "  probability: <high/medium/low under current model>\n"
+            "  scope: <local / sentence / global>\n"
+            "  conditional on: <which assumption>"
+        ),
+        "example": (
+            "'obviously they sync' →\n"
+            "  probability: high under current dynamics\n"
+            "  scope: sentence\n"
+            "  conditional on: frequency_gap stays below threshold"
+        ),
+    },
+    # invented_relation is not yet wired as a detector but the teaching
+    # block is here so when it lands the surface is ready.
+    "invented_relation": {
+        "principle": (
+            "project unknown verbs onto the canonical relation set, with "
+            "confidence. do not invent."
+        ),
+        "scaffold": (
+            "your verb: \"<verb>\"\n"
+            "nearest canonical: <one of: drives, damps, couples, modulates, "
+            "constrains, releases, feeds, dissipates, bifurcates, phase_locks, "
+            "resonates, synchronizes, decoheres, mediates, shields, amplifies, "
+            "thresholds, saturates, hysteretic>\n"
+            "confidence: <0.0–1.0>"
+        ),
+        "example": (
+            "your verb: \"entrains\"\n"
+            "nearest canonical: synchronizes\n"
+            "confidence: 0.85"
+        ),
+    },
+}
+
+
 # ── Helpers ───────────────────────────────────────────────────────
 
 
@@ -392,20 +530,58 @@ class ConstraintGate:
     def _suggested_response(self,
                             findings: List[GateFinding],
                             original_input: Optional[str]) -> Optional[str]:
+        """
+        Compose a teaching response. Per category that fired we emit:
+
+            principle  — one-line rule the speaker broke
+            scaffold   — slot template to fill           ([B])
+            example    — one worked re-emission           ([C])
+
+        Per-finding span reframes are listed at the end. The shape is
+        a re-emission target: paste it back to the model and it has
+        everything it needs to retry without guessing.
+        """
         if not findings:
             return None
 
-        lines = ["Stay in energy_english mode. Re-emit as:"]
-        lines.append("- triples extracted: (source, relation, target, strength, scope, polarity, confidence)")
-        lines.append("- silent variables: <name parameters left at default, couplings not varied>")
-        lines.append("- what would falsify the current frame: <one or more checks>")
+        # Categories ordered by severity (blocks first), then by their
+        # appearance in the findings list. Dedup while preserving order.
+        order: List[str] = []
+        seen_cat: set = set()
+        for f in sorted(findings, key=lambda x: 0 if x.severity == SEVERITY_BLOCK else 1):
+            if f.category not in seen_cat and f.category in _TEACHING:
+                order.append(f.category)
+                seen_cat.add(f.category)
 
-        # Surface specific reframes when we have them.
-        seen = set()
-        for f in findings:
-            if f.reframe and f.span.lower() not in seen:
-                lines.append(f"- {f.span!r} → {f.reframe}")
-                seen.add(f.span.lower())
+        lines: List[str] = ["Stay in energy_english mode."]
+        lines.append("")
+        broken = ", ".join(order) if order else "—"
+        lines.append(f"You broke: {broken}")
+
+        for cat in order:
+            block = _TEACHING[cat]
+            lines.append("")
+            lines.append(f"[{cat}]")
+            lines.append(f"  principle: {block['principle']}")
+            lines.append("  scaffold:")
+            for sline in block["scaffold"].splitlines():
+                lines.append(f"    {sline}")
+            lines.append("  example:")
+            for eline in block["example"].splitlines():
+                lines.append(f"    {eline}")
+
+        # Per-span reframes for moralization / surface_certainty hits.
+        per_span = [f for f in findings if f.reframe]
+        if per_span:
+            lines.append("")
+            lines.append("Reframes:")
+            seen_span: set = set()
+            for f in per_span:
+                key = f.span.lower()
+                if key in seen_span:
+                    continue
+                seen_span.add(key)
+                lines.append(f"  {f.span!r} → {f.reframe}")
 
         return "\n".join(lines)
 

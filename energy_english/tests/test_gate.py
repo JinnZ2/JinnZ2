@@ -174,12 +174,40 @@ class GateCoatingDetection(unittest.TestCase):
 
 class GateSuggestedResponse(unittest.TestCase):
 
-    def test_suggestion_is_emitted_when_findings_exist(self):
+    def test_suggestion_emits_principle_scaffold_and_example(self):
         gate = ConstraintGate()
         report = gate.evaluate_output("Let me walk you through this.")
         self.assertIsNotNone(report.suggested_response)
-        self.assertIn("triples extracted", report.suggested_response)
-        self.assertIn("silent variables", report.suggested_response)
+        # Per-category teaching block surfaces all three layers:
+        # principle ([A]), scaffold ([B]), and worked example ([C]).
+        self.assertIn("[narration]", report.suggested_response)
+        self.assertIn("principle:", report.suggested_response)
+        self.assertIn("scaffold:", report.suggested_response)
+        self.assertIn("example:", report.suggested_response)
+
+    def test_suggestion_lists_each_fired_category_once(self):
+        gate = ConstraintGate()
+        report = gate.evaluate_output(
+            "Let me walk you through this. The answer is X. Obviously."
+        )
+        text = report.suggested_response
+        self.assertIn("[narration]", text)
+        self.assertIn("[closure]", text)
+        self.assertIn("[surface_certainty]", text)
+        # category headers appear exactly once
+        for header in ("[narration]", "[closure]", "[surface_certainty]"):
+            self.assertEqual(text.count(header), 1)
+        # blocking categories are taught before flagging ones
+        self.assertLess(text.index("[narration]"), text.index("[surface_certainty]"))
+        self.assertLess(text.index("[closure]"), text.index("[surface_certainty]"))
+
+    def test_suggestion_includes_per_span_reframe_block(self):
+        gate = ConstraintGate()
+        report = gate.evaluate_output(
+            "obviously they sync — let me walk you through it"
+        )
+        self.assertIn("Reframes:", report.suggested_response)
+        self.assertIn("'obviously'", report.suggested_response)
 
     def test_no_suggestion_on_clean_output(self):
         gate = ConstraintGate()
