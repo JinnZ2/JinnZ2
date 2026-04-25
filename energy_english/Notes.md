@@ -18,7 +18,7 @@ this file now records the design intent only.
 | Layer                | Module                              | Status        |
 |----------------------|-------------------------------------|---------------|
 | L1 constraint gate   | [`gate.py`](./gate.py)              | prototype     |
-| L2 voice dispatcher  | —                                   | not started   |
+| L2 voice dispatcher  | [`dispatcher.py`](./dispatcher.py)  | prototype (gate-wrapper; voice transport not wired) |
 | L3 cloud orchestrator | —                                  | not started   |
 | L4 coating detector  | partial — coating signs in `gate.py` | prototype    |
 | L5 optics translator | —                                   | not started   |
