@@ -29,47 +29,28 @@ or the model itself can consume. The gate never silently rewrites text.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
-from enum import Enum
 from typing import List, Optional, Tuple
+
+from energy_english.findings import (
+    Finding,
+    Report,
+    SEVERITY_BLOCK,
+    SEVERITY_INFO,
+    SEVERITY_WARN,
+    Verdict,
+    verdict_from,
+)
 
 
 # ── Public types ──────────────────────────────────────────────────
+#
+# Aliases keep the gate's public surface stable while the underlying
+# types live in ``findings.py`` so other layers (notably the L4 coating
+# detector) consume the same shape.
 
-
-class GateVerdict(Enum):
-    PASS = "pass"      # nothing fired
-    FLAG = "flag"      # findings present, output may still be useful
-    BLOCK = "block"    # structurally violates the grammar
-
-
-SEVERITY_INFO = "info"
-SEVERITY_WARN = "warn"
-SEVERITY_BLOCK = "block"
-
-
-@dataclass
-class GateFinding:
-    category: str            # narration / moralization / intention / closure / coating / invented_relation / surface_certainty
-    severity: str            # info / warn / block
-    span: str                # the matched substring (best effort)
-    rationale: str           # why this fired
-    reframe: Optional[str] = None  # how to rewrite it relationally, when available
-
-
-@dataclass
-class GateReport:
-    verdict: GateVerdict
-    findings: List[GateFinding] = field(default_factory=list)
-    triples: List[dict] = field(default_factory=list)
-    silent_variables: List[str] = field(default_factory=list)
-    suggested_response: Optional[str] = None
-
-    def blocked(self) -> bool:
-        return self.verdict is GateVerdict.BLOCK
-
-    def has_category(self, category: str) -> bool:
-        return any(f.category == category for f in self.findings)
+GateVerdict = Verdict
+GateFinding = Finding
+GateReport = Report
 
 
 # ── Detection patterns ────────────────────────────────────────────
@@ -537,7 +518,7 @@ class ConstraintGate:
         if original_input is not None:
             findings.extend(self._coating_findings(model_text, original_input))
 
-        verdict = self._verdict_from(findings)
+        verdict = verdict_from(findings)
         suggestion = self._suggested_response(findings, original_input)
 
         return GateReport(
@@ -590,13 +571,6 @@ class ConstraintGate:
             ))
 
         return out
-
-    def _verdict_from(self, findings: List[GateFinding]) -> GateVerdict:
-        if not findings:
-            return GateVerdict.PASS
-        if any(f.severity == SEVERITY_BLOCK for f in findings):
-            return GateVerdict.BLOCK
-        return GateVerdict.FLAG
 
     def _suggested_response(self,
                             findings: List[GateFinding],
