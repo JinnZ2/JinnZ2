@@ -71,5 +71,121 @@ class LockedCompiler:
         }
 
 
+from typing import Dict, List, Any
+
+class LockViolation(Exception):
+    pass
+
+
+class LockValidator:
+    """
+    Ensures compiler outputs remain within the CanonicalLock manifold.
+
+    This is NOT semantic checking.
+    It is structural invariance enforcement.
+    """
+
+    def __init__(self, lock):
+        self.lock = lock
+
+    def validate(self, compiled: Dict[str, Any]) -> bool:
+        self._validate_nodes(compiled.get("nodes", {}))
+        self._validate_edges(compiled.get("edges", {}))
+        self._validate_required_fields(compiled)
+        return True
+
+        
+
+    def _validate_nodes(self, nodes: Dict[str, Any]):
+        for name, node in nodes.items():
+
+            if "type" not in node:
+                raise LockViolation(f"Node {name} missing type")
+
+            if node["type"] not in self.lock.node_types:
+                raise LockViolation(
+                    f"Unmapped node type: {node['type']}"
+                )
+
+            # Ensure semantic binding exists
+            expected = self.lock.node_types[node["type"]]
+            if not expected:
+                raise LockViolation(
+                    f"Node type {node['type']} lacks canonical binding"
+                )
+
+
+                    def _validate_edges(self, edges: List[Dict]):
+        for e in edges:
+
+            if "relation" not in e:
+                raise LockViolation("Edge missing relation")
+
+            rel = e["relation"]
+
+            if rel not in self.lock.relation_meaning:
+                raise LockViolation(f"Unknown relation: {rel}")
+
+            # Strength must remain bounded (prevents semantic drift amplification)
+            if not (0.0 <= e.get("strength", 0.5) <= 1.0):
+                raise LockViolation(
+                    f"Out-of-bounds strength: {e['strength']}"
+                )
+
+                
+
+    def _validate_required_fields(self, compiled: Dict[str, Any]):
+        required = [
+            "nodes",
+            "edges",
+            "state_model",
+            "time_model",
+            "memory_model",
+            "update_rule"
+        ]
+
+        for r in required:
+            if r not in compiled:
+                raise LockViolation(f"Missing canonical field: {r}")
+
+                
+
+class LockedRuntime:
+
+    def __init__(self, compiler, lock, validator, memory_fields=None):
+        self.compiler = compiler
+        self.lock = lock
+        self.validator = validator
+        self.memory_fields = memory_fields or []
+
+        self.state = StateGraph()
+
+    def step(self, text: str, external_inputs=None):
+
+        compiled = self.compiler.compile(text)
+
+        # ── INVARIANT GATE ─────────────────────
+        self.validator.validate(compiled)
+
+        # If this passes, system is structurally safe to execute
+        self.state = evolve(
+            state_graph=self.state,
+            constraint_graph=compiled,
+            memory_fields=self.memory_fields,
+            external_inputs=external_inputs
+        )
+
+        return {
+            "iteration": self.state.iteration,
+            "nodes": {k: v.properties for k, v in self.state.nodes.items()},
+        }
+
+        
+
+text → compiler → canonical projection → VALIDATION GATE → runtime
+
+
+
+
         
     
