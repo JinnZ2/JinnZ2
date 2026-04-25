@@ -23,8 +23,9 @@ this file now records the design intent only.
 | L3 cloud orchestrator      | [`orchestrator/`](./orchestrator)   | prototype — runtime-agnostic (LocalRuntime + DockerRuntime + HTTPRuntime real; AWSLambdaRuntime + ModalRuntime stubbed) |
 | L4 coating detector        | [`coating_detector.py`](./coating_detector.py) | prototype (synthetic-trajectory tested) |
 | L5 oral archaeology plugin | [`../oral_archaeology/`](../oral_archaeology) | prototype, 3 domains, 5 physics signatures |
-| L5 optics translator       | —                                   | not started   |
+| L5 optics translator       | [`optics.py`](./optics.py)          | prototype, multi-report → unified verb-first speech |
 | shared finding shape       | [`findings.py`](./findings.py)      | stable        |
+| alternative-compute design | [`ALTERNATIVE_COMPUTE_BRIDGES.md`](./ALTERNATIVE_COMPUTE_BRIDGES.md) | design doc for next build cycles |
 
 ## Pipeline
 
