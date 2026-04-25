@@ -172,6 +172,63 @@ class GateCoatingDetection(unittest.TestCase):
         self.assertFalse(report.has_category("coating"))
 
 
+class GateInventedRelations(unittest.TestCase):
+
+    def test_flags_invented_relation_causes(self):
+        gate = ConstraintGate()
+        report = gate.evaluate_output(
+            "front_A causes front_B to lock. "
+            "Silent: thermal at default."
+        )
+        self.assertIs(report.verdict, GateVerdict.FLAG)
+        self.assertTrue(report.has_category("invented_relation"))
+
+    def test_invented_relation_reframe_names_canonical_target(self):
+        gate = ConstraintGate()
+        report = gate.evaluate_output("front_A causes front_B to lock.")
+        finding = next(f for f in report.findings if f.category == "invented_relation")
+        self.assertIsNotNone(finding.reframe)
+        # canonical projection for "causes" mentions "drives"
+        self.assertIn("drives", finding.reframe.lower())
+        # original phrase preserved in the reframe so the model sees what it wrote
+        self.assertIn("front_A causes front_B", finding.reframe)
+
+    def test_invented_relation_block_appears_in_teaching(self):
+        gate = ConstraintGate()
+        report = gate.evaluate_output("front_A causes front_B to lock.")
+        self.assertIn("[invented_relation]", report.suggested_response)
+        self.assertIn("project unknown verbs", report.suggested_response)
+
+    def test_dedups_by_verb(self):
+        gate = ConstraintGate()
+        report = gate.evaluate_output(
+            "front_A causes front_B. Then front_B causes front_C. "
+            "Then front_C causes front_D."
+        )
+        invented = [f for f in report.findings if f.category == "invented_relation"]
+        # one finding for 'causes', not three
+        self.assertEqual(len(invented), 1)
+
+    def test_multiple_distinct_verbs_each_fire(self):
+        gate = ConstraintGate()
+        report = gate.evaluate_output(
+            "front_A causes front_B. front_B affects front_C. "
+            "front_C controls front_D."
+        )
+        invented = [f for f in report.findings if f.category == "invented_relation"]
+        spans = {f.span for f in invented}
+        self.assertEqual(spans, {"causes", "affects", "controls"})
+
+    def test_canonical_verbs_do_not_fire(self):
+        gate = ConstraintGate()
+        report = gate.evaluate_output(
+            "front_A drives front_B. thermal_field damps chi_front. "
+            "Silent: coupling_range at default."
+        )
+        # 'drives' and 'damps' are canonical — no invented-relation finding
+        self.assertFalse(report.has_category("invented_relation"))
+
+
 class GateSuggestedResponse(unittest.TestCase):
 
     def test_suggestion_emits_principle_scaffold_and_example(self):

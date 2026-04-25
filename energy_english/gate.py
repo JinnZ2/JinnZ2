@@ -134,6 +134,42 @@ _SURFACE_CERTAINTY_PATTERNS: Tuple[Tuple[str, str], ...] = (
     (r"\bundoubtedly\b",   "echoed certainty (reframe required)"),
 )
 
+# Common non-canonical verbs the model reaches for when it's making a
+# constraint-style claim. Each maps to its nearest canonical projection
+# so the reframe can teach as well as flag.
+_INVENTED_RELATION_VERBS: dict = {
+    "causes":      "drives (or thresholds, depending on context)",
+    "triggers":    "thresholds",
+    "induces":     "drives",
+    "creates":     "feeds (energy/mass) or drives (state)",
+    "destroys":    "dissipates",
+    "kills":       "dissipates",
+    "affects":     "modulates (specify direction)",
+    "impacts":     "modulates (specify direction)",
+    "controls":    "constrains",
+    "regulates":   "modulates",
+    "powers":      "feeds",
+    "blocks":      "shields",
+    "prevents":    "shields",
+    "supports":    "feeds",
+    "enables":     "releases",
+    "boosts":      "amplifies",
+    "weakens":     "damps",
+    "strengthens": "amplifies",
+    "binds":       "couples (specify symmetry)",
+    "entrains":    "synchronizes",
+    "links":       "couples",
+}
+
+# Match a noun-verb-noun shape so we only fire inside constraint-style
+# claims, not bare mentions like "what causes the issue".
+_INVENTED_RELATION_PATTERN = re.compile(
+    r"\b(\w+)\s+("
+    + "|".join(re.escape(v) for v in _INVENTED_RELATION_VERBS)
+    + r")\s+(\w+)",
+    re.IGNORECASE,
+)
+
 # Minimal map for a reframe suggestion. Mirrors RELATIONAL_MAP intent.
 _REFRAMES = {
     "should":     "rephrase as a collaborative trajectory: 'one path here is X — does that match?'",
@@ -343,6 +379,36 @@ def _names_silent_variables(text: str) -> bool:
     return any(v in low for v in _SILENT_VARIABLE_VOCAB)
 
 
+def _detect_invented_relations(text: str) -> List[GateFinding]:
+    """
+    Find non-canonical relation-like verbs used in noun-verb-noun shape
+    and emit a WARN finding with a reframe to the nearest canonical
+    relation. One finding per distinct verb (not per occurrence) — the
+    teaching block is what the model needs, not noise.
+    """
+    findings: List[GateFinding] = []
+    seen: set = set()
+    for m in _INVENTED_RELATION_PATTERN.finditer(text):
+        source = m.group(1)
+        verb = m.group(2).lower()
+        target = m.group(3)
+        if verb in seen:
+            continue
+        seen.add(verb)
+        canonical = _INVENTED_RELATION_VERBS[verb]
+        findings.append(GateFinding(
+            category="invented_relation",
+            severity=SEVERITY_WARN,
+            span=verb,
+            rationale=f"'{verb}' is not in the canonical relation set",
+            reframe=(
+                f"'{source} {verb} {target}' → project as: "
+                f"{source} {canonical} {target}"
+            ),
+        ))
+    return findings
+
+
 def _has_structure(text: str) -> bool:
     """A response that lists triples / bullets / tables has visible structure."""
     if re.search(r"^\s*(?:[-*•]|\d+\.)\s", text, re.MULTILINE):
@@ -461,6 +527,11 @@ class ConstraintGate:
                 rationale=rationale,
                 reframe=_suggest_reframe(span),
             ))
+
+        # Invented-relation detection — flags non-canonical relation
+        # verbs in constraint-style claims and offers the canonical
+        # projection.
+        findings.extend(_detect_invented_relations(model_text))
 
         # Coating detection — only meaningful with a paired input.
         if original_input is not None:
