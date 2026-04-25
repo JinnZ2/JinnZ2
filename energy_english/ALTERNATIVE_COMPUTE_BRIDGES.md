@@ -218,7 +218,7 @@ like at the source-tree level.
       graph drops BLOCK to WARN), subgraph-overlap coating, intent
       traversal, permissive input mode, and ensemble compatibility via
       `OpticsTranslator.translate(*reports)`.**
-- [ ] Write `examples/gate_graph_walkthrough.md`.
+- [x] Write [`examples/gate_graph_walkthrough.md`](./examples/gate_graph_walkthrough.md). **Landed.**
 - [x] Implement `coating_as_information_divergence.py` per priority [2]. **Landed.**
 - [x] Add mirror-tests that share fixtures with `tests/test_coating_detector.py`.
       **Landed as `tests/test_coating_as_information_divergence.py` with 17
@@ -230,7 +230,7 @@ like at the source-tree level.
       uncorrelated_coupling false-positive; MI ≈ 2.9 bits → twin does
       NOT fire), distributional convergence on a noisy plateau, and
       ensemble compatibility.**
-- [ ] Write `examples/coating_divergence_walkthrough.md`.
+- [x] Write [`examples/coating_divergence_walkthrough.md`](./examples/coating_divergence_walkthrough.md). **Landed.**
 - [x] Implement `oral_as_constraint_tensor.py` per priority [3]. **Landed.**
 - [x] Add mirror-tests that share fixtures with `oral_archaeology/tests/test_validator.py`.
       **Landed as `tests/test_oral_as_constraint_tensor.py` with 19 tests
@@ -249,7 +249,7 @@ like at the source-tree level.
       ``tensor.dominant_factor`` finding on every non-empty tensor, the
       ``tensor.empty`` finding on a trivial geometry, and ensemble
       compatibility through `OpticsTranslator.translate(*reports)`.**
-- [ ] Write `examples/oral_tensor_walkthrough.md`.
+- [x] Write [`examples/oral_tensor_walkthrough.md`](./examples/oral_tensor_walkthrough.md). **Landed.**
 - [ ] Update this document with cross-references to landed twins.
 - [x] Add ensemble-vote helper to `optics.py`. **Landed.** ``ensemble(*reports)``
       returns an ``EnsembleResult`` with: per-report ``verdicts``, a
