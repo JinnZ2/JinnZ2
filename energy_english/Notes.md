@@ -20,8 +20,9 @@ this file now records the design intent only.
 | L1 constraint gate   | [`gate.py`](./gate.py)              | prototype     |
 | L2 voice dispatcher  | [`dispatcher.py`](./dispatcher.py)  | prototype (gate-wrapper; voice transport not wired) |
 | L3 cloud orchestrator | —                                  | not started   |
-| L4 coating detector  | partial — coating signs in `gate.py` | prototype    |
+| L4 coating detector  | [`coating_detector.py`](./coating_detector.py) | prototype (synthetic-trajectory tested) |
 | L5 optics translator | —                                   | not started   |
+| shared finding shape | [`findings.py`](./findings.py)      | stable        |
 
 ## Pipeline
 
