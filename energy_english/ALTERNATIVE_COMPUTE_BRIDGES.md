@@ -231,7 +231,25 @@ like at the source-tree level.
       NOT fire), distributional convergence on a noisy plateau, and
       ensemble compatibility.**
 - [ ] Write `examples/coating_divergence_walkthrough.md`.
-- [ ] Implement `oral_as_constraint_tensor.py` per priority [3].
+- [x] Implement `oral_as_constraint_tensor.py` per priority [3]. **Landed.**
+- [x] Add mirror-tests that share fixtures with `oral_archaeology/tests/test_validator.py`.
+      **Landed as `tests/test_oral_as_constraint_tensor.py` with 19 tests
+      covering the ConstraintTensor primitives (sparse storage, marginals
+      summing to total mass, normalised time-proportions, dominant
+      (entity, relation) cell), per-form tensor construction (4-7-8
+      proportions, box-uniform proportions, dance subjects on entity
+      axis, story bifurcation/threshold/phase_lock relations on relation
+      axis), mirror tests against `PhysicsValidator` for all five
+      signature classes (4-7-8 / box / kuramoto / threshold-bifurcation
+      / partial), the box-versus-4-7-8 separation regression test that
+      forced the box tolerance to tighten from 0.10 to 0.05, the
+      explicit no-match disagreement fixture (primary fires
+      ``physics.no_match`` and twin fires ``tensor.empty`` — same
+      meaning, native vocabularies), the always-fires
+      ``tensor.dominant_factor`` finding on every non-empty tensor, the
+      ``tensor.empty`` finding on a trivial geometry, and ensemble
+      compatibility through `OpticsTranslator.translate(*reports)`.**
+- [ ] Write `examples/oral_tensor_walkthrough.md`.
 - [ ] Update this document with cross-references to landed twins.
 - [ ] Add ensemble-vote helper to `optics.py` (no API change — just a
       convenience wrapper over `OpticsTranslator.translate(*reports)`).
@@ -285,5 +303,53 @@ Patterns established by [1] + [2] for priority [3]:
   contributors see what each twin gets that the others miss.
 - ensemble-via-`OpticsTranslator` is the integration point; no router
   changes required.
+
+## What [3] proved out
+
+The tensor twin completes the contract demonstration across all three
+priorities. ``ConstraintTensor`` is a 3-mode sparse tensor over
+``(time × entity × relation)``; ``TensorPhysicsValidator`` builds it
+from a ``ConstraintGeometry`` and matches the primary's
+``physics.{4-7-8, box, kuramoto, story.threshold_bifurcation, no_match}``
+categories using **time-marginal proportions**, **bilinear
+entity-relation slices**, and **dominant-cell analysis** instead of
+ratio comparisons.
+
+The 4-7-8 signature is now caught by the time-marginal directly:
+``time_proportions = (4/23, 7/23, 8/23, 4/23)`` matches the
+parasympathetic-activation tensor signature. Box breathing is caught
+by uniform time-marginal. Kuramoto is caught by the entity-relation
+slice having ≥ 2 entities and non-trivial mass on phase-coupling
+relations. Threshold-bifurcation is caught by the relation-marginal
+carrying threshold + bifurcation + phase_lock mass.
+
+Two tensor-native findings have no analogue in the primary:
+
+- ``tensor.dominant_factor`` — names the (entity, relation) pair
+  carrying the most mass across time. Fires on every non-empty
+  tensor as an info-severity reading. The twin's signal that "this
+  is the system's leading mode; subsequent findings are perturbations
+  on it".
+- ``tensor.empty`` — fires when the geometry produces no extractable
+  tensor entries. Distinct from the primary's ``physics.no_match``
+  (which fires *because* the geometry is well-formed but no library
+  entry matches). When both fire on the same input (1:1 breathing
+  with no inferable coupling) that is the **legitimate paradigm
+  divergence** the design doc invited: same situation, different
+  native vocabularies, same downstream optics rendering.
+
+A scoping admission: full CP / Tucker decompositions are out of
+scope for v0 because they require BLAS-level math. The operations
+implemented (mode marginals, bilinear slices, dominant-cell analysis)
+are honest tensor operations and give a tensor-reasoner real purchase,
+but a future cycle could extend the twin with a stdlib-friendly
+power-iteration rank-1 decomposition or layer in numpy as an optional
+acceleration.
+
+With [1], [2], [3] landed the contract pattern is proven across L1,
+L4, and L5. Adding new twins is now a recipe: pick a paradigm, mirror
+the primary's input/output shape, surface 1-2 native findings, write
+mirror tests + at least one explicit disagreement fixture, and rely
+on ``OpticsTranslator.translate(*reports)`` for ensemble integration.
 
 All deliverables are CC0.
