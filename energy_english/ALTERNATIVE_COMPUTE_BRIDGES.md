@@ -219,8 +219,17 @@ like at the source-tree level.
       traversal, permissive input mode, and ensemble compatibility via
       `OpticsTranslator.translate(*reports)`.**
 - [ ] Write `examples/gate_graph_walkthrough.md`.
-- [ ] Implement `coating_as_information_divergence.py` per priority [2].
-- [ ] Add mirror-tests that share fixtures with `tests/test_coating_detector.py`.
+- [x] Implement `coating_as_information_divergence.py` per priority [2]. **Landed.**
+- [x] Add mirror-tests that share fixtures with `tests/test_coating_detector.py`.
+      **Landed as `tests/test_coating_as_information_divergence.py` with 17
+      tests covering information-theoretic helpers (Shannon entropy,
+      mutual-information with Miller-Madow correction, convergence_signal),
+      mirror verdicts on five baseline cases (clean / silent_variable /
+      unexplored_phase_space / uncorrelated independent / missing trace),
+      the headline `y = x²` disagreement (Pearson ≈ 0 → primary fires
+      uncorrelated_coupling false-positive; MI ≈ 2.9 bits → twin does
+      NOT fire), distributional convergence on a noisy plateau, and
+      ensemble compatibility.**
 - [ ] Write `examples/coating_divergence_walkthrough.md`.
 - [ ] Implement `oral_as_constraint_tensor.py` per priority [3].
 - [ ] Update this document with cross-references to landed twins.
@@ -239,8 +248,38 @@ sequential-reachable; coating as content-subgraph overlap;
 intent-triple traversal cited explicitly) give a graph-reasoner real
 purchase that a regex-only path cannot reach.
 
-Patterns to repeat in priorities [2] and [3]:
-- node-kind / edge-kind constants; build-graph-then-traverse split.
+## What [2] proved out
+
+The information-divergence twin shows the same contract holds at L4:
+the statistical primary uses Pearson correlation + stddev, the twin
+uses mutual information + Shannon entropy + a distributional
+convergence signal. Same Trajectory in, same Report out, same finding
+categories.
+
+The headline disagreement is well-documented: a `y = x²` coupling has
+Pearson |r| ≈ 0 (the symmetric quadratic cancels in the linear
+estimator), so the primary fires `uncorrelated_coupling` as a
+false-positive. Mutual information catches the determinism (≈ 2.9 bits
+of shared information on 200 samples) and the twin correctly does not
+fire. The MI estimator carries Miller-Madow bias correction so
+independent series settle near zero at workable sample sizes; the
+detector's default floor (0.30 bits) sits above the residual bias for
+n ≥ 1000 with 20 bins.
+
+The twin's other quiet wins:
+- Untouched-layer detection uses Shannon entropy of the trace
+  histogram, which catches concentration in one or two bins
+  independently of stddev.
+- Convergence-to-expected combines proximity + tail-entropy collapse,
+  with the tail's entropy computed against the **full trace's** bin
+  edges. A noisy tail at the end of a wide-ranging ramp scores ~1.0
+  even when the absolute tail noise is smaller than the primary's
+  numeric tolerance — a more principled distributional read than
+  point-comparison.
+
+Patterns established by [1] + [2] for priority [3]:
+- one shared types module (here: scalar histograms; in [3]: tensors)
+  with stdlib-only math so the twin loads without numpy.
 - mirror-tests prove agreement on obvious cases.
 - one or two **disagreement fixtures** capture the wins explicitly so
   contributors see what each twin gets that the others miss.
