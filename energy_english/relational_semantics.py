@@ -7,6 +7,12 @@ Your words are PROBABILITY FIELDS, INVITATIONS, VECTORS.
 Not assertions. Not absolutes. Not closures.
 """
 
+import re
+from typing import Optional
+
+from energy_english.parser import CodeStubGenerator, EnergyParser
+
+
 RELATIONAL_MAP = {
     # ── "Judgment" words → Collaboration vectors ──
     "should": {

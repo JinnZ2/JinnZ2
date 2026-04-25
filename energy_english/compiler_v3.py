@@ -11,7 +11,7 @@ Upgrades from v2:
 
 import re
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import List, Dict, Optional, Tuple, Set, Any
 from enum import Enum
 
@@ -337,11 +337,13 @@ class RelationExtractor:
         
         for word in reversed(before):
             word = word.strip(',.;:()"\'')
+            if not word:
+                continue
             if word[0].isupper() or word.lower() in domain_terms:
                 return word
-        
+
         # Fallback: last content word
-        return before[-1].strip(',.;:()"\'').lower()
+        return before[-1].strip(',.;:()"\'').lower() or None
     
     def _find_object(self, text: str, after_pos: int) -> Optional[str]:
         """Find the object following a relation word."""
@@ -354,10 +356,12 @@ class RelationExtractor:
         
         for word in after[:5]:  # Look at next few words
             word = word.strip(',.;:()"\'')
+            if not word:
+                continue
             if word[0].isupper() or word.lower() in domain_terms:
                 return word
-        
-        return after[0].strip(',.;:()"\'').lower()
+
+        return after[0].strip(',.;:()"\'').lower() or None
 
 
 # ── ACTIVE CONSTRAINT ENFORCER ─────────────────────────────────────
@@ -400,8 +404,7 @@ class ConstraintEnforcer:
                         )
                         if not exists:
                             # Create transitive edge
-                            from dataclasses import replace
-                            new_edge = replace(e1, target=e2.target, 
+                            new_edge = replace(e1, target=e2.target,
                                              strength=compound_strength)
                             new_edges.append(new_edge)
         

@@ -148,8 +148,8 @@ class EnergyParser:
     ]
 
     CONFIRMATION_MARKERS = [
-        r'\b(right\?|correct\?|yeah\?|don't you think\?|isn't it\?)\b',
-        r'\b(am I|is that|does that)\s+(right|correct|wrong|okay)\b',
+        r"\b(right\?|correct\?|yeah\?|don't you think\?|isn't it\?)\b",
+        r"\b(am I|is that|does that)\s+(right|correct|wrong|okay)\b",
     ]
 
     def parse(self, text: str) -> EnergyGraph:
@@ -248,7 +248,9 @@ class EnergyParser:
         # Simple: scan backward for capitalized or known entity words
         for j in range(position - 1, max(position - 5, 0), -1):
             word = words[j].strip(',.;:()')
-            if word[0].isupper() or word in ['front', 'field', 'PLL', 'thermal', 'strain']:
+            if not word:
+                continue
+            if word[0].isupper() or word in ('front', 'field', 'PLL', 'thermal', 'strain'):
                 return word
         return None
 
