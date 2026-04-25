@@ -12,26 +12,15 @@ Adds:
 import numpy as np
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Callable, Optional, Tuple
-from enum import Enum
 from collections import deque
 
-
-# ── EXTENDED STATE MODES ──────────────────────────────────────────
-
-class StateMode(Enum):
-    STABLE = "stable"
-    DRIVEN = "driven"
-    SUPPRESSED = "suppressed"
-    OSCILLATORY = "oscillatory"
-    UNSTABLE = "unstable"
-    # ── NEW ──
-    LOCKED = "locked"           # Phase-locked resonance achieved
-    BIFURCATING = "bifurcating" # Approaching a branch point
-    SATURATED = "saturated"     # Input capped, no further response
-    HYSTERETIC = "hysteretic"   # State depends on history
-    MEDIATING = "mediating"     # Acting as field mediator between others
-    SHIELDED = "shielded"       # Protected from external influence
-    DECOHERENT = "decoherent"   # Lost phase coherence
+from energy_english.state_model import (
+    MemoryField,
+    MemoryTrigger,
+    StateGraph,
+    StateMode,
+    StateNode,
+)
 
 
 # ── ACTIVE CONSTRAINT ENFORCER ────────────────────────────────────
@@ -51,10 +40,10 @@ class ConstraintEnforcer:
     def __post_init__(self):
         self._state_history: Dict[str, deque] = {}
     
-    def apply(self, 
-              constraint_graph: Dict, 
-              state_graph: 'StateGraph',
-              memory_fields: List['MemoryField']) -> Dict[str, Dict]:
+    def apply(self,
+              constraint_graph: Dict,
+              state_graph: StateGraph,
+              memory_fields: List[MemoryField]) -> Dict[str, Dict]:
         """
         Apply active constraints and return node deltas.
         
@@ -206,10 +195,10 @@ class SimulationFeedback:
     This closes the loop: Speech → Graph → Sim → Results → Graph → Speech
     """
     
-    def ingest(self, 
-               sim_results: Dict, 
-               state_graph: 'StateGraph',
-               front_mapping: Dict[int, str] = None) -> Dict[str, Dict]:
+    def ingest(self,
+               sim_results: Dict,
+               state_graph: StateGraph,
+               front_mapping: Optional[Dict[int, str]] = None) -> Dict[str, Dict]:
         """
         Convert simulation diagnostics into StateGraph deltas.
         
@@ -349,12 +338,12 @@ class ModeTransitionDetector:
 
 # ── UPGRADED EVOLVE FUNCTION ──────────────────────────────────────
 
-def evolve_v4(state_graph: 'StateGraph',
+def evolve_v4(state_graph: StateGraph,
               constraint_graph: Dict,
-              memory_fields: List['MemoryField'],
-              external_inputs: Dict = None,
-              sim_results: Dict = None,
-              front_mapping: Dict[int, str] = None) -> Tuple['StateGraph', Dict]:
+              memory_fields: List[MemoryField],
+              external_inputs: Optional[Dict] = None,
+              sim_results: Optional[Dict] = None,
+              front_mapping: Optional[Dict[int, str]] = None) -> Tuple[StateGraph, Dict]:
     """
     Upgraded evolve function with:
     - Active constraint enforcement (not just propagation)
