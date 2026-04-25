@@ -111,5 +111,85 @@ class ArgvParsing(unittest.TestCase):
         self.assertIsNone(router.oral_archaeology)
 
 
+class LLMWiring(unittest.TestCase):
+
+    def test_unknown_llm_provider_raises_systemexit(self):
+        with self.assertRaises(SystemExit):
+            cli._build_llm_client("nope")
+
+    def test_no_provider_returns_none(self):
+        self.assertIsNone(cli._build_llm_client(""))
+        self.assertIsNone(cli._build_llm_client(None))
+
+    def test_claude_provider_builds_claude_client(self):
+        from energy_english.llm import ClaudeClient
+        client = cli._build_llm_client("claude")
+        self.assertIsInstance(client, ClaudeClient)
+
+    def test_openai_provider_builds_openai_client(self):
+        from energy_english.llm import OpenAIClient
+        for alias in ("openai", "gpt"):
+            client = cli._build_llm_client(alias)
+            self.assertIsInstance(client, OpenAIClient)
+
+    def test_gemini_provider_builds_gemini_client(self):
+        from energy_english.llm import GeminiClient
+        client = cli._build_llm_client("gemini")
+        self.assertIsInstance(client, GeminiClient)
+
+    def test_llm_provider_wires_model_dispatcher_into_router(self):
+        # Build via _build_router; the model dispatcher should be set.
+        router = cli._build_router(llm_provider="claude")
+        self.assertIsNotNone(router.model_dispatcher)
+
+
+class VoiceWiring(unittest.TestCase):
+
+    def test_default_voice_is_stdio(self):
+        from energy_english.voice import StdioVoiceTransport
+        v = cli._build_voice("stdio",
+                             input_stream=io.StringIO(""),
+                             output_stream=io.StringIO())
+        self.assertIsInstance(v, StdioVoiceTransport)
+
+    def test_whisper_voice_is_whisper_api(self):
+        from energy_english.voice import WhisperAPIVoiceTransport
+        v = cli._build_voice("whisper",
+                             input_stream=io.StringIO(""),
+                             output_stream=io.StringIO())
+        self.assertIsInstance(v, WhisperAPIVoiceTransport)
+
+    def test_unknown_voice_raises_systemexit(self):
+        with self.assertRaises(SystemExit):
+            cli._build_voice("hologram",
+                             input_stream=io.StringIO(""),
+                             output_stream=io.StringIO())
+
+    def test_injected_transport_is_honoured(self):
+        # Pass a stub transport directly; main() should use it.
+        from energy_english.voice import StdioVoiceTransport
+
+        class _Recorder(StdioVoiceTransport):
+            name = "stub"
+            spoken: list
+
+            def __init__(self, **kw):
+                super().__init__(**kw)
+                self.spoken = []
+
+            def speak(self, text):
+                self.spoken.append(text)
+
+        recorder = _Recorder(
+            input_stream=io.StringIO("status\nquit\n"),
+            output_stream=io.StringIO(),
+        )
+        cli.main([], stdin=io.StringIO("ignored"),
+                 stdout=io.StringIO(),
+                 interactive=False,
+                 transport=recorder)
+        self.assertTrue(any("Backends" in s for s in recorder.spoken))
+
+
 if __name__ == "__main__":
     unittest.main()

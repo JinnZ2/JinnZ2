@@ -23,7 +23,9 @@ this file now records the design intent only.
 | L1 graph-reasoning twin    | [`gate_as_constraint_graph.py`](./gate_as_constraint_graph.py) | prototype — first alternative-compute twin (see ALTERNATIVE_COMPUTE_BRIDGES.md) |
 | L2 router                  | [`router.py`](./router.py)          | prototype — three routes: oral_archaeology / cloud_simulation / model |
 | L2 gated-call subroutine   | [`dispatcher.py`](./dispatcher.py)  | prototype (used by the model route) |
-| L2 interactive shell       | [`cli.py`](./cli.py) (`python -m energy_english`) | prototype |
+| L2 interactive shell       | [`cli.py`](./cli.py) (`python -m energy_english`) | prototype, with `--llm` and `--voice` flags |
+| L2 LLM clients             | [`llm/`](./llm)                     | prototype — Claude / OpenAI / Gemini, stdlib `urllib`, system prompt loaded by default |
+| L2 voice transport         | [`voice.py`](./voice.py)            | prototype — `StdioVoiceTransport` (default) + `WhisperAPIVoiceTransport` (OpenAI Whisper API) |
 | L3 cloud orchestrator      | [`orchestrator/`](./orchestrator)   | prototype — runtime-agnostic (LocalRuntime + DockerRuntime + HTTPRuntime real; AWSLambdaRuntime + ModalRuntime stubbed) |
 | L4 coating detector        | [`coating_detector.py`](./coating_detector.py) | prototype (synthetic-trajectory tested) |
 | L4 info-divergence twin    | [`coating_as_information_divergence.py`](./coating_as_information_divergence.py) | prototype — second alternative-compute twin (see ALTERNATIVE_COMPUTE_BRIDGES.md) |
