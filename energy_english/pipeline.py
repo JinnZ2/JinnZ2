@@ -19,9 +19,17 @@ import sys
 from energy_english.compiler import (
     EnergyCompiler, ConstraintGraph, RelationType, Scope
 )
-from borophene.multi_front import (
-    MultiFrontSimulation, MultiFrontConfig, FrontConfig
-)
+from energy_english.gate import ConstraintGate, GateReport, GateVerdict
+
+
+def _load_borophene():
+    """Lazy-load the external simulation. Kept out of module import so
+    the rest of the pipeline (gate wiring, speech builder) is usable in
+    environments without the borophene package installed."""
+    from borophene.multi_front import (  # type: ignore
+        MultiFrontSimulation, MultiFrontConfig, FrontConfig,
+    )
+    return MultiFrontSimulation, MultiFrontConfig, FrontConfig
 
 
 # ── GRAPH → SIMULATION CONFIG ────────────────────────────────────
@@ -282,62 +290,92 @@ class EnergyPipeline:
         → Human observer → (loop repeats)
     """
     
-    def __init__(self):
+    def __init__(self, gate: Optional[ConstraintGate] = None):
         self.compiler = EnergyCompiler()
         self.config_builder = GraphToSimulation()
         self.speech_builder = ResultsToSpeech()
+        self.gate = gate or ConstraintGate()
         self.simulation = None
+        self.last_input_report: Optional[GateReport] = None
+        self.last_output_report: Optional[GateReport] = None
         self.history = {
             'cross_talk': [],
             'lock_A': [],
             'lock_B': [],
             'max_T': [],
         }
-    
+
     def speak(self, energy_text: str) -> str:
         """
         Accept Energy English speech, run simulation, return Energy English observations.
-        
-        This is the single entry point for the closed loop.
-        Human speaks → Pipeline runs → Pipeline speaks back
+
+        Single entry point for the closed loop:
+        Human speaks → Layer 1 input gate → compile → run → speak →
+        Layer 1 output gate → string back to human.
+
+        Gate reports for both directions are stashed on
+        ``self.last_input_report`` and ``self.last_output_report`` for
+        the dispatcher / interactive shell to surface.
         """
+        # Layer 1 pre-flight: annotate the human's speech, never block.
+        self.last_input_report = self.gate.evaluate_input(energy_text)
+        if self.last_input_report.findings:
+            cats = sorted({f.category for f in self.last_input_report.findings})
+            print(f"[PIPELINE] input markers: {', '.join(cats)}")
+
         # Step 1: Compile speech to graph
         compiled = self.compiler.compile(energy_text)
         graph = compiled['graph']
-        
+
         # If there are open invitations, acknowledge them
         if compiled['invitations']:
             print(f"\n[PIPELINE] Invitations received: {compiled['invitations']}")
-        
+
         # Step 2: Graph → Simulation config
         config = self.config_builder.translate(graph)
-        
-        # Step 3: Run simulation
+
+        # Step 3: Run simulation (lazy-import the external sim package)
+        MultiFrontSimulation, MultiFrontConfig, FrontConfig = _load_borophene()
+
         print(f"[PIPELINE] Running: {len(config.fronts)} fronts, "
               f"N={config.N}, steps={config.num_steps}")
-        
+
         self.simulation = MultiFrontSimulation(config)
-        
+
         self.history = {
             'cross_talk': [],
             'lock_A': [],
             'lock_B': [],
             'max_T': [],
         }
-        
+
         for step in range(config.num_steps):
             diag = self.simulation.step()
             self.history['cross_talk'].append(diag['cross_talk'])
             self.history['lock_A'].append(diag['fronts'][0]['lock_strength'])
             self.history['lock_B'].append(diag['fronts'][1]['lock_strength'])
             self.history['max_T'].append(diag['max_T'])
-        
+
         # Final value for max_T
         self.history['max_T'] = self.history['max_T'][-1]
-        
+
         # Step 4: Results → Energy English
         speech = self.speech_builder.translate(self.history, graph)
-        
+
+        # Layer 1 post-flight: gate the speech we're about to return.
+        self.last_output_report = self.gate.evaluate_output(
+            speech, original_input=energy_text
+        )
+        if self.last_output_report.verdict is GateVerdict.BLOCK:
+            print(
+                "[PIPELINE] WARNING: output blocked by gate. "
+                "Suggested re-emission:\n"
+                f"{self.last_output_report.suggested_response}"
+            )
+        elif self.last_output_report.verdict is GateVerdict.FLAG:
+            cats = sorted({f.category for f in self.last_output_report.findings})
+            print(f"[PIPELINE] output flagged: {', '.join(cats)}")
+
         return speech
     
     def interact(self):

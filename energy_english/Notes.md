@@ -5,6 +5,27 @@ canonical-lock layer (`CanonicalLock`, `LockedCompiler`, `LockValidator`,
 `LockedRuntime`). That code has been integrated into the package and
 this file now records the design intent only.
 
+## Companion documents
+
+| Document                          | Purpose                                                              |
+|-----------------------------------|----------------------------------------------------------------------|
+| [`SPEC.md`](./SPEC.md)            | Authoritative constraint-grammar reference. Defines meaning.         |
+| [`system_prompt.md`](./system_prompt.md) | Paste-ready system prompt for GPT / Gemini / Claude.          |
+| [`ORCHESTRATOR.md`](./ORCHESTRATOR.md) | Five-layer architecture, build phases, multi-community fork model. |
+
+## Layer-by-layer modules
+
+| Layer                | Module                              | Status        |
+|----------------------|-------------------------------------|---------------|
+| L1 constraint gate         | [`gate.py`](./gate.py)              | prototype     |
+| L2 router                  | [`router.py`](./router.py)          | prototype (intent → backend) |
+| L2 gated-call subroutine   | [`dispatcher.py`](./dispatcher.py)  | prototype (used by the model route) |
+| L3 cloud orchestrator      | —                                   | not started — your platform call |
+| L4 coating detector        | [`coating_detector.py`](./coating_detector.py) | prototype (synthetic-trajectory tested) |
+| L5 oral archaeology plugin | [`../oral_archaeology/`](../oral_archaeology) | prototype, 3 domains, 5 physics signatures |
+| L5 optics translator       | —                                   | not started   |
+| shared finding shape       | [`findings.py`](./findings.py)      | stable        |
+
 ## Pipeline
 
 ```

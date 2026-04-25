@@ -1,0 +1,1 @@
+person A mirrors person B with 0.3s lag, tightens on the third measure, resets on the drum
