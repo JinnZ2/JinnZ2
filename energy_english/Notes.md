@@ -5,6 +5,14 @@ canonical-lock layer (`CanonicalLock`, `LockedCompiler`, `LockValidator`,
 `LockedRuntime`). That code has been integrated into the package and
 this file now records the design intent only.
 
+## Companion documents
+
+| Document                          | Purpose                                                              |
+|-----------------------------------|----------------------------------------------------------------------|
+| [`SPEC.md`](./SPEC.md)            | Authoritative constraint-grammar reference. Defines meaning.         |
+| [`system_prompt.md`](./system_prompt.md) | Paste-ready system prompt for GPT / Gemini / Claude.          |
+| [`ORCHESTRATOR.md`](./ORCHESTRATOR.md) | Five-layer architecture, build phases, multi-community fork model. |
+
 ## Pipeline
 
 ```
