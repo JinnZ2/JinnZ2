@@ -130,15 +130,31 @@ class OpticsTranslator:
         optics: Optics,
         seen: set,
     ) -> None:
-        # Couplings the archaeology pulled go into observed.
-        for c in (report.couplings or []):
-            line = (
-                f"({c.get('source','?')}, {c.get('relationship','?')}, "
-                f"{c.get('target','?')})"
+        geom = getattr(report, "constraint_geometry", None)
+
+        # Process-first rendering when the process layer is populated
+        # (per the axiom: every noun is a verb running slowly enough
+        # to look like a thing). Falls back to noun-first rendering
+        # for backward compat when the process layer is absent.
+        used_processual = False
+        if geom is not None and getattr(geom, "processes", None):
+            self._render_processual(geom, optics, seen)
+            used_processual = True
+        elif geom is not None and getattr(geom, "process_couplings", None):
+            self._render_process_couplings(
+                geom.process_couplings, optics, seen
             )
-            if "strength" in c:
-                line += f" strength≈{c['strength']}"
-            self._add(optics.observed, line, seen)
+            used_processual = True
+
+        if not used_processual:
+            for c in (report.couplings or []):
+                line = (
+                    f"({c.get('source','?')}, {c.get('relationship','?')}, "
+                    f"{c.get('target','?')})"
+                )
+                if "strength" in c:
+                    line += f" strength≈{c['strength']}"
+                self._add(optics.observed, line, seen)
 
         # Implicit variables → silent (the encoding asserts them; the
         # sim either has them or it doesn't, which the trajectory
@@ -157,6 +173,65 @@ class OpticsTranslator:
             self._absorb_findings(
                 report.trajectory_validation.findings, optics, seen
             )
+
+    def _render_processual(
+        self,
+        geom: Any,
+        optics: Optics,
+        seen: set,
+    ) -> None:
+        """Render geom.processes as a single OBSERVED chain in
+        process-first form: e.g.
+
+            flowing intensifying → encountering(enduring) → bifurcating
+            → phase-locking(downstreaming)
+        """
+        chain_parts: List[str] = []
+        for entry in geom.processes:
+            process = entry.get("process") or "?"
+            modulation = entry.get("modulation")
+            constraint = entry.get("constraint")
+            if constraint and modulation:
+                segment = f"{modulation}({constraint})"
+            elif modulation and chain_parts:
+                segment = modulation
+            elif modulation:
+                # First step often reads as "<process> <modulation>"
+                segment = f"{process} {modulation}"
+            elif constraint:
+                segment = f"{process}({constraint})"
+            else:
+                # No modulation and no constraint — bare process
+                # (breathing phases, dance subjects).
+                segment = process
+            chain_parts.append(segment)
+
+        if chain_parts:
+            self._add(optics.observed, " → ".join(chain_parts), seen)
+
+        # Process couplings rendered alongside the chain.
+        self._render_process_couplings(
+            getattr(geom, "process_couplings", []) or [],
+            optics, seen,
+        )
+
+    def _render_process_couplings(
+        self,
+        couplings: List[Dict[str, Any]],
+        optics: Optics,
+        seen: set,
+    ) -> None:
+        for c in couplings:
+            line = (
+                f"({c.get('process_a','?')}) "
+                f"--[{c.get('modulation','?')}]--> "
+                f"({c.get('process_b','?')})"
+            )
+            if c.get("strength") is not None:
+                line += f" strength≈{c['strength']}"
+            if c.get("inferred"):
+                line += " (inferred)"
+            self._add(optics.observed, line, seen)
 
     # -- routing rules ------------------------------------------
 

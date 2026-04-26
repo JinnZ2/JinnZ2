@@ -1,0 +1,25 @@
+{
+  "id": "dance_en",
+  "version": "0.1",
+  "language": "en",
+  "community": "default",
+  "description": "Dance-notation process names. Subjects (person A, dancer 1) are kept as-is; the relations get processualised forms.",
+  "processes": {
+    "drum": "drum-pulsing",
+    "beat": "beating",
+    "bar": "barring",
+    "phrase": "phrasing"
+  },
+  "modulations": {
+    "mirrors": "mirroring",
+    "syncs": "synchronising",
+    "syncs_with": "synchronising",
+    "follows": "following",
+    "leads": "leading",
+    "couples_to": "coupling",
+    "couples": "coupling",
+    "phase_locks": "phase-locking",
+    "tightens": "tightening",
+    "resets": "releasing"
+  }
+}

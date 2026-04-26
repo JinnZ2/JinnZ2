@@ -34,6 +34,7 @@ from oral_archaeology.parser import (
     detect_form,
     parser_for,
 )
+from oral_archaeology.process import ProcessExtractor, ProcessVocabulary
 from oral_archaeology.validator import (
     PhysicsValidator,
     TrajectoryValidator,
@@ -47,6 +48,8 @@ __all__ = [
     "ConstraintGeometry",
     "ParsedOralForm",
     "PhysicsValidator",
+    "ProcessExtractor",
+    "ProcessVocabulary",
     "StateEquation",
     "TrajectoryValidator",
     "ValidationReport",

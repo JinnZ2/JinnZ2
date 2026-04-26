@@ -1,0 +1,14 @@
+{
+  "id": "story_en",
+  "version": "0.1",
+  "language": "en",
+  "community": "default",
+  "description": "Story-form process names. Most story entities are common nouns covered by default_en; this overlay adds story-internal implicits (e.g. branched_state).",
+  "processes": {
+    "branched_state": "branching",
+    "downstream": "downstreaming",
+    "upstream": "upstreaming",
+    "obstacle": "obstacling"
+  },
+  "modulations": {}
+}

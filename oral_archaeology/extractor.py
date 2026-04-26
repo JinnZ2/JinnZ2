@@ -49,6 +49,15 @@ class ConstraintGeometry:
     implicit_variables: List[str] = field(default_factory=list)
     source_spans: Dict[str, str] = field(default_factory=dict)
 
+    # ── processual layer (populated by ProcessExtractor) ──
+    # These fields stay empty when the process layer is not run, so
+    # downstream code can check ``if geom.processes`` to decide
+    # whether to render in process-first form or fall back to
+    # noun-first.
+    processes: List[Dict[str, Any]] = field(default_factory=list)
+    process_couplings: List[Dict[str, Any]] = field(default_factory=list)
+    vocabulary_id: Optional[str] = None
+
 
 # ── Base class ────────────────────────────────────────────────────
 
@@ -384,4 +393,10 @@ def run_all(parsed: ParsedOralForm) -> ConstraintGeometry:
             seen.add(v)
             deduped.append(v)
     geom.implicit_variables = deduped
+
+    # Process layer runs last; lazy-imported so process.py can import
+    # ConstraintGeometry from this module without a circular hit.
+    from oral_archaeology.process import ProcessExtractor
+    ProcessExtractor().extract(parsed, geom)
+
     return geom
