@@ -10,6 +10,11 @@ Use when:
 - developing a sim
 - the sim is fast and runs on the laptop / cab compute
 - there is no need for isolation or remote execution
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

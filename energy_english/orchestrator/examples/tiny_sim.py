@@ -18,6 +18,11 @@ Use this as a template for wrapping a real sim:
 This particular sim produces sin/cos traces parameterised by
 amplitude and iteration count — useful only for verifying the
 plumbing.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 import json

@@ -18,6 +18,11 @@ Three concrete parsers ship in v0:
 
 A ``detect_form`` helper picks a parser by keywords when the caller
 doesn't specify one.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

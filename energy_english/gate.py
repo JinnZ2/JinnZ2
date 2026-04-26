@@ -24,6 +24,11 @@ The gate has two modes:
 
 The gate's output is a ``GateReport``: a structured object the dispatcher
 or the model itself can consume. The gate never silently rewrites text.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

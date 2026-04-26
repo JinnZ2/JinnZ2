@@ -5,6 +5,11 @@ Backend registry for the L3 orchestrator.
 Importing this package does NOT eagerly import every backend — backends
 that depend on optional packages (boto3, modal) are loaded lazily so a
 model-only or local-only setup doesn't fail on import.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from energy_english.orchestrator.backends.docker import DockerRuntime

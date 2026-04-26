@@ -25,6 +25,11 @@ the primary's findings: feed both into ``OpticsTranslator.translate``
 to ensemble.
 
 This module only depends on the shared report shape in ``findings.py``.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

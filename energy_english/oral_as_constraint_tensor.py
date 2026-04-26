@@ -33,6 +33,11 @@ What the twin gets that the primary cannot:
 
 Stdlib only — sparse dict storage; ``math.log2`` for entropy of
 marginals.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

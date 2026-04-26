@@ -18,6 +18,11 @@ calls for voice-first interaction so seconds-to-minutes work windows
 at fuel stops and weigh stations stay closed-loop. The transport
 layer is what makes that possible without hardcoding the I/O modality
 into the dispatcher.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

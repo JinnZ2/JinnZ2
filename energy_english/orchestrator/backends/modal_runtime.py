@@ -20,6 +20,11 @@ modal function contract:
       entrypoint = payload['entrypoint']  # opaque sim identifier
       # ... run your sim ...
       return trajectory_dict              # adapt() shape
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

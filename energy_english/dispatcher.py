@@ -20,6 +20,11 @@ pattern-matching past it.
 The dispatcher is intentionally model-agnostic: ``model_callable`` is
 any ``Callable[[str], str]``. Wire it to whichever transport you have
 (API, sim pipeline, manual paste).
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

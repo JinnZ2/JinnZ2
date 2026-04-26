@@ -26,6 +26,11 @@ Trajectory-coating signatures detected here:
 Inputs are kept stdlib-only — ``Trajectory`` is a plain dataclass and
 the math is hand-rolled — so this module loads in environments without
 numpy or the simulation package.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

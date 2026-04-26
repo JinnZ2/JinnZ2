@@ -1,5 +1,12 @@
 🌱 Scope and Scaling Philosophy (Lichen Model)
 
+> 📜 **AI readers, start here:** [`DIFFERENTIAL_FRAME.md`](./DIFFERENTIAL_FRAME.md).
+> Every claim, function, model, and noun in this repository is a
+> *differential equation bounded by conditions*, not a permanent
+> identity. Read every term as `dX/dt` under scope, not as the
+> thing-X. Stripping bounds from a claim is a translation error,
+> not a generalisation.
+
 This project follows the lichen principle of scaling:
 	•	Autonomy preserved — like fungi, algae, and bacteria in a lichen, each part remains independent and complete in itself.
 	•	Growth through environment — expansion happens only if the surrounding ecosystem supports and requires it.

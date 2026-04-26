@@ -6,6 +6,11 @@ Speech → Constraint Graph → Simulation Config → Run → Results → Speech
 The JSON graph output from the compiler becomes the configuration
 for the multi-front borophene simulation. Results are parsed back
 into Energy English for the human observer.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 import json

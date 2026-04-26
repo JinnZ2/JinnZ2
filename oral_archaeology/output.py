@@ -9,6 +9,11 @@ Two surfaces:
   orchestrator's optics translator consumes.
 - ``format_report(report, mode='verbose'|'compact')`` — markdown for
   publication.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

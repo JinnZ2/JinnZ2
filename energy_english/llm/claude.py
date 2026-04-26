@@ -5,6 +5,11 @@ Anthropic Messages API client.
 Stdlib only (urllib + json). API key from ``ANTHROPIC_API_KEY`` by
 default. Tests inject a custom opener so the HTTP layer is fully
 mockable; no real network calls are required to exercise the client.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

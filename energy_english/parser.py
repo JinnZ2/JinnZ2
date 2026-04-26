@@ -9,6 +9,11 @@ Converts relationship-encoded language into:
 
 Energy English is a RELATIONAL encoding, not an ASSERTIVE one.
 Every statement describes connections between things, not claims about truth.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 import re
