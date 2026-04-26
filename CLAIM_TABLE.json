@@ -1,0 +1,72 @@
+{
+  "rates": [
+    "dM/dt=I-E-U",
+    "dV/dt=f(co2,exhale)",
+    "dN/dt=f(narration_markers)",
+    "dC/dt=f(declared,observed)",
+    "dF/dt=f(flow,obstacle)"
+  ],
+  "bounds": [
+    "2ac_MN_sandyloam,120d,0-30cm",
+    "human_lung,23s_cycle,parasympathetic",
+    "model_output,single_response,token_level",
+    "trajectory,single_run,declared_couplings",
+    "water_course,single_event,surface_flow"
+  ],
+  "cond": [
+    "d>=5",
+    "lith_match",
+    "P~mean",
+    "hold>=7",
+    "exhale>=8",
+    "ratio_4-7-8",
+    "pattern_match",
+    "no_falsifier",
+    "no_silent_var",
+    "declared_coupling",
+    "traces_present",
+    "n>=100",
+    "flow_intensifying",
+    "obstacle_present",
+    "downstream_open"
+  ],
+  "rel": [
+    "mycorr",
+    "albedo",
+    "co2_acc",
+    "vagal_mod",
+    "closure",
+    "intent",
+    "silent_var",
+    "untouched_layer",
+    "enduring_stone",
+    "branching"
+  ],
+  "fail": [
+    "drought_out",
+    "lith_off",
+    "biota_low",
+    "hyperventilation",
+    "breath_hold_apnea",
+    "post_edited",
+    "retry_succeeded",
+    "nonlinear_dep",
+    "mi_above_floor",
+    "pond_formation",
+    "channel_diversion"
+  ],
+  "meas": [
+    "tens_15",
+    "tens_30",
+    "growth_vs_ctrl",
+    "hr_drop",
+    "vagal_uvi",
+    "gate_block",
+    "finding_count",
+    "pearson_r",
+    "mi_bits",
+    "flow_rate",
+    "branch_count",
+    "recombine_dist"
+  ]
+}
