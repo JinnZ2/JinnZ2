@@ -84,6 +84,54 @@ def format_report(report: ArchaeologyReport, mode: str = "verbose") -> str:
         lines.append(report.physics_interpretation)
         lines.append("")
 
+    # Processual reading — preferred form when the process layer has
+    # been run. Renders before the noun-first sections so process-first
+    # readers see it first.
+    geom = report.constraint_geometry
+    processes = getattr(geom, "processes", None) or []
+    process_couplings = getattr(geom, "process_couplings", None) or []
+    if processes or process_couplings:
+        lines.append("## Processual reading")
+        lines.append("")
+        if getattr(geom, "vocabulary_id", None):
+            lines.append(f"*Vocabulary used: `{geom.vocabulary_id}`*")
+            lines.append("")
+        if processes:
+            chain_segments: List[str] = []
+            for entry in processes:
+                process = entry.get("process") or "?"
+                modulation = entry.get("modulation")
+                constraint = entry.get("constraint")
+                if constraint and modulation:
+                    seg = f"{modulation}({constraint})"
+                elif modulation and chain_segments:
+                    seg = modulation
+                elif modulation:
+                    seg = f"{process} {modulation}"
+                elif constraint:
+                    seg = f"{process}({constraint})"
+                else:
+                    seg = process
+                chain_segments.append(seg)
+            lines.append("**Process chain:** " + " → ".join(chain_segments))
+            lines.append("")
+        if process_couplings:
+            lines.append("**Process couplings:**")
+            lines.append("")
+            for c in process_couplings:
+                pa = c.get("process_a") or "?"
+                pb = c.get("process_b") or "?"
+                mod = c.get("modulation") or "?"
+                strength = c.get("strength")
+                extras = []
+                if strength is not None:
+                    extras.append(f"strength≈{strength}")
+                if c.get("inferred"):
+                    extras.append("inferred")
+                extra = f" ({', '.join(extras)})" if extras else ""
+                lines.append(f"- ({pa}) --[{mod}]--> ({pb}){extra}")
+            lines.append("")
+
     # Time constants
     if report.time_constants:
         lines.append("## Time constants")

@@ -1,0 +1,20 @@
+{
+  "id": "breathing_en",
+  "version": "0.1",
+  "language": "en",
+  "community": "default",
+  "description": "Breathing-protocol process names. Implicit-variable inferences from the breathing extractor (CO2 / vagal) plus the cycle phases as ongoing processes.",
+  "processes": {
+    "inhale": "inhaling",
+    "hold": "holding",
+    "exhale": "exhaling",
+    "pause": "pausing",
+    "co2_buildup": "co2_accumulating",
+    "vagal_tone": "vagal_modulating",
+    "lung_volume": "expanding-contracting",
+    "diaphragm": "pulsing"
+  },
+  "modulations": {
+    "drives": "intensifying"
+  }
+}

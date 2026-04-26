@@ -29,7 +29,7 @@ this file now records the design intent only.
 | L3 cloud orchestrator      | [`orchestrator/`](./orchestrator)   | prototype — runtime-agnostic (LocalRuntime + DockerRuntime + HTTPRuntime real; AWSLambdaRuntime + ModalRuntime stubbed) |
 | L4 coating detector        | [`coating_detector.py`](./coating_detector.py) | prototype (synthetic-trajectory tested) |
 | L4 info-divergence twin    | [`coating_as_information_divergence.py`](./coating_as_information_divergence.py) | prototype — second alternative-compute twin (see ALTERNATIVE_COMPUTE_BRIDGES.md) |
-| L5 oral archaeology plugin | [`../oral_archaeology/`](../oral_archaeology) | prototype, 3 domains, 5 physics signatures |
+| L5 oral archaeology plugin | [`../oral_archaeology/`](../oral_archaeology) | prototype, 3 domains, 5 physics signatures, **process layer** (process-first rendering, JSON vocabulary files, per-community fork model) |
 | L5 tensor-reasoning twin   | [`oral_as_constraint_tensor.py`](./oral_as_constraint_tensor.py) | prototype — third alternative-compute twin (see ALTERNATIVE_COMPUTE_BRIDGES.md) |
 | L5 optics translator       | [`optics.py`](./optics.py)          | prototype, multi-report → unified verb-first speech |
 | shared finding shape       | [`findings.py`](./findings.py)      | stable        |
