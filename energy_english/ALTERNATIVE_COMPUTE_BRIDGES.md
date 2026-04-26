@@ -209,15 +209,156 @@ like at the source-tree level.
 
 ## Next-build-cycle TODO
 
-- [ ] Implement `gate_as_constraint_graph.py` per priority [1].
-- [ ] Add mirror-tests that share fixtures with `tests/test_gate.py`.
-- [ ] Write `examples/gate_graph_walkthrough.md`.
-- [ ] Implement `coating_as_information_divergence.py` per priority [2].
-- [ ] Add mirror-tests that share fixtures with `tests/test_coating_detector.py`.
-- [ ] Write `examples/coating_divergence_walkthrough.md`.
-- [ ] Implement `oral_as_constraint_tensor.py` per priority [3].
+- [x] Implement `gate_as_constraint_graph.py` per priority [1]. **Landed.**
+- [x] Add mirror-tests that share fixtures with `tests/test_gate.py`. **Landed
+      as `tests/test_gate_as_constraint_graph.py` with 20 tests covering
+      graph construction, mirror-blocking + mirror-flagging cases, the
+      story-arc motif rationale, context-aware closure (the headline
+      disagreement with the regex primary: closer + falsifier in same
+      graph drops BLOCK to WARN), subgraph-overlap coating, intent
+      traversal, permissive input mode, and ensemble compatibility via
+      `OpticsTranslator.translate(*reports)`.**
+- [x] Write [`examples/gate_graph_walkthrough.md`](./examples/gate_graph_walkthrough.md). **Landed.**
+- [x] Implement `coating_as_information_divergence.py` per priority [2]. **Landed.**
+- [x] Add mirror-tests that share fixtures with `tests/test_coating_detector.py`.
+      **Landed as `tests/test_coating_as_information_divergence.py` with 17
+      tests covering information-theoretic helpers (Shannon entropy,
+      mutual-information with Miller-Madow correction, convergence_signal),
+      mirror verdicts on five baseline cases (clean / silent_variable /
+      unexplored_phase_space / uncorrelated independent / missing trace),
+      the headline `y = x²` disagreement (Pearson ≈ 0 → primary fires
+      uncorrelated_coupling false-positive; MI ≈ 2.9 bits → twin does
+      NOT fire), distributional convergence on a noisy plateau, and
+      ensemble compatibility.**
+- [x] Write [`examples/coating_divergence_walkthrough.md`](./examples/coating_divergence_walkthrough.md). **Landed.**
+- [x] Implement `oral_as_constraint_tensor.py` per priority [3]. **Landed.**
+- [x] Add mirror-tests that share fixtures with `oral_archaeology/tests/test_validator.py`.
+      **Landed as `tests/test_oral_as_constraint_tensor.py` with 19 tests
+      covering the ConstraintTensor primitives (sparse storage, marginals
+      summing to total mass, normalised time-proportions, dominant
+      (entity, relation) cell), per-form tensor construction (4-7-8
+      proportions, box-uniform proportions, dance subjects on entity
+      axis, story bifurcation/threshold/phase_lock relations on relation
+      axis), mirror tests against `PhysicsValidator` for all five
+      signature classes (4-7-8 / box / kuramoto / threshold-bifurcation
+      / partial), the box-versus-4-7-8 separation regression test that
+      forced the box tolerance to tighten from 0.10 to 0.05, the
+      explicit no-match disagreement fixture (primary fires
+      ``physics.no_match`` and twin fires ``tensor.empty`` — same
+      meaning, native vocabularies), the always-fires
+      ``tensor.dominant_factor`` finding on every non-empty tensor, the
+      ``tensor.empty`` finding on a trivial geometry, and ensemble
+      compatibility through `OpticsTranslator.translate(*reports)`.**
+- [x] Write [`examples/oral_tensor_walkthrough.md`](./examples/oral_tensor_walkthrough.md). **Landed.**
 - [ ] Update this document with cross-references to landed twins.
-- [ ] Add ensemble-vote helper to `optics.py` (no API change — just a
-      convenience wrapper over `OpticsTranslator.translate(*reports)`).
+- [x] Add ensemble-vote helper to `optics.py`. **Landed.** ``ensemble(*reports)``
+      returns an ``EnsembleResult`` with: per-report ``verdicts``, a
+      unanimous-or-None ``consensus``, the ``disagreement_categories``
+      list (categories present in some reports but not others, OR
+      present in all but at different severities), and the
+      ``optics`` view. 13 unit tests in
+      ``tests/test_ensemble.py`` cover the empty / unanimous / divergent
+      paths and exercise both real headline disagreements (the graph
+      twin's tempered closure; the info-divergence twin's nonlinear
+      coupling). Pure function over Report-shaped inputs; no router
+      changes required to use it.
+
+## What [1] proved out
+
+The graph twin demonstrates the contract works in practice: same input
+shape, same `Report` shape, same finding categories, same severity
+convention as the regex primary, and the optics translator absorbs
+both reports without modification. The reasoning paths diverge, and
+the twin's context-aware findings (closure tempered by an in-graph
+falsifier; story-arc motif when opener and closer are
+sequential-reachable; coating as content-subgraph overlap;
+intent-triple traversal cited explicitly) give a graph-reasoner real
+purchase that a regex-only path cannot reach.
+
+## What [2] proved out
+
+The information-divergence twin shows the same contract holds at L4:
+the statistical primary uses Pearson correlation + stddev, the twin
+uses mutual information + Shannon entropy + a distributional
+convergence signal. Same Trajectory in, same Report out, same finding
+categories.
+
+The headline disagreement is well-documented: a `y = x²` coupling has
+Pearson |r| ≈ 0 (the symmetric quadratic cancels in the linear
+estimator), so the primary fires `uncorrelated_coupling` as a
+false-positive. Mutual information catches the determinism (≈ 2.9 bits
+of shared information on 200 samples) and the twin correctly does not
+fire. The MI estimator carries Miller-Madow bias correction so
+independent series settle near zero at workable sample sizes; the
+detector's default floor (0.30 bits) sits above the residual bias for
+n ≥ 1000 with 20 bins.
+
+The twin's other quiet wins:
+- Untouched-layer detection uses Shannon entropy of the trace
+  histogram, which catches concentration in one or two bins
+  independently of stddev.
+- Convergence-to-expected combines proximity + tail-entropy collapse,
+  with the tail's entropy computed against the **full trace's** bin
+  edges. A noisy tail at the end of a wide-ranging ramp scores ~1.0
+  even when the absolute tail noise is smaller than the primary's
+  numeric tolerance — a more principled distributional read than
+  point-comparison.
+
+Patterns established by [1] + [2] for priority [3]:
+- one shared types module (here: scalar histograms; in [3]: tensors)
+  with stdlib-only math so the twin loads without numpy.
+- mirror-tests prove agreement on obvious cases.
+- one or two **disagreement fixtures** capture the wins explicitly so
+  contributors see what each twin gets that the others miss.
+- ensemble-via-`OpticsTranslator` is the integration point; no router
+  changes required.
+
+## What [3] proved out
+
+The tensor twin completes the contract demonstration across all three
+priorities. ``ConstraintTensor`` is a 3-mode sparse tensor over
+``(time × entity × relation)``; ``TensorPhysicsValidator`` builds it
+from a ``ConstraintGeometry`` and matches the primary's
+``physics.{4-7-8, box, kuramoto, story.threshold_bifurcation, no_match}``
+categories using **time-marginal proportions**, **bilinear
+entity-relation slices**, and **dominant-cell analysis** instead of
+ratio comparisons.
+
+The 4-7-8 signature is now caught by the time-marginal directly:
+``time_proportions = (4/23, 7/23, 8/23, 4/23)`` matches the
+parasympathetic-activation tensor signature. Box breathing is caught
+by uniform time-marginal. Kuramoto is caught by the entity-relation
+slice having ≥ 2 entities and non-trivial mass on phase-coupling
+relations. Threshold-bifurcation is caught by the relation-marginal
+carrying threshold + bifurcation + phase_lock mass.
+
+Two tensor-native findings have no analogue in the primary:
+
+- ``tensor.dominant_factor`` — names the (entity, relation) pair
+  carrying the most mass across time. Fires on every non-empty
+  tensor as an info-severity reading. The twin's signal that "this
+  is the system's leading mode; subsequent findings are perturbations
+  on it".
+- ``tensor.empty`` — fires when the geometry produces no extractable
+  tensor entries. Distinct from the primary's ``physics.no_match``
+  (which fires *because* the geometry is well-formed but no library
+  entry matches). When both fire on the same input (1:1 breathing
+  with no inferable coupling) that is the **legitimate paradigm
+  divergence** the design doc invited: same situation, different
+  native vocabularies, same downstream optics rendering.
+
+A scoping admission: full CP / Tucker decompositions are out of
+scope for v0 because they require BLAS-level math. The operations
+implemented (mode marginals, bilinear slices, dominant-cell analysis)
+are honest tensor operations and give a tensor-reasoner real purchase,
+but a future cycle could extend the twin with a stdlib-friendly
+power-iteration rank-1 decomposition or layer in numpy as an optional
+acceleration.
+
+With [1], [2], [3] landed the contract pattern is proven across L1,
+L4, and L5. Adding new twins is now a recipe: pick a paradigm, mirror
+the primary's input/output shape, surface 1-2 native findings, write
+mirror tests + at least one explicit disagreement fixture, and rely
+on ``OpticsTranslator.translate(*reports)`` for ensemble integration.
 
 All deliverables are CC0.

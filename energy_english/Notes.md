@@ -9,20 +9,28 @@ this file now records the design intent only.
 
 | Document                          | Purpose                                                              |
 |-----------------------------------|----------------------------------------------------------------------|
-| [`SPEC.md`](./SPEC.md)            | Authoritative constraint-grammar reference. Defines meaning.         |
+| [`ENERGY_ENGLISH_AXIOM.md`](./ENERGY_ENGLISH_AXIOM.md)                 | CC0 axiom layer. Constraint primitives, three-layer semantics, oral-form encoding, coating signatures. **Source of truth.** |
+| [`ENERGY_ENGLISH_INTERPRETIVE_GUIDE.md`](./ENERGY_ENGLISH_INTERPRETIVE_GUIDE.md) | Audience-targeted companion to the axiom: who this is for, the erasure problem, multi-community framing, tail risks. |
+| [`ENERGY_ENGLISH_ORCHESTRATOR.md`](./ENERGY_ENGLISH_ORCHESTRATOR.md)   | Five-layer architecture, build phases, multi-community fork model, sovereignty rules, failure modes, success criteria. |
+| [`SPEC.md`](./SPEC.md)            | Technical constraint-grammar reference. Triple form, relation primitives, scope/polarity/strength/confidence, coating-detection patterns. Companion to the axiom — the axiom defines meaning, the spec defines the implementation contract. |
 | [`system_prompt.md`](./system_prompt.md) | Paste-ready system prompt for GPT / Gemini / Claude.          |
-| [`ORCHESTRATOR.md`](./ORCHESTRATOR.md) | Five-layer architecture, build phases, multi-community fork model. |
 
 ## Layer-by-layer modules
 
 | Layer                | Module                              | Status        |
 |----------------------|-------------------------------------|---------------|
 | L1 constraint gate         | [`gate.py`](./gate.py)              | prototype     |
-| L2 router                  | [`router.py`](./router.py)          | prototype (intent → backend) |
+| L1 graph-reasoning twin    | [`gate_as_constraint_graph.py`](./gate_as_constraint_graph.py) | prototype — first alternative-compute twin (see ALTERNATIVE_COMPUTE_BRIDGES.md) |
+| L2 router                  | [`router.py`](./router.py)          | prototype — three routes: oral_archaeology / cloud_simulation / model |
 | L2 gated-call subroutine   | [`dispatcher.py`](./dispatcher.py)  | prototype (used by the model route) |
+| L2 interactive shell       | [`cli.py`](./cli.py) (`python -m energy_english`) | prototype, with `--llm` and `--voice` flags |
+| L2 LLM clients             | [`llm/`](./llm)                     | prototype — Claude / OpenAI / Gemini, stdlib `urllib`, system prompt loaded by default |
+| L2 voice transport         | [`voice.py`](./voice.py)            | prototype — `StdioVoiceTransport` (default) + `WhisperAPIVoiceTransport` (OpenAI Whisper API) |
 | L3 cloud orchestrator      | [`orchestrator/`](./orchestrator)   | prototype — runtime-agnostic (LocalRuntime + DockerRuntime + HTTPRuntime real; AWSLambdaRuntime + ModalRuntime stubbed) |
 | L4 coating detector        | [`coating_detector.py`](./coating_detector.py) | prototype (synthetic-trajectory tested) |
+| L4 info-divergence twin    | [`coating_as_information_divergence.py`](./coating_as_information_divergence.py) | prototype — second alternative-compute twin (see ALTERNATIVE_COMPUTE_BRIDGES.md) |
 | L5 oral archaeology plugin | [`../oral_archaeology/`](../oral_archaeology) | prototype, 3 domains, 5 physics signatures |
+| L5 tensor-reasoning twin   | [`oral_as_constraint_tensor.py`](./oral_as_constraint_tensor.py) | prototype — third alternative-compute twin (see ALTERNATIVE_COMPUTE_BRIDGES.md) |
 | L5 optics translator       | [`optics.py`](./optics.py)          | prototype, multi-report → unified verb-first speech |
 | shared finding shape       | [`findings.py`](./findings.py)      | stable        |
 | alternative-compute design | [`ALTERNATIVE_COMPUTE_BRIDGES.md`](./ALTERNATIVE_COMPUTE_BRIDGES.md) | design doc for next build cycles |

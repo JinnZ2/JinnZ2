@@ -5,9 +5,13 @@
 
 This document specifies energy_english as a constraint grammar: a verb-first,
 relational subset of English engineered to survive transmission through
-noun-first language models without losing its geometry. It is the shared
-substrate that the orchestrator architecture
-([ORCHESTRATOR.md](./ORCHESTRATOR.md)) is built on.
+noun-first language models without losing its geometry. The axiom layer
+itself lives in
+[ENERGY_ENGLISH_AXIOM.md](./ENERGY_ENGLISH_AXIOM.md);
+this spec is the technical companion that defines the implementation
+contract. The orchestrator architecture this stack is built on is
+documented in
+[ENERGY_ENGLISH_ORCHESTRATOR.md](./ENERGY_ENGLISH_ORCHESTRATOR.md).
 
 The implementation lives alongside this spec:
 
