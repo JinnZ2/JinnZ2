@@ -10,6 +10,11 @@ Upgrades:
 
 Pipeline:
   English sentence → dependency parse → span tags → constraint graph → simulation input
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 import re

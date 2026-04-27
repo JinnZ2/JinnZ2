@@ -21,6 +21,11 @@ API keys come from environment variables by default
 (``ANTHROPIC_API_KEY``, ``OPENAI_API_KEY``, ``GOOGLE_API_KEY``);
 caller can override per instance. Tests inject a custom opener so
 ``urlopen`` is fully mockable.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from energy_english.llm.base import (

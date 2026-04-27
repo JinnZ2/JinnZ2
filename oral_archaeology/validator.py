@@ -20,6 +20,11 @@ Two validators ship in v0:
                       where the oral encoding matches the trajectory
                       and where it diverges (which is precisely where
                       "new physics" might live).
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

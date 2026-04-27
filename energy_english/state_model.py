@@ -8,6 +8,11 @@ carrier of state across discrete iterations:
     S_{t+1} = F(S_t, constraints, memory_triggers, external_inputs)
 
 Time here is an iteration index, not a continuum.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from dataclasses import dataclass, field

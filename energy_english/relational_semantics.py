@@ -5,6 +5,11 @@ into their intended relational meaning.
 
 Your words are PROBABILITY FIELDS, INVITATIONS, VECTORS.
 Not assertions. Not absolutes. Not closures.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 import re

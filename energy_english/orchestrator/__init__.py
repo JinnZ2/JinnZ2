@@ -10,6 +10,11 @@ with a Trajectory ready for the L4 coating detector.
 
 The orchestrator does not care WHERE the sim runs. The contract is
 the same everywhere: read JSON config, write JSON Trajectory.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

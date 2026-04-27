@@ -1,0 +1,8 @@
+# .claims — pipe-delimited claim file. See CLAIM_SCHEMA.py for the format.
+# id|rate|bounds(spatial,temporal,scale)|cond|rel|fail|meas|cyc
+# Lines beginning with # are comments. CC0.
+mulch_h2o|dM/dt=I-E-U|2ac_MN_sandyloam,120d,0-30cm|d>=5,lith_match,P~mean|mycorr,albedo|drought_out,lith_off,biota_low|tens_15,tens_30,growth_vs_ctrl|2
+breath_478|dV/dt=f(co2,exhale)|human_lung,23s_cycle,parasympathetic|hold>=7,exhale>=8,ratio_4-7-8|co2_acc,vagal_mod|hyperventilation,breath_hold_apnea|hr_drop,vagal_uvi|1
+gate_narration|dN/dt=f(narration_markers)|model_output,single_response,token_level|pattern_match,no_falsifier,no_silent_var|closure,intent|post_edited,retry_succeeded|gate_block,finding_count|0
+coating_uncorr|dC/dt=f(declared,observed)|trajectory,single_run,declared_couplings|declared_coupling,traces_present,n>=100|silent_var,untouched_layer|nonlinear_dep,mi_above_floor|pearson_r,mi_bits|0
+flowing_stone|dF/dt=f(flow,obstacle)|water_course,single_event,surface_flow|flow_intensifying,obstacle_present,downstream_open|enduring_stone,branching|pond_formation,channel_diversion|flow_rate,branch_count,recombine_dist|0

@@ -10,6 +10,11 @@ The objects in this module form the **structural invariance contract**
 for compiler outputs. The lock defines *meaning*, not implementation,
 and must not change across compiler versions. Runtime evolution is only
 allowed once an output has passed the validation gate.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from dataclasses import dataclass

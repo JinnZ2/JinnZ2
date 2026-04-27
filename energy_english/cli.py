@@ -21,6 +21,11 @@ The model route activates when --llm <provider> is supplied. Without
 that flag a model-route input falls through to ``unrouted`` with a
 helpful message. The oral_archaeology and cloud_simulation routes
 auto-wire when their backends are available.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

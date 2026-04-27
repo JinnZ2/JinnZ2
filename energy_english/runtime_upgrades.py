@@ -7,6 +7,11 @@ Adds:
 2. Active constraint enforcement (transitive, competition, saturation, hysteresis)
 3. Multi-timestep memory (not just current snapshot)
 4. Mode transition detection (when a node changes mode, trigger memory)
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 import numpy as np

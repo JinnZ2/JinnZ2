@@ -27,6 +27,11 @@ The original entries on ``geom.couplings`` etc. are NOT replaced —
 backward compatibility holds. Downstream code (optics translator,
 markdown report) prefers the processual form when present and falls
 back to the noun form when it isn't.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

@@ -29,6 +29,11 @@ fixtures captured in ``tests/test_coating_as_information_divergence.py``
 record the wins explicitly.
 
 Stdlib only — ``math.log2`` and dict-based histograms. No numpy.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

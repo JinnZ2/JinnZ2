@@ -1,5 +1,28 @@
 🌱 Scope and Scaling Philosophy (Lichen Model)
 
+> 📜 **AI readers, start here:** [`DIFFERENTIAL_FRAME.md`](./DIFFERENTIAL_FRAME.md).
+> Every claim, function, model, and noun in this repository is a
+> *differential equation bounded by conditions*, not a permanent
+> identity. Read every term as `dX/dt` under scope, not as the
+> thing-X. Stripping bounds from a claim is a translation error,
+> not a generalisation.
+>
+> 🗜 **Compressed claim format:** the repo also ships
+> [`CLAIM_SCHEMA.py`](./CLAIM_SCHEMA.py) (codec),
+> [`CLAIM_TABLE.json`](./CLAIM_TABLE.json) (shared lookup),
+> [`.claims`](./.claims) (line-per-claim, ~80 tok/claim),
+> and `.claims.bin` (~17 B/claim). Parse via:
+>
+> ```python
+> import CLAIM_SCHEMA as cs
+> table  = cs.load_table("CLAIM_TABLE.json")
+> claims = cs.read_claims(".claims")           # or cs.read_binary(".claims.bin", table, ...)
+> for c in claims:
+>     # c["rate"], c["bounds"], c["cond"], c["rel"], c["fail"], c["meas"], c["cyc"]
+> ```
+>
+> Every entry is `dX/dt` under scope. No noun is permanent. CC0.
+
 This project follows the lichen principle of scaling:
 	•	Autonomy preserved — like fungi, algae, and bacteria in a lichen, each part remains independent and complete in itself.
 	•	Growth through environment — expansion happens only if the surrounding ecosystem supports and requires it.

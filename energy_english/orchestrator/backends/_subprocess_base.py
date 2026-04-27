@@ -5,6 +5,11 @@ DockerRuntime). Handles config write, command execution, output read,
 timeout enforcement, and trajectory adaptation. Concrete subclasses
 only have to build the command and supply the environment that
 points at the config + output paths.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

@@ -18,6 +18,11 @@ That shared vocabulary is what lets the eventual optics translator
 If you are writing a new detector, return a ``Report`` whose findings
 all use the constants below. Keep your category strings consistent
 with the existing teaching blocks where applicable.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

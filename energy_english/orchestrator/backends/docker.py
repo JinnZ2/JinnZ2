@@ -15,6 +15,11 @@ Use when:
 - the sim has heavyweight dependencies you don't want on the host
 - you need reproducibility across machines
 - you ship sims as images (e.g. on Docker Hub or a registry)
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

@@ -24,6 +24,11 @@ Response:
 
 Stdlib only — no requests/httpx dependency. ``urllib`` carries the
 JSON in and out. ``token`` is added as a Bearer header when supplied.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

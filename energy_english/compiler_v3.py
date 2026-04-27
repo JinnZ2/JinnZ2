@@ -7,6 +7,11 @@ Upgrades from v2:
 2. GLOBAL STRENGTH: sentence-level feature, not local token proximity
 3. EXTENDED RELATION VOCABULARY: phase-locks, resonance, hysteresis, field mediation
 4. ACTIVE CONSTRAINTS: global constraints feed back into edge weights and node states
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 import re

@@ -6,6 +6,11 @@ Stdlib only. API key from ``GOOGLE_API_KEY`` by default. Sent as a
 query-string parameter (``?key=<api_key>``) per Google's REST contract.
 The system instruction is sent as the ``systemInstruction`` field in
 the body.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations

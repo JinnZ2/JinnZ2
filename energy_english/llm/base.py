@@ -9,6 +9,11 @@ drops into the dispatcher without glue.
 The default system prompt is the **tight version** from
 ``energy_english/system_prompt.md`` — short enough to fit in any
 provider's system slot, sharp enough to anchor the gate's grammar.
+
+
+Ontology: every name in this module names a state variable on a
+curve, not a permanent identity. See ``DIFFERENTIAL_FRAME.md`` at
+the repo root.
 """
 
 from __future__ import annotations
