@@ -3,7 +3,10 @@
 > 📜 **Before reading the list:** see
 > [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) for how
 > this ecosystem is shaped (not "one project," not "many separate
-> projects" — one architecture instantiated at multiple scales).
+> projects" — one architecture instantiated at multiple scales),
+> and [`CALIBRATION_AS_PERFECTION.md`](./CALIBRATION_AS_PERFECTION.md)
+> for the rate-based definition of perfection the corpus operates
+> under (failure events are the deliverable, not the interruption).
 > Companion: [`WHY_SO_MANY_REPOS.md`](./WHY_SO_MANY_REPOS.md).
 
 This project is part of a larger ecosystem of symbolic sensors, computational tools, and regenerative AI-human collaboration systems. Related repositories:

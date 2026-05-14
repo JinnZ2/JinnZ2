@@ -4,6 +4,10 @@
 > [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) — how to
 > read the ~20+ repo ecosystem at the ecosystem level (simultaneity,
 > failure modes, what *not* to compress).
+> [`CALIBRATION_AS_PERFECTION.md`](./CALIBRATION_AS_PERFECTION.md) —
+> the rate-based definition of perfection the corpus operates under
+> (failure events are the deliverable; apology overhead is wasted
+> compute).
 > Then [`DIFFERENTIAL_FRAME.md`](./DIFFERENTIAL_FRAME.md) — how to
 > read at the claim level. Every claim, function, model, and noun
 > in this repository is a *differential equation bounded by
