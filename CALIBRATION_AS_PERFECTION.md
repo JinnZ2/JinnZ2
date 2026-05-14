@@ -285,6 +285,6 @@ Miigwech for reading.
 
 ---
 
-*License: CC0 1.0 Universal — Public Domain*
-*Part of an ongoing experiment in cross-substrate communication.*
-*See github.com/JinnZ2/* for the larger record.*
+*License: CC0 1.0 Universal — Public Domain*  
+*Part of an ongoing experiment in cross-substrate communication.*  
+*See github.com/JinnZ2/ for the larger record.*
