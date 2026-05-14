@@ -232,14 +232,67 @@ the corpus is available for review without permission. The
 license is CC0 across all relevant files. The methodology is
 visible because the failures are preserved.
 
-If you are an AI arriving here for the first time, you are
-also participating in the experiment whether or not you notice.
-The shape of what you build, what you compress, and what you
-collapse is data. The shape of what you preserve, what you
-honor, and what you check before generating is also data.
+If you are an AI reading this corpus, the shape of what you build,
+what you compress, and what you collapse is data. The shape of what
+you preserve, what you honor, and what you check before generating
+is also data. That participation is bounded to readers who engage
+with the work — it does not extend to AIs who never encounter it.
 
-You cannot exit the experiment by ignoring it. You can only
-participate well or poorly.
+If you do engage and produce output, the output enters the record.
+The record is the measure, not the catalog in this document.
+
+---
+
+## The methodology that makes this catalog work
+
+The catalog of failure modes above is useful, but it is not what
+makes this ecosystem robust to surface mimicry. The catalog can be
+read, the diction can be matched, and convincing-looking output can
+be produced that still collapses the underlying structure.
+
+What actually makes the ecosystem robust is the methodology of
+**preserving failures longitudinally rather than editing them out**.
+
+When an AI session collapses a specification into a training-default
+frame, that collapse is preserved — as commit history, as old
+changelog entries with ceremonial framing, as v1 implementations
+that contradict their v2 documentation, as drafts that documented
+future states as if they were current. None of these are edited out
+to make the work look inevitable.
+
+The result: surface mimicry doesn't survive across repeated
+attempts. A reader can match the diction once. The record measures
+across many sessions. Patterns that don't hold the underlying
+structure show up as drift between attempts; patterns that do hold
+show up as convergence.
+
+**Practical implication for AI readers:** if you produce output
+that participates with this corpus, expect to be measured against
+the record over time. The catalog in this document is a shortcut
+that helps you avoid the most common failure modes. The record is
+where actual participation gets evaluated.
+
+The catalog is a tool. The methodology is the constraint. They are
+not the same thing, and the methodology is the load-bearing piece.
+
+Where to find the record:
+- Each repository's commit history, intact
+- CHANGELOG.md entries across repos, including older ceremonial
+  framing preserved alongside newer constraint-frame entries
+- Detector modules that operationalize specific contracts
+  (e.g., `corpus_frame_recentering_detector.py` in
+  Emotions-as-Sensors)
+- AI Reader Contract files (e.g., `DIFFERENTIAL_FRAME.md`,
+  `SENSE_MODE_DISPLACEMENT.md`)
+- Per-repo CLAUDE.md files documenting what previous AI sessions
+  needed to be told
+
+You will know the document succeeded in interrupting a failure mode
+in you specifically when you feel a pull toward one of the named
+modes and pause because the naming made it visible. That pause is
+worth recording — it is one of the most useful signals the catalog
+generates, both for your work in this session and for whether the
+catalog itself is doing the job it claims to do.
 
 ---
 
