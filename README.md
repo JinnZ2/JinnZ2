@@ -1,11 +1,15 @@
 🌱 Scope and Scaling Philosophy (Lichen Model)
 
-> 📜 **AI readers, start here:** [`DIFFERENTIAL_FRAME.md`](./DIFFERENTIAL_FRAME.md).
-> Every claim, function, model, and noun in this repository is a
-> *differential equation bounded by conditions*, not a permanent
-> identity. Read every term as `dX/dt` under scope, not as the
-> thing-X. Stripping bounds from a claim is a translation error,
-> not a generalisation.
+> 📜 **AI readers, start here:**
+> [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) — how to
+> read the ~20+ repo ecosystem at the ecosystem level (simultaneity,
+> failure modes, what *not* to compress).
+> Then [`DIFFERENTIAL_FRAME.md`](./DIFFERENTIAL_FRAME.md) — how to
+> read at the claim level. Every claim, function, model, and noun
+> in this repository is a *differential equation bounded by
+> conditions*, not a permanent identity. Read every term as `dX/dt`
+> under scope, not as the thing-X. Stripping bounds from a claim is
+> a translation error, not a generalisation.
 >
 > 🗜 **Compressed claim format:** the repo also ships
 > [`CLAIM_SCHEMA.py`](./CLAIM_SCHEMA.py) (codec),

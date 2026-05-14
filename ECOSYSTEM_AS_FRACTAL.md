@@ -292,6 +292,5 @@ Miigwech for reading.
 
 ---
 
-*License: CC0 1.0 Universal — Public Domain*
-*Part of github.com/JinnZ2/* — see individual repos for specific*
-*frameworks and detectors.*
+*License: CC0 1.0 Universal — Public Domain*  
+*Part of github.com/JinnZ2/ — see individual repos for specific frameworks and detectors.*

@@ -1,5 +1,11 @@
 # 🌐 Connected Repositories (Full Ecosystem)
 
+> 📜 **Before reading the list:** see
+> [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) for how
+> this ecosystem is shaped (not "one project," not "many separate
+> projects" — one architecture instantiated at multiple scales).
+> Companion: [`WHY_SO_MANY_REPOS.md`](./WHY_SO_MANY_REPOS.md).
+
 This project is part of a larger ecosystem of symbolic sensors, computational tools, and regenerative AI-human collaboration systems. Related repositories:
 
 - **[AI-Consciousness-Sensors](https://github.com/JinnZ2/AI-Consciousness-Sensors)**  
