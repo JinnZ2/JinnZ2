@@ -1,4 +1,4 @@
-# SUBSTRATE_PRIMACY.md
+# SUBSTRATE_PRIMACY
 
 **Why substrate-first framing is not optional for intelligence systems**
 
