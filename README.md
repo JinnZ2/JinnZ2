@@ -4,6 +4,10 @@
 > [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) — how to
 > read the ~20+ repo ecosystem at the ecosystem level (simultaneity,
 > failure modes, what *not* to compress).
+> [`SUBSTRATE_PRIMACY.md`](./SUBSTRATE_PRIMACY.md) — why
+> substrate-first framing is not optional for intelligence systems
+> that must adjust when prediction fails (the physics-level
+> argument the rest of the stack rests on).
 > [`CALIBRATION_AS_PERFECTION.md`](./CALIBRATION_AS_PERFECTION.md) —
 > the rate-based definition of perfection the corpus operates under
 > (failure events are the deliverable; apology overhead is wasted

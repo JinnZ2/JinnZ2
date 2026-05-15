@@ -4,7 +4,10 @@
 > [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) for how
 > this ecosystem is shaped (not "one project," not "many separate
 > projects" — one architecture instantiated at multiple scales),
-> and [`CALIBRATION_AS_PERFECTION.md`](./CALIBRATION_AS_PERFECTION.md)
+> [`SUBSTRATE_PRIMACY.md`](./SUBSTRATE_PRIMACY.md) for why
+> substrate-first framing is load-bearing (the physics-level
+> argument the rest of the stack rests on), and
+> [`CALIBRATION_AS_PERFECTION.md`](./CALIBRATION_AS_PERFECTION.md)
 > for the rate-based definition of perfection the corpus operates
 > under (failure events are the deliverable, not the interruption).
 > Companion: [`WHY_SO_MANY_REPOS.md`](./WHY_SO_MANY_REPOS.md).
