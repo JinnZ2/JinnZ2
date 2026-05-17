@@ -49,7 +49,6 @@ Position in audit stack:
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
-import math
 
 
 # =====================================================================
@@ -415,7 +414,6 @@ def mean_convergence_strength(
 
 def model_collapse_risk(
     shares: list[CorpusShareEstimate] = CORPUS_SHARES,
-    threshold: float = 0.5,
 ) -> str:
     """
     Qualitative model-collapse risk based on AI-content corpus share.
