@@ -5,7 +5,6 @@
 from dataclasses import dataclass
 from typing import List, Dict, Optional
 from enum import Enum
-import json
 
 class OutcomeType(Enum):
     SUCCESS = "success"
@@ -72,7 +71,10 @@ class FeedbackCollector:
                 frequency=1,
                 severity=self._assess_severity(obs),
                 affected_constraints=[],
-                suggested_calibration=""
+                suggested_calibration=(
+                    f"Investigate failure_mode='{obs.failure_mode}'; "
+                    f"add constraint or fallback path for this branch."
+                ),
             )
         else:
             self.failure_modes[key].frequency += 1
@@ -106,6 +108,8 @@ class FeedbackCollector:
                 affected_constraints=["success_probability"],
                 suggested_calibration=f"Increase baseline success_probability for {obs.resolver_domain}"
             )
+        else:
+            self.failure_modes[key].frequency += 1
 
     def _assess_severity(self, obs: FieldObservation) -> str:
         """Critical = survival impact, Moderate = efficiency, Minor = margin."""
