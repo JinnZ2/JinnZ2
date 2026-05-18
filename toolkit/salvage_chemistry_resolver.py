@@ -69,6 +69,11 @@ class Node:
     status: NodeStatus = NodeStatus.OPEN
     closure_conditions: List[ClosureCondition] = field(default_factory=list)
     child_nodes: List["Node"] = field(default_factory=list)  # Next spike-out
+    # Additive fields used by cross_domain_combiner (aliased into child_nodes
+    # by __post_init__ so .append / .sort propagate to both names):
+    children: List["Node"] = field(default_factory=list)
+    parent_id: Optional[str] = None
+    closure_reason: Optional[str] = None
 
     def __post_init__(self):
         if self.transform is not None and not self.mode:
@@ -86,18 +91,65 @@ class Node:
                     status=NodeStatus.CONDITIONAL,
                     fallback_nodes=list(self.constraints.fallback_paths),
                 ))
+        # Alias children <-> child_nodes so combiner-style .append/.sort
+        # on either name propagates to both.
+        if self.children and not self.child_nodes:
+            self.child_nodes = list(self.children)
+        self.children = self.child_nodes
+
+    def to_json(self, node: Optional["Node"] = None, indent: int = 2) -> str:
+        """Serialize this node (or a passed node) as a JSON string."""
+        import json
+        target = node if node is not None else self
+        return json.dumps(self._to_dict(target), indent=indent, default=str)
+
+    def _to_dict(self, node: "Node") -> dict:
+        return {
+            "id": node.id,
+            "description": node.description,
+            "mode": node.mode,
+            "success_probability": node.success_probability,
+            "status": (node.status.value
+                       if isinstance(node.status, NodeStatus)
+                       else str(node.status)),
+            "parent_id": node.parent_id,
+            "closure_reason": node.closure_reason,
+            "equipment": list(node.equipment),
+            "dwell_hours": node.dwell_hours,
+            "children": [self._to_dict(c) for c in node.children],
+        }
 
 # Backwards-compat alias for the eager-tree shape used previously.
 ProcessNode = Node
 
+_TEMP_SENTINEL = -273  # below absolute zero, used to mark "unset"
+
 @dataclass
 class QueryContext:
-    feedstock: str
-    target_property: str
-    time_available_days: int
-    temp_constraint: int  # Operating minimum
-    equipment_on_hand: List[str]
-    salvage_access: Dict[str, bool]  # What can you source last-minute?
+    # feedstock accepts a single str for single-domain navigate(), OR
+    # List[str] for multi-substrate queries consumed by
+    # CrossDomainCombiner.build_synergy_tree().
+    feedstock: object
+    target_property: str = "any"
+    time_available_days: int = 30
+    temp_constraint: int = _TEMP_SENTINEL  # Operating minimum
+    temp_constraint_c: int = _TEMP_SENTINEL  # alias preferred by newer callers
+    equipment_on_hand: List[str] = field(default_factory=list)
+    salvage_access: Dict[str, bool] = field(default_factory=dict)
+    components_on_hand: List[str] = field(default_factory=list)
+
+    def __post_init__(self):
+        # Mirror temp_constraint and temp_constraint_c so either name works.
+        if (self.temp_constraint == _TEMP_SENTINEL
+                and self.temp_constraint_c != _TEMP_SENTINEL):
+            self.temp_constraint = self.temp_constraint_c
+        elif (self.temp_constraint_c == _TEMP_SENTINEL
+                and self.temp_constraint != _TEMP_SENTINEL):
+            self.temp_constraint_c = self.temp_constraint
+        # If neither was supplied, default to a permissive minimum.
+        if self.temp_constraint == _TEMP_SENTINEL:
+            self.temp_constraint = -273
+            self.temp_constraint_c = -273
 
 # Backwards-compat alias for the domain-author vocabulary.
 Query = QueryContext
@@ -137,22 +189,40 @@ class ProbabilityTreeResolver:
         2. Time feasibility (dwell + available window)
         3. Equipment + salvage closure risk
         """
-        if context.feedstock in self.expanders:
+        # Accept list-shaped feedstock from the multi-domain API: collapse
+        # to single-feedstock navigate if it has exactly one element;
+        # multi-feedstock queries route through CrossDomainCombiner.
+        fs = context.feedstock
+        if isinstance(fs, list):
+            if len(fs) == 1:
+                fs = fs[0]
+            elif len(fs) == 0:
+                return {"error": "Empty feedstock list"}
+            else:
+                return {
+                    "error": (
+                        "Multi-feedstock query: pass to "
+                        "CrossDomainCombiner.build_synergy_tree() "
+                        "instead of resolver.navigate()."
+                    )
+                }
+        if fs in self.expanders:
             # Lazy-expansion path: invoke the registered expander into
             # a synthetic root whose constraints permit pass-through to
             # its children.
-            expander = self.expanders[context.feedstock]
+            expander = self.expanders[fs]
             root = Node(
-                id=f"{context.feedstock}_root",
-                description=f"Root for {context.feedstock}",
+                id=f"{fs}_root",
+                description=f"Root for {fs}",
                 success_probability=1.0,
                 temp_range=(context.temp_constraint, 1000),
             )
             root.child_nodes = list(expander(root, context))
+            root.children = root.child_nodes
         else:
-            root = self.transformation_trees.get(context.feedstock)
+            root = self.transformation_trees.get(fs)
             if not root:
-                return {"error": f"Domain '{context.feedstock}' not registered"}
+                return {"error": f"Domain '{fs}' not registered"}
 
         tree = self._build_traversal_tree(
             root, context.target_property, context
@@ -306,3 +376,7 @@ class ProbabilityTreeResolver:
 
         traverse(tree)
         return windows
+
+
+# Backwards-compat alias for the cross_domain_combiner / test vocabulary.
+TreeResolver = ProbabilityTreeResolver
