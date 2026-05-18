@@ -2,7 +2,7 @@
 # Relational + GPS hybrid navigation for emergency shelter
 # CC0 | falsifiable | offline-capable + cell-enhanced
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Dict, Optional, Tuple
 from enum import Enum
 
@@ -74,7 +74,7 @@ class IncidentContext:
     visibility_meters: int
     smoke_inhalation_risk: str
 
-class WildfirerShelterResolver:
+class WildfireShelterResolver:
     """
     Hybrid relational + GPS navigation for shelter discovery.
     Input: relational position ("at 63, heading north to Trigo")
@@ -196,6 +196,7 @@ class WildfirerShelterResolver:
                 "heat_score": heat_score,
                 "reachability_score": reach_score,
                 "exit_score": exit_score,
+                "wind_protection": feature.wind_protection,
                 "water_access": feature.water_access,
                 "signaling": feature.signaling_options,
                 "notes": feature.notes
