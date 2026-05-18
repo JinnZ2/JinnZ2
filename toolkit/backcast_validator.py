@@ -4,8 +4,8 @@
 
 from dataclasses import dataclass
 from typing import List, Dict
-from enum import Enum
 
+@dataclass
 class HistoricalScenario:
     """Known real event with documented outcome."""
     id: str
