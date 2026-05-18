@@ -13,6 +13,7 @@ class NodeStatus(Enum):
 @dataclass
 class ClosureCondition:
     reason: str  # "missing_equipment", "time_exceeded", "temp_unstable"
+    status: NodeStatus  # OPEN / CLOSED / CONDITIONAL
     fallback_nodes: List[str]  # Alternative branches if this closes
 
 @dataclass
@@ -106,6 +107,7 @@ class ProbabilityTreeResolver:
         if missing and not self._can_salvage(missing, context):
             return ClosureCondition(
                 reason="missing_equipment",
+                status=NodeStatus.CLOSED,
                 fallback_nodes=node.closure_conditions[0].fallback_nodes
                               if node.closure_conditions else []
             )
@@ -114,6 +116,7 @@ class ProbabilityTreeResolver:
         if node.dwell_hours > context.time_available_days * 24:
             return ClosureCondition(
                 reason="time_exceeded",
+                status=NodeStatus.CLOSED,
                 fallback_nodes=[]
             )
 
@@ -121,10 +124,11 @@ class ProbabilityTreeResolver:
         if node.temp_range[0] < context.temp_constraint:
             return ClosureCondition(
                 reason="temp_unstable",
+                status=NodeStatus.CLOSED,
                 fallback_nodes=[]
             )
 
-        return ClosureCondition(reason="open", fallback_nodes=[])
+        return ClosureCondition(reason="open", status=NodeStatus.OPEN, fallback_nodes=[])
 
     def _rank_branches(self, tree: Dict, context: QueryContext) -> Dict:
         """Sort children by success probability, time efficiency, salvage cost."""
