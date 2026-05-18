@@ -3,8 +3,9 @@
 # CC0 | falsifiable | mobile-queryable | immediate threat detection
 
 from dataclasses import dataclass
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional
 from enum import Enum
+import re
 
 class LightningObservationType(Enum):
     THUNDER_DELAY = "thunder_delay"
@@ -112,17 +113,19 @@ class LightningAvoidanceResolver:
         }
 
     def _extract_thunder_delay(self, observations: List[LightningObservation]) -> Optional[int]:
-        """Parse thunder delay from observations."""
+        """
+        Parse thunder delay (seconds between flash and thunder) from
+        observations. Tolerates both spaced ('4 sec after flash') and
+        concatenated ('4sec after flash') phrasings.
+        """
         for obs in observations:
             if obs.observation_type == LightningObservationType.THUNDER_DELAY:
-                try:
-                    # Extract number: "thunder 5sec after flash" → 5
-                    delay_str = obs.value.split()
-                    for i, word in enumerate(delay_str):
-                        if "sec" in word:
-                            return int(delay_str[i-1])
-                except:
-                    pass
+                match = re.search(r"(\d+)\s*sec", obs.value)
+                if match:
+                    try:
+                        return int(match.group(1))
+                    except ValueError:
+                        continue
         return None
 
     def _extract_visible_lightning(self, observations: List[LightningObservation]) -> bool:
