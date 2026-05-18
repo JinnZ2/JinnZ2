@@ -3,7 +3,7 @@
 # CC0 | field-tested | mobile-queryable
 
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
 from enum import Enum
 
 class TechniqueType(Enum):
