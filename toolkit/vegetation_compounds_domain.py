@@ -254,7 +254,10 @@ def register_with_resolver(resolver):
     resolver.register_domain("comfrey", vegetation_expander)
     resolver.register_domain("nettle", vegetation_expander)
     resolver.register_domain("seaweed", vegetation_expander)
-    resolver.register_domain("wood_ash", vegetation_expander)
+    # 'wood_ash' is held by wood_ash_domain (lye, glaze, fertilizer,
+    # saltpeter branches); this domain exposes its plant-mineral
+    # branches under 'wood_ash_vegetation' so both stay reachable.
+    resolver.register_domain("wood_ash_vegetation", vegetation_expander)
     resolver.register_domain("vegetation", vegetation_expander)
     resolver.register_domain("plant_material", vegetation_expander)
     resolver.salvage_index.update(VEGETATION_SALVAGE)
