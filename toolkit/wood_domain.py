@@ -2,6 +2,8 @@
 # Substrate domain: wood species → cutting boards, boats, structural, tools
 # CC0 | falsifiable | material-property driven
 
+from dataclasses import dataclass
+
 from salvage_chemistry_resolver import (
     Node, TransformMode, Constraint
 )
