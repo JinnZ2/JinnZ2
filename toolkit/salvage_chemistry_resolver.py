@@ -319,19 +319,43 @@ class ProbabilityTreeResolver:
         return prob * time_eff * max(1.0 - salvage_friction, 0.1)
 
     def _can_salvage(self, missing: List[str], context: QueryContext) -> bool:
-        """Can you source this at last minute or synthesize it?"""
-        return any(context.salvage_access.get(item, False) for item in missing)
+        """
+        Can you source this at last minute or synthesize it?
+
+        Consults both:
+          - context.salvage_access  (per-query opt-in flags)
+          - self.salvage_index      (registered substitution paths;
+                                     populated by domain register_with_resolver
+                                     calls and by salvage_index_expander)
+        Returns True if any missing item is salvageable from either source.
+        """
+        for item in missing:
+            if context.salvage_access.get(item, False):
+                return True
+            if self.salvage_index.get(item):
+                return True
+        return False
 
     def _assess_salvage_risk(self, node: ProcessNode,
                             context: QueryContext) -> float:
-        """0–1 risk score for missing components."""
+        """0–1 risk score for missing components.
+
+        An item counts as sourceable if either the per-query
+        salvage_access flag is True OR the resolver's salvage_index
+        has a non-empty source list for it.
+        """
         missing = [e for e in node.equipment
                   if e not in context.equipment_on_hand]
         if not missing:
             return 0.0
-        sourceable = sum(1 for m in missing
-                        if context.salvage_access.get(m, False))
-        return 1.0 - (sourceable / len(missing)) if missing else 0.0
+
+        def is_sourceable(item: str) -> bool:
+            if context.salvage_access.get(item, False):
+                return True
+            return bool(self.salvage_index.get(item))
+
+        sourceable = sum(1 for m in missing if is_sourceable(m))
+        return 1.0 - (sourceable / len(missing))
 
     def _map_all_closures(self, tree: Dict, context: QueryContext) -> Dict:
         """For each open node, list what would close it and fallback branches."""
