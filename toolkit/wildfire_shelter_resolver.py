@@ -1,8 +1,8 @@
 # wildfire_shelter_resolver.py
-# Real-time survival constraint navigation
-# CC0 | falsifiable | offline-capable
+# Relational + GPS hybrid navigation for emergency shelter
+# CC0 | falsifiable | offline-capable + cell-enhanced
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Dict, Optional, Tuple
 from enum import Enum
 
@@ -11,192 +11,244 @@ class TerrainType(Enum):
     CREEK_BED = "creek_bed"
     CULVERT = "culvert"
     ROCK_OUTCROP = "rock_outcrop"
+    GRAVEL_PIT = "gravel_pit"
     DENSE_FOREST = "dense_forest"
     OPEN_FIELD = "open_field"
     RAVINE = "ravine"
     WATER_BODY = "water_body"
 
 class ShelterRating(Enum):
-    CRITICAL = 1  # Immediate life risk
-    POOR = 2      # Survival possible, high discomfort
-    MARGINAL = 3  # Viable short-term
-    GOOD = 4      # Solid protection
-    OPTIMAL = 5   # Best available option
+    CRITICAL = 1
+    POOR = 2
+    MARGINAL = 3
+    GOOD = 4
+    OPTIMAL = 5
 
 @dataclass
 class TerrainFeature:
-    """Known landmark on your corridor."""
+    """Known landmark on corridor."""
     id: str
     name: str
     terrain_type: TerrainType
-    location: Tuple[float, float]  # lat, lon OR mile marker + offset
-    distance_minutes_foot: int  # From highway at sprint pace
+    coordinates: Tuple[float, float]  # lat, lon (from topo lookup or memory)
+    relational_description: str  # "lake off right from Trigo", "gravel pit 2min north of 63 pulloff"
+    distance_minutes_foot: int  # Sprint pace
     oxygen_duration_hours: float
     heat_exposure_risk: str  # "low", "medium", "high"
     water_access: bool
     exit_viability: str  # "easy", "moderate", "difficult"
-    signaling_options: List[str]  # "visible_from_road", "cell_strength", "clear_sky"
+    signaling_options: List[str]  # "visible_from_road", "cell_dead_zone", "open_sky"
+    wind_protection: str  # "excellent", "good", "marginal", "none"
     notes: str
 
 @dataclass
+class RelationalAnchor:
+    """Known location node in your mental map."""
+    id: str
+    name: str  # "sixty-three pulloff", "Trigo", "Superior bridge"
+    coordinates: Tuple[float, float]
+    description: str
+
+@dataclass
+class RelationalDirection:
+    """Describes terrain relative to anchor."""
+    from_anchor: str
+    bearing: str  # "north", "south", "east", "west", "northeast", etc.
+    terrain_features: List[TerrainFeature]  # What's reachable in that direction
+
+@dataclass
 class VehicleState:
-    position: Tuple[float, float]  # lat, lon OR mile marker
+    current_anchor: str  # "at sixty-three pulloff"
+    heading: str  # "north toward Trigo"
+    coordinates: Optional[Tuple[float, float]]  # GPS if available
     operable: bool
     fuel_remaining_miles: int
     occupants: int
-    equipment_on_hand: List[str]  # Water, blanket, fire extinguisher, flare, etc.
+    equipment_on_hand: List[str]
 
 @dataclass
 class IncidentContext:
     wind_speed_mph: int
-    wind_direction: str  # "from_N", "from_NE", etc.
+    wind_direction: str  # "from_west", "from_north", etc.
     fire_proximity_miles: float
     visibility_meters: int
-    smoke_inhalation_risk: str  # "low", "medium", "high"
+    smoke_inhalation_risk: str
 
 class WildfirerShelterResolver:
     """
-    Given vehicle position + incident context,
-    return ranked shelter options with viability scores and escape chains.
+    Hybrid relational + GPS navigation for shelter discovery.
+    Input: relational position ("at 63, heading north to Trigo")
+    Output: ranked shelters in both relational + GPS terms
     """
 
     def __init__(self):
+        self.anchors: Dict[str, RelationalAnchor] = {}
         self.terrain_library: Dict[str, TerrainFeature] = {}
+        self.relational_map: Dict[str, List[RelationalDirection]] = {}
+
+    def register_anchor(self, anchor: RelationalAnchor) -> None:
+        """Add known landmark to mental map."""
+        self.anchors[anchor.id] = anchor
 
     def register_terrain(self, feature: TerrainFeature) -> None:
-        """Add known landmark to your corridor memory."""
+        """Add terrain feature; optionally tied to relational context."""
         self.terrain_library[feature.id] = feature
 
+    def register_relational_direction(self, anchor_id: str,
+                                     direction: RelationalDirection) -> None:
+        """Map what's reachable from an anchor in a given direction."""
+        if anchor_id not in self.relational_map:
+            self.relational_map[anchor_id] = []
+        self.relational_map[anchor_id].append(direction)
+
     def query(self, vehicle_state: VehicleState,
-              incident: IncidentContext,
-              search_radius_miles: float = 5.0) -> Dict:
+              incident: IncidentContext) -> Dict:
         """
-        Returns ranked shelter options + escape chains.
-        Primary output: immediate action sequence.
+        Given relational position + incident, return ranked shelters
+        in both relational + GPS language.
         """
-        candidates = self._find_nearby_terrain(
-            vehicle_state.position, search_radius_miles
+        # Resolve relational position to coordinates
+        anchor = self.anchors.get(vehicle_state.current_anchor)
+        if not anchor:
+            return {"error": f"Anchor '{vehicle_state.current_anchor}' not found"}
+
+        # Find terrain features in heading direction
+        heading_features = self._find_features_by_direction(
+            vehicle_state.current_anchor, vehicle_state.heading
         )
-        scored = self._score_shelters(
-            candidates, vehicle_state, incident
-        )
-        ranked = sorted(scored, key=lambda x: x["viability"], reverse=True)
+
+        # Score each by survivability
+        scored = self._score_shelters(heading_features, vehicle_state, incident)
+        ranked = sorted(scored, key=lambda x: x["viability_score"], reverse=True)
 
         return {
+            "current_position_relational": f"{vehicle_state.current_anchor}, heading {vehicle_state.heading}",
+            "current_position_gps": anchor.coordinates if anchor else None,
             "immediate_action": ranked[0] if ranked else None,
             "ranked_options": ranked,
             "fallback_chains": self._build_fallback_chains(ranked),
-            "signaling_priority": self._signaling_plan(ranked[0] if ranked else None),
-            "time_to_viability": self._estimate_timeline(ranked[0] if ranked else None, vehicle_state)
+            "signaling_plan": self._signaling_plan(ranked[0] if ranked else None, anchor),
+            "time_to_shelter": ranked[0]["distance_minutes"] if ranked else None,
+            "wind_interaction": self._assess_wind(ranked[0] if ranked else None, incident)
         }
 
-    def _find_nearby_terrain(self, position: Tuple, radius: float) -> List[TerrainFeature]:
+    def _find_features_by_direction(self, anchor_id: str,
+                                   heading: str) -> List[TerrainFeature]:
         """
-        Memory-first: return features you know near this position.
-        If GPS + cell available, could supplement with topo API query.
+        Return terrain features reachable from anchor in given direction.
+        Heading = "north toward Trigo", "south", etc.
         """
-        # Simplified: iterate library, filter by distance
-        candidates = []
-        for feature in self.terrain_library.values():
-            dist = self._haversine(position, feature.location)
-            if dist <= radius:
-                candidates.append(feature)
-        return candidates
+        if anchor_id not in self.relational_map:
+            return []
 
-    def _score_shelters(self, candidates: List[TerrainFeature],
-                       vehicle: VehicleState, incident: IncidentContext) -> List[Dict]:
+        # Parse heading direction
+        heading_primary = heading.split()[0].lower()  # "north" from "north toward Trigo"
+
+        features = []
+        for rel_dir in self.relational_map[anchor_id]:
+            if heading_primary in rel_dir.bearing.lower():
+                features.extend(rel_dir.terrain_features)
+
+        return features
+
+    def _score_shelters(self, features: List[TerrainFeature],
+                       vehicle: VehicleState,
+                       incident: IncidentContext) -> List[Dict]:
         """
-        Composite score: oxygen duration × heat protection × reachability × exit viability.
+        Score: oxygen duration × heat protection × reachability × exit viability.
+        Modulated by wind direction relative to fire approach.
         """
         results = []
-        for feature in candidates:
-            # Oxygen score
+        for feature in features:
+            # Oxygen score (longer = higher)
             oxygen_score = min(feature.oxygen_duration_hours / 2.0, 1.0)
 
-            # Heat exposure (inverse)
+            # Heat exposure (inverse; lower risk = higher score)
             heat_map = {"low": 1.0, "medium": 0.6, "high": 0.3}
             heat_score = heat_map.get(feature.heat_exposure_risk, 0.5)
 
-            # Reachability (can you sprint there before fire reaches you?)
-            fire_arrival_minutes = (incident.fire_proximity_miles /
-                                   (incident.wind_speed_mph / 60))
-            reachability_score = (1.0 if feature.distance_minutes_foot < fire_arrival_minutes
-                                 else 0.5)
+            # Reachability (faster = higher)
+            reach_score = 1.0 - min(feature.distance_minutes_foot / 10.0, 1.0)
 
             # Exit viability
             exit_map = {"easy": 1.0, "moderate": 0.7, "difficult": 0.4}
             exit_score = exit_map.get(feature.exit_viability, 0.5)
 
+            # Wind protection (if wind is adverse, protection matters more)
+            wind_mult = 1.2 if incident.wind_speed_mph > 50 else 1.0
+            wind_map = {"excellent": 1.0, "good": 0.8, "marginal": 0.5, "none": 0.2}
+            wind_score = wind_map.get(feature.wind_protection, 0.5) * wind_mult
+
             # Composite
-            viability = (oxygen_score * 0.35 + heat_score * 0.35 +
-                        reachability_score * 0.2 + exit_score * 0.1)
+            viability = (oxygen_score * 0.25 + heat_score * 0.25 +
+                        reach_score * 0.2 + exit_score * 0.15 + wind_score * 0.15)
 
             results.append({
-                "shelter_id": feature.id,
+                "feature_id": feature.id,
                 "name": feature.name,
-                "terrain": feature.terrain_type.value,
+                "relational": feature.relational_description,
+                "gps": feature.coordinates,
+                "terrain_type": feature.terrain_type.value,
                 "distance_minutes": feature.distance_minutes_foot,
-                "viability": viability,
                 "oxygen_hours": feature.oxygen_duration_hours,
-                "heat_risk": feature.heat_exposure_risk,
+                "viability_score": viability,
+                "oxygen_score": oxygen_score,
+                "heat_score": heat_score,
+                "reachability_score": reach_score,
+                "exit_score": exit_score,
                 "water_access": feature.water_access,
-                "exit_viability": feature.exit_viability,
                 "signaling": feature.signaling_options,
                 "notes": feature.notes
             })
 
         return results
 
-    def _build_fallback_chains(self, ranked: List[Dict]) -> List[List[str]]:
+    def _build_fallback_chains(self, ranked: List[Dict]) -> List[Dict]:
         """
-        If primary shelter closes (blocked access, overcrowded, structural failure),
-        what's your sequence of alternatives?
-        Returns paths, not just single options.
+        If primary shelter closes (impassable, fills with smoke),
+        what's the next ranked option + ETA?
         """
-        chains = []
-        for i in range(len(ranked)):
-            chain = [ranked[j]["shelter_id"] for j in range(i, min(i + 3, len(ranked)))]
-            chains.append(chain)
-        return chains[:1]  # Return primary chain (first 3 options in rank order)
+        return [
+            {
+                "rank": i + 1,
+                "option": r["name"],
+                "relational": r["relational"],
+                "viability": r["viability_score"],
+                "minutes_from_primary": sum(ranked[j]["distance_minutes"]
+                                           for j in range(i)) if i > 0 else 0
+            }
+            for i, r in enumerate(ranked[:3])  # Top 3 fallbacks
+        ]
 
-    def _signaling_plan(self, primary: Optional[Dict]) -> Dict:
+    def _signaling_plan(self, primary_shelter: Optional[Dict],
+                       anchor: Optional[RelationalAnchor]) -> Dict:
         """
-        From this shelter, how do you signal for rescue?
-        Ranked by effectiveness.
+        Once sheltered, how do you signal for rescue?
+        GPS coordinates for emergency services.
         """
-        if not primary:
-            return {"options": [], "notes": "No viable shelter found"}
-
-        signaling = primary.get("signaling", [])
-        return {
-            "options": signaling,
-            "primary": signaling[0] if signaling else "none",
-            "notes": f"From {primary['name']}: {', '.join(signaling)}"
-        }
-
-    def _estimate_timeline(self, primary: Optional[Dict],
-                          vehicle: VehicleState) -> Dict:
-        """
-        How long until you're in shelter? How long can you stay?
-        """
-        if not primary:
-            return {"status": "no_shelter_found", "recommendation": "move_vehicle"}
+        if not primary_shelter:
+            return {"error": "No viable shelter"}
 
         return {
-            "minutes_to_shelter": primary["distance_minutes"],
-            "oxygen_duration_hours": primary["oxygen_hours"],
-            "safe_margin_minutes": max(0, 5 - primary["distance_minutes"]),
-            "recommendation": "GO NOW" if primary["distance_minutes"] < 3 else "MOVE SOON"
+            "gps_coordinates": primary_shelter["gps"],
+            "signaling_methods": primary_shelter["signaling"],
+            "emergency_message": f"Sheltered at {primary_shelter['name']}, "
+                               f"{primary_shelter['relational']}, "
+                               f"coordinates {primary_shelter['gps']}"
         }
 
-    def _haversine(self, pos1: Tuple[float, float],
-                   pos2: Tuple[float, float]) -> float:
-        """Simple distance calc. Replace with geodesic if needed."""
-        from math import radians, cos, sin, asin, sqrt
-        lon1, lat1, lon2, lat2 = map(radians, [pos1[1], pos1[0], pos2[1], pos2[0]])
-        dlon = lon2 - lon1
-        dlat = lat2 - lat1
-        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-        c = 2 * asin(sqrt(a))
-        km = 6371 * c
-        return km * 0.621371  # Convert to miles
+    def _assess_wind(self, primary_shelter: Optional[Dict],
+                    incident: IncidentContext) -> Dict:
+        """
+        How does wind + fire direction interact with chosen shelter?
+        """
+        if not primary_shelter:
+            return {}
+
+        return {
+            "wind_speed": incident.wind_speed_mph,
+            "wind_direction": incident.wind_direction,
+            "shelter_protection": primary_shelter.get("wind_protection", "unknown"),
+            "fire_proximity_miles": incident.fire_proximity_miles,
+            "risk_assessment": "CRITICAL" if incident.fire_proximity_miles < 1.0 else "HIGH"
+        }
