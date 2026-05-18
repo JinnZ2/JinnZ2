@@ -1,5 +1,5 @@
 # stone_domain.py
-# Substrate domain: limestone, sandstone, niece → cement, mortar, glass, aggregate, lime
+# Substrate domain: limestone, sandstone, gneiss → cement, mortar, glass, aggregate, lime
 # CC0 | falsifiable
 
 from salvage_chemistry_resolver import (
@@ -12,7 +12,7 @@ def stone_expander(parent, query) -> List:
     Stone composition + processing:
       Limestone (CaCO3): heating → quicklime (CaO) + CO2
       Sandstone (SiO2 + binder): grinding → silica sand, or fuse for glass
-      Niece (varied, typically feldspar/quartz mix): crush → aggregate or flux
+      Gneiss (varied, typically feldspar/quartz mix): crush → aggregate or flux
 
     Property handles:
       Heat → decomposition (limestone → lime)
@@ -152,6 +152,6 @@ STONE_SALVAGE = {
 def register_with_resolver(resolver):
     resolver.register_domain("limestone", stone_expander)
     resolver.register_domain("sandstone", stone_expander)
-    resolver.register_domain("niece", stone_expander)
+    resolver.register_domain("gneiss", stone_expander)
     resolver.register_domain("stone", stone_expander)
     resolver.salvage_index.update(STONE_SALVAGE)
