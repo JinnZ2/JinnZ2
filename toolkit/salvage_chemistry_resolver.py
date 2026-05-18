@@ -1,7 +1,7 @@
 # salvage_chemistry_resolver.py
 # Probability-space tree navigator | CC0
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 from enum import Enum
 
@@ -10,6 +10,13 @@ class NodeStatus(Enum):
     CLOSED = "closed"
     CONDITIONAL = "conditional"
 
+class TransformMode(Enum):
+    EXTRACT = "extract"
+    FERMENT = "ferment"
+    THERMAL = "thermal"
+    HYBRID = "hybrid"
+    SYNTHESIZE = "synthesize"
+
 @dataclass
 class ClosureCondition:
     reason: str  # "missing_equipment", "time_exceeded", "temp_unstable"
@@ -17,17 +24,71 @@ class ClosureCondition:
     fallback_nodes: List[str]  # Alternative branches if this closes
 
 @dataclass
-class ProcessNode:
+class Constraint:
+    """
+    Bundled requirements for a Node. Translated by Node.__post_init__
+    into the flat navigation fields the resolver uses internally.
+    """
+    equipment_required: List[str] = field(default_factory=list)
+    components_required: List[str] = field(default_factory=list)
+    min_dwell_hours: int = 0
+    temp_range_c: tuple = (0, 100)
+    fallback_paths: List[str] = field(default_factory=list)
+
+@dataclass
+class Node:
+    """
+    A transformation step in the substrate -> product graph.
+
+    Two construction styles are supported:
+
+    Spec style (domain authors):
+        Node(id="...", description="...", transform=TransformMode.X,
+             success_probability=..., constraints=Constraint(...))
+        __post_init__ translates the constraints fields to the flat
+        navigation fields used internally by the resolver.
+
+    Direct style (eager-tree building, original API):
+        Node(id="...", mode="...", energy_cost="...",
+             dwell_hours=..., equipment=[...], temp_range=(low, high),
+             success_probability=..., status=..., closure_conditions=[...],
+             child_nodes=[...])
+    """
     id: str
-    mode: str  # "ferment", "heat", "extract", "build", "hybrid"
-    energy_cost: str  # "low", "medium", "high"
-    dwell_hours: int
-    equipment: List[str]
-    temp_range: tuple  # (min, max) Celsius
-    success_probability: float  # 0–1
-    status: NodeStatus
-    closure_conditions: List[ClosureCondition]
-    child_nodes: List['ProcessNode']  # Next spike-out
+    # Spec-style optional fields (domain authors set these):
+    description: str = ""
+    transform: Optional[TransformMode] = None
+    constraints: Optional[Constraint] = None
+    # Navigation fields (auto-populated from spec when not set directly):
+    mode: str = ""  # "ferment", "thermal", "extract", "synthesize", "hybrid"
+    energy_cost: str = "medium"  # "low", "medium", "high"
+    dwell_hours: int = 0
+    equipment: List[str] = field(default_factory=list)
+    temp_range: tuple = (-273, 1000)  # (min, max) Celsius, permissive default
+    success_probability: float = 1.0  # 0–1
+    status: NodeStatus = NodeStatus.OPEN
+    closure_conditions: List[ClosureCondition] = field(default_factory=list)
+    child_nodes: List["Node"] = field(default_factory=list)  # Next spike-out
+
+    def __post_init__(self):
+        if self.transform is not None and not self.mode:
+            self.mode = self.transform.value
+        if self.constraints is not None:
+            if not self.equipment:
+                self.equipment = list(self.constraints.equipment_required)
+            if self.dwell_hours == 0:
+                self.dwell_hours = self.constraints.min_dwell_hours
+            if self.temp_range == (-273, 1000):
+                self.temp_range = self.constraints.temp_range_c
+            if self.constraints.fallback_paths and not self.closure_conditions:
+                self.closure_conditions.append(ClosureCondition(
+                    reason="missing_equipment",
+                    status=NodeStatus.CONDITIONAL,
+                    fallback_nodes=list(self.constraints.fallback_paths),
+                ))
+
+# Backwards-compat alias for the eager-tree shape used previously.
+ProcessNode = Node
 
 @dataclass
 class QueryContext:
@@ -38,15 +99,36 @@ class QueryContext:
     equipment_on_hand: List[str]
     salvage_access: Dict[str, bool]  # What can you source last-minute?
 
+# Backwards-compat alias for the domain-author vocabulary.
+Query = QueryContext
+
 class ProbabilityTreeResolver:
     def __init__(self):
         self.domains = {}  # "black_beans", "tallow", etc.
         self.transformation_trees = {}
+        # Lazy-expansion registry: feedstock -> Callable[[Node, Query], List[Node]]
+        # Used by domain files (e.g. black_beans_domain) that spike branches
+        # out from a parent node on demand rather than pre-building the tree.
+        self.expanders = {}
+        # Shared substitution map: component_name -> [salvage_source_names].
+        # Domain files extend this in their register_with_resolver(resolver).
+        self.salvage_index = {}
 
-    def register_domain(self, feedstock: str, tree: ProcessNode):
-        """Add a feedstock domain with its transformation tree."""
-        self.domains[feedstock] = tree
-        self.transformation_trees[feedstock] = tree
+    def register_domain(self, feedstock: str, tree_or_expander):
+        """
+        Register a feedstock domain.
+
+        tree_or_expander accepts either:
+          - A Node (or ProcessNode) for eager-tree registration, or
+          - A callable (parent: Node, query: Query) -> List[Node] for
+            lazy expansion (the spike-out pattern used by domain files
+            like black_beans_domain and battery_domain).
+        """
+        if callable(tree_or_expander) and not isinstance(tree_or_expander, Node):
+            self.expanders[feedstock] = tree_or_expander
+        else:
+            self.domains[feedstock] = tree_or_expander
+            self.transformation_trees[feedstock] = tree_or_expander
 
     def navigate(self, context: QueryContext) -> Dict:
         """
@@ -55,9 +137,22 @@ class ProbabilityTreeResolver:
         2. Time feasibility (dwell + available window)
         3. Equipment + salvage closure risk
         """
-        root = self.transformation_trees.get(context.feedstock)
-        if not root:
-            return {"error": f"Domain '{context.feedstock}' not registered"}
+        if context.feedstock in self.expanders:
+            # Lazy-expansion path: invoke the registered expander into
+            # a synthetic root whose constraints permit pass-through to
+            # its children.
+            expander = self.expanders[context.feedstock]
+            root = Node(
+                id=f"{context.feedstock}_root",
+                description=f"Root for {context.feedstock}",
+                success_probability=1.0,
+                temp_range=(context.temp_constraint, 1000),
+            )
+            root.child_nodes = list(expander(root, context))
+        else:
+            root = self.transformation_trees.get(context.feedstock)
+            if not root:
+                return {"error": f"Domain '{context.feedstock}' not registered"}
 
         tree = self._build_traversal_tree(
             root, context.target_property, context
@@ -85,6 +180,7 @@ class ProbabilityTreeResolver:
 
         return {
             "id": node.id,
+            "description": node.description,
             "mode": node.mode,
             "dwell_hours": node.dwell_hours,
             "success_probability": node.success_probability,
