@@ -223,8 +223,61 @@ class VoiceOrchestrator_WithDissent:
     def optics_translator(self, validated):
         return self._translator.translate(validated)
 
-    def voice_synthesis(self, optics):
-        return self._synthesizer.to_speech(optics)
+    def voice_synthesis(self, optics, merged=None):
+        """
+        Extends VoiceOrchestrator.to_speech with a dissent section
+        drawn from the merged dict.
+
+        Without `merged`, behaves identically to the base to_speech.
+        With `merged`, appends a 'WHAT BREAKS IT' checklist of the
+        obligation short-names, a 'Verify by observing' line carrying
+        the falsifier prompt, and the dissent confidence.
+        """
+        base = self._synthesizer.to_speech(optics)
+        if not merged:
+            return base
+
+        lines = []
+        breaks_if = merged.get("BUT_breaks_if") or []
+        falsifier = merged.get("verify_by_observing") or ""
+        conf_dissent = merged.get("confidence_dissent", 0)
+
+        if breaks_if:
+            lines.append("")
+            lines.append("What breaks it (check these as you go):")
+            for name in self._obligation_short_names(breaks_if):
+                lines.append(f"  - {name}")
+
+        if falsifier:
+            lines.append("")
+            # Drop the obligation prefix from the falsifier prompt for
+            # cleaner speech output.
+            falsifier_text = falsifier
+            if ":" in falsifier_text:
+                falsifier_text = falsifier_text.split(":", 1)[1].strip()
+            lines.append(f"Verify by observing: {falsifier_text}")
+
+        if conf_dissent:
+            lines.append("")
+            lines.append(f"Dissent confidence: {conf_dissent}")
+
+        if not lines:
+            return base
+        return base + "\n" + "\n".join(lines)
+
+    def _obligation_short_names(self, prompts) -> list:
+        """
+        Pull 'ASSUMPTION_AUDIT' style heads from FormalizedDissent's
+        full obligation prompts ('ASSUMPTION_AUDIT: List every...').
+        Returns title-cased short names suitable for speech.
+        """
+        names = []
+        for p in prompts:
+            if not isinstance(p, str) or ":" not in p:
+                continue
+            head = p.split(":", 1)[0].strip()
+            names.append(head.replace("_", " ").title())
+        return names
 
     # ------------------------------------------------------------------
     # Dissent checkpoint
@@ -312,6 +365,7 @@ class VoiceOrchestrator_WithDissent:
         simulated = self.sim_runner(merged)
         validated = self.validator(simulated)
         optics = self.optics_translator(validated)
-        voice_output = self.voice_synthesis(optics)
+        # Pass merged through so voice_synthesis can surface dissent.
+        voice_output = self.voice_synthesis(optics, merged=merged)
 
         return voice_output
