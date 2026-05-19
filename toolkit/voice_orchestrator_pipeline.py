@@ -140,6 +140,7 @@ class EnergyEnglishGate:
         # Constraint extraction
         time_hours = self._extract_time(text)
         equipment = self._extract_equipment(text)
+        emotional_signals = self._extract_emotional_signals(text)
 
         # Domain routing
         domain = self._route_domain(detected_feedstock, target_output, text)
@@ -153,8 +154,55 @@ class EnergyEnglishGate:
             time_available_hours=time_hours,
             equipment_on_hand=equipment,
             constraints={"context": query.context},
-            confidence=confidence
+            confidence=confidence,
+            emotional_signals=emotional_signals,
         )
+
+    def _extract_emotional_signals(self, text: str) -> Dict:
+        """
+        Light-touch keyword sniff for operator/team state from the
+        spoken query. Emotion-aware sensor data (sidecar stream)
+        overrides anything detected here -- see
+        VoiceOrchestrator.process(sensor_snapshot=...).
+        """
+        signals: Dict = {}
+
+        stress_keywords = (
+            "stressed", "stress", "anxious", "anxiety", "tense", "wound up"
+        )
+        if any(kw in text for kw in stress_keywords):
+            signals["stress_level"] = "high"
+
+        fatigue_keywords = (
+            "tired", "exhausted", "fatigue", "fatigued", "drained", "wiped"
+        )
+        if any(kw in text for kw in fatigue_keywords):
+            signals["fatigue"] = "high"
+
+        burnout_keywords = ("burnt out", "burned out", "burnout")
+        if any(kw in text for kw in burnout_keywords):
+            signals["burnout"] = 0.8
+
+        panic_keywords = ("panic", "panicking", "freaking out")
+        if any(kw in text for kw in panic_keywords):
+            signals["panic"] = True
+
+        urgent_keywords = ("urgent", "rushing", "no time", "right now")
+        if any(kw in text for kw in urgent_keywords):
+            signals["urgent"] = True
+
+        coherence_keywords = (
+            "team isn't working", "team fractured", "we aren't aligned",
+            "not on the same page"
+        )
+        if any(kw in text for kw in coherence_keywords):
+            signals["team_coherence"] = 0.3
+
+        calm_keywords = ("calm", "steady", "i'm fine", "i am fine")
+        if any(kw in text for kw in calm_keywords):
+            signals.setdefault("stress_level", "low")
+
+        return signals
 
     def _extract_time(self, text: str) -> Optional[int]:
         """Pull time estimate from query."""
@@ -398,12 +446,23 @@ class VoiceOrchestrator:
         self.validator = PhysicsValidator()
         self.translator = OpticsTranslator()
 
-    def process(self, voice_query: VoiceQuery) -> OpticsOutput:
+    def process(self, voice_query: VoiceQuery,
+                sensor_snapshot: Optional[Dict] = None) -> OpticsOutput:
         """
         End-to-end pipeline execution.
+
+        sensor_snapshot: optional dict of emotion/somatic sensor readings
+        (Emotions-as-Sensors sidecar stream). When supplied, it is merged
+        into constrained.emotional_signals AFTER the parse-time keyword
+        extractor runs, so direct sensor readings override anything the
+        keyword sniff inferred.
         """
         # Stage 1: Constraint gate
         constrained = self.gate.parse(voice_query)
+
+        # Sidecar sensor merge: sensor readings override keyword-inferred ones.
+        if sensor_snapshot:
+            constrained.emotional_signals.update(sensor_snapshot)
 
         # Stage 2: Dispatcher routes to resolver
         resolver_result = self.dispatcher.dispatch(constrained)
