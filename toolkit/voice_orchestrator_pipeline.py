@@ -2,7 +2,7 @@
 # Voice → energy_english constraint gate → resolver dispatcher → sim runner → optics translator → voice
 # CC0 | mobile-queryable | offline-capable with cell enhancement
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Dict, Optional, Callable
 from enum import Enum
 import json
@@ -47,6 +47,14 @@ class ConstrainedQuery:
     equipment_on_hand: List[str] = None
     constraints: Dict = None  # Wind, temp, hazard context
     confidence: float = 0.0  # How certain is the parse?
+    # Emotional / somatic sensor readings, keyed by sensor name (e.g.
+    # "stress_level", "team_coherence", "burnout", "anxiety", "fatigue").
+    # Values are whatever the upstream sensor produces (str / float / dict).
+    # Existing resolvers ignore this field; emotion-aware code reads and
+    # writes it. Wedge point for the Emotions-as-Sensors framework
+    # (github.com/JinnZ2/Emotions-as-Sensors) without committing to its
+    # API shape yet.
+    emotional_signals: Dict = field(default_factory=dict)
 
 @dataclass
 class ResolverResult:
