@@ -137,6 +137,11 @@ class QueryContext:
     equipment_on_hand: List[str] = field(default_factory=list)
     salvage_access: Dict[str, bool] = field(default_factory=dict)
     components_on_hand: List[str] = field(default_factory=list)
+    # Optional emotion/somatic sensor readings (Emotions-as-Sensors
+    # wedge -- see ConstrainedQuery.emotional_signals). Resolvers that
+    # care can read this to modulate scoring; default empty = no
+    # modulation, identical to pre-wedge behavior.
+    emotional_signals: Dict = field(default_factory=dict)
 
     def __post_init__(self):
         # Mirror temp_constraint and temp_constraint_c so either name works.
@@ -311,12 +316,61 @@ class ProbabilityTreeResolver:
         return tree
 
     def _score_branch(self, node_tree: Dict, context: QueryContext) -> float:
-        """Composite score: probability × time_efficiency × (1 - salvage_friction)."""
+        """Composite score: probability × time_efficiency × (1 - salvage_friction)
+        × emotion_modulation (no-op when context.emotional_signals is empty)."""
         prob = node_tree["success_probability"]
         time_eff = 1.0 - min(node_tree["dwell_hours"] /
                             (context.time_available_days * 24), 1.0)
         salvage_friction = len(node_tree["missing_equipment"]) * 0.1
-        return prob * time_eff * max(1.0 - salvage_friction, 0.1)
+        emotion_factor = self._emotion_modulation_factor(node_tree, context)
+        return (prob * time_eff
+                * max(1.0 - salvage_friction, 0.1)
+                * emotion_factor)
+
+    def _emotion_modulation_factor(self, node_tree: Dict,
+                                   context: QueryContext) -> float:
+        """
+        Multiplicative scoring factor based on operator/team state.
+        Returns 1.0 when context.emotional_signals is empty -- so
+        callers that don't populate emotional_signals see identical
+        behavior to before this hook existed.
+
+        Heuristics (opt-in; tune via feedback_loop_module):
+          - High stress / panic / urgent  -> penalize long-dwell branches
+          - High fatigue / burnout         -> penalize hybrid / synthesize
+          - Low team_coherence             -> penalize hybrid (coordination)
+        """
+        signals = context.emotional_signals or {}
+        if not signals:
+            return 1.0
+
+        factor = 1.0
+        dwell = node_tree.get("dwell_hours", 0)
+        mode = (node_tree.get("mode") or "").lower()
+
+        stress_high = (
+            signals.get("stress_level") in ("high", "critical")
+            or signals.get("panic")
+            or signals.get("urgent")
+        )
+        if stress_high and dwell > 24:
+            factor *= 0.6
+
+        fatigue_high = (
+            signals.get("fatigue") in ("high", "critical")
+            or (isinstance(signals.get("burnout"), (int, float))
+                and signals["burnout"] > 0.5)
+        )
+        if fatigue_high and mode in ("hybrid", "synthesize"):
+            factor *= 0.7
+
+        coherence = signals.get("team_coherence")
+        if (isinstance(coherence, (int, float))
+                and coherence < 0.5
+                and mode == "hybrid"):
+            factor *= 0.8
+
+        return factor
 
     def _can_salvage(self, missing: List[str], context: QueryContext) -> bool:
         """
