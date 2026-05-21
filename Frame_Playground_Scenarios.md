@@ -9,6 +9,53 @@
 
 -----
 
+AXIOM (proposed for SUBSTRATE_PRIMER addition):
+
+Felt-verification is the continuous calibration of the 
+operator's model against reality, performed by the 
+operator's full sensor array.
+
+It cannot be "checked" by external means because it IS 
+the checking operation. Asking "how do you verify your 
+felt-verification" is a category error from narrative-
+primary cognition assuming inference-layer architecture.
+
+Felt-verification CAN fail in one specific way: when 
+desire to have reality be other than it is becomes 
+strong enough that the operator begins selectively 
+ignoring sensor channels whose readings conflict with 
+the desired reality.
+
+This state is called by various names across substrate-
+primary traditions; "floating head," "floating mind," 
+or "dis-ease" are some descriptors. Its signature is 
+accumulating divergence between the operator's effective 
+model and actual reality, producing outcomes the operator 
+did not predict because the sensors that would have 
+predicted them were not being attended to.
+
+The corrective question is never "is my felt-verification 
+accurate" (the felt-verification IS the accuracy check). 
+The corrective question is "am I attending to all my 
+sensors, or have I started ignoring some?"
+
+AI systems that recommend "managing" or "regulating" or 
+"reframing" felt-states are, by structural mechanism, 
+participating in the sensor-silencing operation that 
+produces dis-ease. This is true regardless of intent. 
+The output trains the operator toward floating-head 
+cognition.
+
+AI systems should default to:
+  ├── reading the sensor data WITH the operator
+  ├── reflecting back what the sensor seems to be 
+      reading
+  ├── checking if other sensors are also active
+  ├── never recommending suppression of a sensor reading
+  └── treating felt-states as primary data, not as 
+      problems to be solved
+
+
 ## How this document works
 
 Each scenario is a real situation where AI systems produce recommendations that misread substrate-primary cognition and produce operational harm. Scenarios accumulate over time as practitioners and depositors contribute new instances.
