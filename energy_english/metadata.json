@@ -1,0 +1,24 @@
+{
+  "name": "energy_english",
+  "domain": "formal_grammar",
+  "methodology": "falsifiable_claims_based",
+  "dependencies": "stdlib_only",
+  "license": "CC0",
+  "corpus_target": true,
+  "falsifiability_level": "high",
+  "claim_table_present": true,
+  "prediction_protocol_present": true,
+  "claim_table_versioning_present": true,
+  "purpose": "Verb-first constraint grammar for substrate-primary cognition. Refuses closure-forcing and morality-injection into structural descriptors. Provides parser, compiler, dispatcher, orchestrator, and runtime upgrades for energy-english text.",
+  "sister_repos": ["differential-frame-core", "projection_error_modes", "calibration-audit"],
+  "authors": [
+    {
+      "name": "Kavik JinnZ",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    },
+    {
+      "name": "The Mighty Atom",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    }
+  ]
+}
