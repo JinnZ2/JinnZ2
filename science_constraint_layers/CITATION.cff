@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "science_constraint_layers"
+message: "If you use this software, please cite it using these metadata."
+authors:
+  - family-names: "JinnZ"
+    given-names: "Kavik"
+    affiliation: "JinnZ2 CC0 Foundation"
+  - name: "The Mighty Atom"
+    affiliation: "JinnZ2 CC0 Foundation"
+license: CC0-1.0
+repository-code: "https://github.com/JinnZ2/science_constraint_layers"
+date-released: "2026-05-24"
+keywords:
+  - public-domain
+  - cc0
+  - falsifiable
+  - stdlib-only
+  - systems
+  - coupled_dynamics

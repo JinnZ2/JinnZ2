@@ -1,0 +1,24 @@
+{
+  "name": "constraint_pipeline",
+  "domain": "formal_grammar",
+  "methodology": "falsifiable_claims_based",
+  "dependencies": "stdlib_only",
+  "license": "CC0",
+  "corpus_target": true,
+  "falsifiability_level": "high",
+  "claim_table_present": true,
+  "prediction_protocol_present": true,
+  "claim_table_versioning_present": true,
+  "purpose": "Seven-module pipeline that encodes, validates, tokenizes, and routes text by constraint geometry rather than token frequency. Extends energy_english from documentation/spec into runnable detectors. CC0, stdlib only (Anthropic API call is optional).",
+  "sister_repos": ["energy_english", "projection_error_modes", "calibration-audit"],
+  "authors": [
+    {
+      "name": "Kavik JinnZ",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    },
+    {
+      "name": "The Mighty Atom",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    }
+  ]
+}

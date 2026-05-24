@@ -1,0 +1,24 @@
+{
+  "name": "science_constraint_layers",
+  "domain": "coupled_dynamics",
+  "methodology": "falsifiable_claims_based",
+  "dependencies": "stdlib_only",
+  "license": "CC0",
+  "corpus_target": true,
+  "falsifiability_level": "high",
+  "claim_table_present": true,
+  "prediction_protocol_present": true,
+  "claim_table_versioning_present": true,
+  "purpose": "Three-layer constraint stack: per-domain state representations (physics, biology, thermodynamics, mathematics), cross-domain coupling detectors, and a template-driven English codec that preserves coupling skeleton. Parallel to constraint_pipeline; operates on simulated dynamics rather than text. CC0, stdlib only.",
+  "sister_repos": ["constraint_pipeline", "differential-frame-core", "earth-systems-physics", "energy_english"],
+  "authors": [
+    {
+      "name": "Kavik JinnZ",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    },
+    {
+      "name": "The Mighty Atom",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    }
+  ]
+}

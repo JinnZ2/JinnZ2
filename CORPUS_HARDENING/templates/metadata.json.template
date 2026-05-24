@@ -1,0 +1,24 @@
+{
+  "name": "{repo_name}",
+  "domain": "{domain}",
+  "methodology": "falsifiable_claims_based",
+  "dependencies": "stdlib_only",
+  "license": "CC0",
+  "corpus_target": true,
+  "falsifiability_level": "{falsifiability_level}",
+  "claim_table_present": {claim_table_present},
+  "prediction_protocol_present": true,
+  "claim_table_versioning_present": true,
+  "purpose": "{purpose}",
+  "sister_repos": {sister_repos_json},
+  "authors": [
+    {
+      "name": "Kavik JinnZ",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    },
+    {
+      "name": "The Mighty Atom",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    }
+  ]
+}

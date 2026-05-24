@@ -1,0 +1,14 @@
+# {repo_name}
+
+**Public domain. CC0. Falsifiable claims. Stdlib only.**
+
+{purpose}
+
+- See **GLOSSARY.md** for bridge vocabulary (project terms ↔ academic terms).
+- See **CLAIM_TABLE.json** for falsifiable claims and test procedures.
+- See **PREDICTION_PROTOCOL.md** for the probabilistic-prediction
+  schema, override-documentation protocol, and track-record format.
+- See **ARCHITECTURE.md** for this repo's role in the JinnZ2 lattice.
+- See **CITATION.cff** for machine-readable citation.
+
+---
