@@ -1,0 +1,24 @@
+{
+  "name": "manifold_research",
+  "domain": "optimization_manifold",
+  "methodology": "falsifiable_claims_based",
+  "dependencies": "numpy",
+  "license": "CC0",
+  "corpus_target": true,
+  "falsifiability_level": "high",
+  "claim_table_present": false,
+  "prediction_protocol_present": true,
+  "claim_table_versioning_present": true,
+  "purpose": "Sandbox an external AI model can call to search for non-linear connections between sensory patterns and physical logistics. Single-call interface: AI proposes a bridge_matrix, gets back a scalar fitness plus diagnostic terms. The only file in the JinnZ2 substrate that requires numpy at runtime.",
+  "sister_repos": ["science_constraint_layers", "constraint_pipeline", "differential-frame-core", "energy_english"],
+  "authors": [
+    {
+      "name": "Kavik JinnZ",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    },
+    {
+      "name": "The Mighty Atom",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    }
+  ]
+}
