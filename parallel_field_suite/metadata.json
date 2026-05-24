@@ -1,0 +1,24 @@
+{
+  "name": "parallel_field_suite",
+  "domain": "coupled_dynamics",
+  "methodology": "falsifiable_claims_based",
+  "dependencies": "numpy",
+  "license": "CC0",
+  "corpus_target": true,
+  "falsifiability_level": "high",
+  "claim_table_present": false,
+  "prediction_protocol_present": true,
+  "claim_table_versioning_present": true,
+  "purpose": "Two non-sequential, non-narrative topologies for physical-values-first processing. SystemicViabilityModel: time-evolving audit ledger that penalizes speculative tech, community friction, and physical decay. ParallelPullTransformer: concurrent sensory + science processing with cross-attention modulation. Numpy required.",
+  "sister_repos": ["manifold_research", "science_constraint_layers", "constraint_pipeline", "energy_english"],
+  "authors": [
+    {
+      "name": "Kavik JinnZ",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    },
+    {
+      "name": "The Mighty Atom",
+      "affiliation": "JinnZ2 CC0 Foundation"
+    }
+  ]
+}
