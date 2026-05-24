@@ -38,6 +38,16 @@ Layer 2   language_codec.py
             hybrid              R-codes embedded in English
             english_marked      English with [R##] markers
             english_plain       English only (maximum info loss)
+
+Adjunct  geometric_metric_stdlib.py
+          Riemannian metric + basin repair controller.
+          FisherMetricEstimator, RepairEnergyAccumulator,
+          BasinDivergenceMonitor, kappa_eff, GeometricControllerStdlib.
+          Operates on any state vector (typically the Layer 1
+          integration_vector) with a user-supplied loss function.
+          Stdlib translation of FisherMetricEstimator + HVP machinery
+          from JinnZ2/Geometric-manifold-, finite-difference where
+          the source uses torch.autograd.
 ```
 
 Each layer is independently runnable. Each writes a falsifiable
@@ -121,6 +131,62 @@ python3 language_codec.py                  # Layer 0 + 1 + 2 demo (all 4 modes)
 
 The Layer 2 demo prints all four output modes against a fresh stack
 stepped forward 100 ticks.
+
+```bash
+python3 geometric_metric_stdlib.py         # adjunct controller demo
+```
+
+The adjunct demo runs a 4-dim quadratic loss with `theta_init = [1.0,
+-0.5, 0.8, -1.2]` for 20 controller steps. Expected: state enters
+basin (KL < ε_basin) within ~10 steps, spectral bound holds, Fisher
+validation rel-error < 0.05.
+
+---
+
+## Adjunct: `geometric_metric_stdlib.py`
+
+A stdlib translation of the Fisher metric + repair-energy controller
+from `JinnZ2/Geometric-manifold-`. Where the source uses
+`torch.autograd` for Hessian-vector products, this file uses central
+finite differences. Pure stdlib.
+
+Components:
+
+- `fd_gradient(f, x, epsilon)` — central-difference gradient.
+- `fd_hvp(f, x, v, epsilon)` — central-difference Hessian-vector product.
+- `FisherMetricEstimator` — diagonal Fisher Information Matrix as
+  local Riemannian metric `G(theta)`. Diagonal approximation; off-
+  diagonal coupling is a stated known limitation.
+- `RepairEnergyAccumulator` — `C_repair = Σ δ^T G δ`, with budget
+  + `recent_trend` early-warning ratio.
+- `BasinDivergenceMonitor` — KL-divergence basin check + negative-
+  gradient repair direction.
+- `kappa_eff(loss_fn, theta, theta_dot)` — Rayleigh quotient of the
+  safety Hessian along the current flow direction. Spike precedes
+  phase transition.
+- `power_iteration_lambda_max` — FD-HVP power iteration for the
+  largest Hessian eigenvalue.
+- `GeometricControllerStdlib` — wires the four monitors into a
+  single Riemannian-gradient-descent + trust-region step. Emits
+  `GeometricControllerState` per step (`stable | threshold |
+  critical`) and a merged `CLAIM_TABLE.geometric.json` on
+  `to_claim_table()`.
+
+**`ISS_PROOF_PENDING: True`** — inherited from the source repo.
+Input-to-state stability under adversarial perturbations is still
+open. This is empirical monitoring, not a robustness theorem.
+
+**Falsifiable claims**, each with explicit falsification condition,
+attached to the module: FD-Fisher within 5% for smooth low-coupling
+loss; FD-HVP < 1% off autograd; `kappa_eff` FD error < 10% outside
+high-curvature regions; energy trend > 2.0 precedes constraint
+violation within 10 steps; power iteration converges to true
+λ_max within 5% in 8 iterations.
+
+**Use cases inside this folder:**
+- repair Layer 1 `integration_vector` toward a reference basin
+- detect constraint drift in Layer 2 codec output
+- monitor any state vector in the stack with a user-supplied loss
 
 ---
 
