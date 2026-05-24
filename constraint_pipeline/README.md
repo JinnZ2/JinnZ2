@@ -27,8 +27,12 @@ frequency.
 | `bpe_constraint_tokenizer.py` | corpus (list of strings) | `BPEVocab` with merge rules + `CLAIM_TABLE.bpe.json` | stdlib |
 | `voice_tokenizer.py` | transcribed speech | `VoiceToken` list with prosodic types + `CLAIM_TABLE.voice.json` | stdlib |
 | `sdk_integration.py` | text | end-to-end pipeline result (encode → validate → API call → re-validate) | stdlib core; `anthropic` SDK optional |
+| `pipeline_runner.py` | text (or `--file corpus.txt`) | unified signal table (JSON + TSV) + merged `CLAIM_TABLE.pipeline.json` | all six modules above |
 
-All seven are independently runnable: `python3 <module>.py [text]`.
+All seven of the core modules are independently runnable:
+`python3 <module>.py [text]`. `pipeline_runner.py` chains them and
+emits `unified_signal_table.json` / `.tsv` plus the merged claim
+table (gitignored — regenerated on each run).
 
 ---
 
