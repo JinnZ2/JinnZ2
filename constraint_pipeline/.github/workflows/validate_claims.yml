@@ -1,0 +1,55 @@
+name: validate_claims
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Validate CLAIM_TABLE.json shape (if present)
+        run: |
+          if [ -f CLAIM_TABLE.json ]; then
+            python -c "import json,sys; json.load(open('CLAIM_TABLE.json')); print('CLAIM_TABLE.json: valid JSON')"
+          else
+            echo "No CLAIM_TABLE.json at root; skipping."
+          fi
+
+      - name: Validate metadata.json shape (if present)
+        run: |
+          if [ -f metadata.json ]; then
+            python -c "import json,sys; json.load(open('metadata.json')); print('metadata.json: valid JSON')"
+          fi
+
+      - name: Validate CITATION.cff exists
+        run: |
+          if [ -f CITATION.cff ]; then
+            echo "CITATION.cff: present"
+          else
+            echo "::warning::CITATION.cff missing"
+          fi
+
+      - name: Run tests (if any)
+        run: |
+          if [ -d tests ]; then
+            python -m pip install --upgrade pip pytest
+            python -m pytest tests/ -q
+          else
+            echo "No tests/ directory; skipping pytest."
+          fi
+
+      - name: Run validation script (if present)
+        run: |
+          if [ -f scripts/validate_claims.py ]; then
+            python scripts/validate_claims.py
+          fi
