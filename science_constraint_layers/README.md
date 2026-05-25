@@ -48,6 +48,26 @@ Adjunct  geometric_metric_stdlib.py
           Stdlib translation of FisherMetricEstimator + HVP machinery
           from JinnZ2/Geometric-manifold-, finite-difference where
           the source uses torch.autograd.
+
+Adjunct  generic_repair_controller.py
+          Domain-agnostic composition of GeometricControllerStdlib +
+          ConstraintState. Pass any ConstraintState (physics, biology,
+          thermo, math, or any new domain), and the controller drives
+          it toward constraint satisfaction via Riemannian gradient
+          descent on a smooth-penalty loss built from the domain's
+          constraint list. Ships with default smooth penalties for
+          known constraints; new domains supply their own via
+          penalty_fns.
+
+Bridge   bridges/upstream_geometric_manifold.py
+          Pulled from JinnZ2/Geometric-manifold-/repair/
+          science_constraint_bridge.py (stdlib-only upstream). Maps
+          per-step repair metrics (task_loss, safety_loss, curvature,
+          confidence, dist_to_ref) from the upstream framework into
+          this folder's ConstraintState taxonomy. Added local-
+          compatibility helpers (to_local_constraint_state_dict,
+          validate_roundtrip) at the bottom; upstream code verbatim
+          otherwise.
 ```
 
 Each layer is independently runnable. Each writes a falsifiable
@@ -124,22 +144,55 @@ where coupling information is unrecoverable from the generated text.
 ## How to run
 
 ```bash
-python3 science_transformers.py            # Layer 0 demo
-python3 constraint_integration_layer.py    # Layer 0 + 1 demo
-python3 language_codec.py                  # Layer 0 + 1 + 2 demo (all 4 modes)
+python3 science_transformers.py                  # Layer 0 demo
+python3 constraint_integration_layer.py          # Layer 0 + 1 demo
+python3 language_codec.py                        # Layer 0 + 1 + 2 demo
+python3 geometric_metric_stdlib.py               # adjunct: controller demo
+python3 generic_repair_controller.py             # adjunct: domain-agnostic repair
+python3 bridges/upstream_geometric_manifold.py   # bridge: upstream trajectory
 ```
 
 The Layer 2 demo prints all four output modes against a fresh stack
 stepped forward 100 ticks.
 
+The adjunct controller demo runs a 4-dim quadratic loss with `theta_init
+= [1.0, -0.5, 0.8, -1.2]` for 20 controller steps. Expected: state
+enters basin (KL < ε_basin) within ~10 steps, spectral bound holds,
+Fisher validation rel-error < 0.05.
+
+The `generic_repair_controller` demo runs three repair cases (thermo
+temperature=−0.5, biology population overshoot, physics negative mass)
+and reports `converged=True` on all three with `final_loss=0`.
+
+The upstream bridge demo converts a 3-step monitor trajectory and
+runs `validate_roundtrip` against each record (all `ok=True`,
+state_vector length 14, 5 couplings emitted).
+
+## Tests
+
+Three test files live in the repo-level `tests/` directory:
+
+- `tests/test_trust_region_invariant.py` — property-style tests that
+  `||delta|| <= trust_r` after the controller's projection.
+- `tests/test_falsifiability.py` — every CLAIM_TABLE-emitting module
+  in the substrate produces well-formed claims with non-empty
+  `falsification_condition`.
+- `tests/test_cross_substrate.py` — coherence across modules:
+  the `science * (1 + sensory)` modulation is identical in
+  manifold_research and parallel_field_suite; coupling-type sets
+  match across local and upstream; state-schema fields agree;
+  generic_repair_controller drives loss strictly downward on all
+  three smooth domains.
+
+Run with:
+
 ```bash
-python3 geometric_metric_stdlib.py         # adjunct controller demo
+python3 -m unittest tests.test_trust_region_invariant \
+                    tests.test_falsifiability \
+                    tests.test_cross_substrate -v
 ```
 
-The adjunct demo runs a 4-dim quadratic loss with `theta_init = [1.0,
--0.5, 0.8, -1.2]` for 20 controller steps. Expected: state enters
-basin (KL < ε_basin) within ~10 steps, spectral bound holds, Fisher
-validation rel-error < 0.05.
+All 22 tests pass at this commit.
 
 ---
 
