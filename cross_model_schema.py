@@ -51,6 +51,18 @@ class OperatorFrame:
 # ---------------------------------------------------------------------------
 # Falsifiable claim
 # ---------------------------------------------------------------------------
+#
+# RULE: standalone-importable extensions.
+# Each extension module (scale_tuning_extension.py, data_gap_protocol.py,
+# ...) MAY redefine FalsifiableClaim with identical fields so that
+# `from <extension> import FalsifiableClaim` works without depending
+# on cross_model_schema. The duplication is intentional: extensions
+# must run standalone in any AI session that loads only the extension
+# URL. If the signature here changes, all extensions defining their
+# own FalsifiableClaim must be updated in lockstep. The rule is
+# documented at the matching location in each extension.
+#
+# Closes gap DG-001-fc-redef as proven_illusory.
 
 @dataclass
 class FalsifiableClaim:

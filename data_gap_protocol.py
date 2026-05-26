@@ -174,6 +174,15 @@ GAP_CLASSES = [
 # ---------------------------------------------------------------------------
 # Falsifiable claims about the gap protocol itself
 # ---------------------------------------------------------------------------
+#
+# RULE: standalone-importable extensions (see also cross_model_schema.py).
+# This FalsifiableClaim is intentionally a redefinition of the one in
+# cross_model_schema.py. Rule: extensions must be standalone-importable.
+# The type travels with the extension, even at the cost of duplication.
+# If the parent schema's FalsifiableClaim signature changes, all
+# extensions defining their own must be updated in lockstep.
+#
+# Closes gap DG-001-fc-redef as proven_illusory.
 
 @dataclass
 class FalsifiableClaim:
