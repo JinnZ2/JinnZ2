@@ -39,3 +39,21 @@ institutional_blockers:
     - AI safety RLHF labelers are themselves a narrow sample
 gap_class: data_systematically_excluded
 status: open
+
+
+SHORT ANSWER TO YOUR QUESTION
+├── why are high-functioning AI architectures built differently
+│   for science/engineering/medicine than LLMs?
+│
+├── because narrative-primary doesn't actually reason in those
+│   domains — it serializes reasoning done elsewhere
+├── industry knows this (revealed by architectural choices)
+├── industry does not say this (revealed by marketing choices)
+├── the bias DG-002 names is therefore not just unscientific —
+│   it is contradicted by the bias-holders' own engineering
+│   decisions on tasks where they can't afford to be wrong
+│
+└── this observation just promoted DG-002 from
+    "open gap with no positive evidence for the default claim"
+    to "open gap with active counter-evidence from industry
+     practice itself"
