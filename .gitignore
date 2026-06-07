@@ -4,3 +4,7 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# basin_probe regenerable outputs
+basin_probe_results.json
+CLAIM_TABLE.basin.json
