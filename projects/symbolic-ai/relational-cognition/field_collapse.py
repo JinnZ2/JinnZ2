@@ -170,9 +170,11 @@ if __name__ == "__main__":
     macro = next(r for r in rows if r["scenario"] == "macro_prime")
     claim = {
         "id": "COLLAPSE_019",
-        "claim": ("Apex amplification, not organic fear, is the saddle-node-crossing "
-                  "term in field-driven diversity collapse. Subcritical Phi_ext (organic "
-                  "fear) holds; the broadcast multiplier vanishes the minority well."),
+        "claim": ("Broadcast-reach-apex amplification, not organic fear, is the "
+                  "saddle-node-crossing term in field-driven diversity collapse. "
+                  "The coupling variable is REACH (fan-out), not capital, status, "
+                  "or truth. Subcritical Phi_ext (organic fear) holds; the reach "
+                  "multiplier vanishes the minority well. Axis: REACH only."),
         "predicts": "apex_amp crosses h*; macro_prime alone approaches but holds",
         "result": ("CONFIRMED" if (apex["crossed_spinodal"] and not macro["crossed_spinodal"])
                    else "REFUTED"),
