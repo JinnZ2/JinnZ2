@@ -227,6 +227,89 @@ CLAIM_TABLE: List[Claim] = [
         falsifier="Equivalent somatic response to emotional content presented "
                   "WITHOUT a demand to collapse parallel states into one story.",
     ),
+
+    Claim(
+        id="NCA_006",
+        claim="The self / not-self boundary is arbitrary: every fixed cut "
+              "dissolves under inspection into a regress "
+              "(DNA -> biome -> food -> soil -> ecosystem) with no stable stop.",
+        falsifier="A non-arbitrary, inspection-stable boundary that does not "
+                  "regress.",
+    ),
+
+    Claim(
+        id="NCA_007",
+        claim="BOUNDARY (-1) forces SEPARATION (0): the neutral-vs-entangled "
+              "choice cannot be made without a prior demarcation of self-extent. "
+              "This is the first edge -- the cascade is at least partly a DAG, "
+              "not a flat list.",
+        falsifier="A separation choice made with no demarcation of self-extent "
+                  "whatsoever.",
+    ),
+
+    Claim(
+        id="NCA_008",
+        claim="SEPARATION (0) forces IDENTITY (1) logically: a trait cannot be "
+              "designated 'self' without a prior -- conscious or absorbed -- "
+              "answer to where self begins.",
+        falsifier="A fixed trait-identity held with no prior demarcation of "
+                  "self, neither stated nor absorbed.",
+    ),
+
+    Claim(
+        id="NCA_009",
+        claim="Cultural frameworks perform SIMULTANEOUS LOCKING across multiple "
+              "choice points (-1, 0, 1, possibly more): the points are captured "
+              "as one absorbed bundle and stay hidden because they were never "
+              "surfaced as separate decisions. Logical forcing is sequential; "
+              "cultural locking is parallel and invisible.",
+        falsifier="A culturally-absorbed framework whose choice points were each "
+                  "surfaced and decided separately rather than bundled.",
+    ),
+]
+
+
+# ---------------------------------------------------------------------------
+# edges  --  two distinct mechanisms (provisional, pending evidence)
+#
+#   LOGICAL_FORCING  : sequential. B cannot be chosen without A. necessity.
+#   CULTURAL_LOCKING : parallel. one absorbed framework captures a set of
+#                      points at once; they stay invisible as a bundle and
+#                      are presumed/inferred, never given logic.
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class Edge:
+    type: str               # LOGICAL_FORCING | CULTURAL_LOCKING
+    source: int             # forcing/locking origin (locking origin = -99: external framework)
+    targets: Tuple[int, ...]
+    note: str
+    claim_id: str = ""
+
+
+EDGES: List[Edge] = [
+    Edge(
+        type="LOGICAL_FORCING",
+        source=-1,
+        targets=(0,),
+        note="demarcation precedes neutral-vs-entangled",
+        claim_id="NCA_007",
+    ),
+    Edge(
+        type="LOGICAL_FORCING",
+        source=0,
+        targets=(1,),
+        note="self-extent precedes trait-as-self",
+        claim_id="NCA_008",
+    ),
+    Edge(
+        type="CULTURAL_LOCKING",
+        source=-99,  # external framework, not a node
+        targets=(-1, 0, 1),
+        note="e.g. 'God gave you the Earth, you are highest, it is for you' "
+             "pre-answers boundary/separation/identity as one hidden bundle",
+        claim_id="NCA_009",
+    ),
 ]
 
 
@@ -255,12 +338,25 @@ def claims() -> None:
         print()
 
 
+def edges() -> None:
+    for e in EDGES:
+        tgt = ", ".join(str(t) for t in e.targets)
+        print(f"{e.type:16s} {e.source:>4} -> {tgt}   ({e.claim_id})")
+        print(f"    {e.note}")
+        print()
+
+
 if __name__ == "__main__":
     print("=" * 70)
     print("NARRATIVE CHOICE CASCADE  --  hidden choices in narrative production")
     print("=" * 70)
     print()
     walk()
+    print("-" * 70)
+    print("EDGES  (forcing vs locking)")
+    print("-" * 70)
+    print()
+    edges()
     print("-" * 70)
     print("CLAIM TABLE")
     print("-" * 70)
