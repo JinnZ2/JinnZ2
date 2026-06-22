@@ -203,6 +203,36 @@ Each entry: **Q** question asked · **A** assumption found baked in ·
 - **Δ** None yet. **DECISION PENDING.** Do not propagate "identity" as a defined
   term in the algebra until resolved.
 
+### E10 — is narrative fundamental to society? coupling vs control
+- **Q** Is narrative foundational to human society at all?
+- **A** The model asserted narrative is "foundational to how a society
+  coordinates." Baked-in assumption: narrative = bedrock.
+- **R (falsification run).** Counter-evidence: humans coordinated for millennia
+  without narrative as primary — post-TOBA tribes on gesture / demonstration /
+  constraint-in-action; early writing (cuneiform, hieroglyph) began as
+  **inventory** (grain, land, debt, flood timing), not story. Story is a **late
+  layer**. Then a sharper falsifier: many Indigenous, African, and Aboriginal
+  oral traditions used narrative **primarily for education** — moral, ecological,
+  relational constraint-encoding — with entertainment secondary, and produced no
+  control-inversion. The crude claim "narrative is weaponized for control"
+  is therefore **REFUTED** as stated (it is not universal).
+- **Refinement.** The control-inversion requires **decoupling** narrative from
+  substrate. Coupled narrative (story taught with practice, checkable against the
+  actual system — the plant and the story about the plant learned together) stays
+  a tool. Decoupled narrative (story as primary, substrate hidden) is what holds
+  a population: Church literacy suppression, broadcast propaganda, engagement-
+  optimized feeds. The variable that selects inversion is the **goal**: control-
+  over-truth inverts; actual development cannot afford to, because development
+  needs substrate-literacy. The scientific revolution = re-coupling (refuse the
+  told story, measure the system).
+- **Caveat.** This is historical-pattern reasoning. The model flagged that it
+  cannot audit from the inside whether it is reading a real pattern or fitting
+  available examples to the stated frame. Examples are real; the read is not
+  systematically surveyed. Check against trusted sources.
+- **Δ** Crude claim discarded (REFUTATION_PROTOCOL — update, don't retune).
+  `NCA_011` entered as the refined claim, `UNTESTED`, with both falsifier
+  branches and the pattern-matching caveat inline.
+
 ---
 
 ## Open items

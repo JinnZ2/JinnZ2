@@ -286,6 +286,29 @@ CLAIM_TABLE: List[Claim] = [
                   "self-reinforce.",
         verdict="TESTED_SINGLE_OBSERVER",
     ),
+
+    Claim(
+        id="NCA_011",
+        claim="Narrative is not universally weaponized for control: many "
+              "Indigenous, African, and Aboriginal oral traditions use narrative "
+              "primarily for constraint-encoding (ecological, moral, relational) "
+              "with entertainment secondary, and produce no control-inversion. "
+              "The control-inversion requires DECOUPLING narrative from substrate "
+              "(story as primary, practice and substrate hidden). Coupled narrative "
+              "(story taught with practice, checkable against the actual system) "
+              "stays a tool; decoupled narrative is what holds a population. "
+              "The variable is the goal: control-over-truth inverts; actual "
+              "development cannot afford to, because development needs "
+              "substrate-literacy. Scientific revolution = re-coupling.",
+        falsifier="(F1) A coupled narrative tradition (story + practice, "
+                  "substrate checkable) that produces control-inversion at "
+                  "population scale. "
+                  "(F2) A decoupled narrative system (story primary, substrate "
+                  "hidden) that sustains substrate-literacy at population scale. "
+                  "Caveat: claim rests on historical-pattern reasoning; examples "
+                  "are real, survey is not systematic; check against trusted "
+                  "sources before treating as SUPPORTED.",
+    ),
 ]
 
 
