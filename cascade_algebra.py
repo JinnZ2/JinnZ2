@@ -56,7 +56,8 @@ CC0. stdlib only.
 """
 
 from dataclasses import dataclass, field
-from typing import FrozenSet, Optional, List, Tuple, Set
+from typing import FrozenSet, Optional, List, Tuple, Set, Dict
+from math import log as ln
 
 
 # ---------------------------------------------------------------------------
@@ -169,6 +170,60 @@ def resolve(sp: Superposition, *falsifiers: Falsifier):
 
 
 # ---------------------------------------------------------------------------
+# weighted superposition:  identity as a probability distribution over selves
+#   decide on the leading hypothesis; keep every other branch live as a
+#   contingency; update weights as evidence arrives; pivot with no rework.
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class WeightedField:
+    items: Tuple[Tuple[str, float], ...]      # (facet, weight); weights > 0
+
+    def as_dict(self) -> Dict[str, float]:
+        return dict(self.items)
+
+    def normalized(self) -> "WeightedField":
+        tot = sum(w for _, w in self.items)
+        if tot == 0:
+            return WeightedField(tuple())
+        return WeightedField(tuple((f, w / tot) for f, w in self.items))
+
+    def leading(self) -> Tuple[str, float]:
+        n = self.normalized()
+        return max(n.items, key=lambda kv: kv[1])
+
+    def spread(self) -> float:
+        """Normalized Shannon entropy in [0,1]. 0 = concentrated (one hypothesis
+        dominates, low identity cost). 1 = uniform (all live, high identity cost)."""
+        n = self.normalized()
+        k = len(n.items)
+        if k <= 1:
+            return 0.0
+        h = -sum(p * ln(p) for _, p in n.items if p > 0)
+        return h / ln(k)
+
+
+def wfield(**weights: float) -> WeightedField:
+    return WeightedField(tuple(weights.items())).normalized()
+
+
+def update(wf: WeightedField, evidence: Dict[str, float]) -> WeightedField:
+    """
+    Multiplicative (likelihood) update. evidence[f] scales facet f's weight.
+    A multiplier of 0 falsifies that facet -> it drops out. Unlisted facets
+    keep their weight (multiplier 1). Renormalizes. This is RESOLVE on a
+    weighted field: data moves weight, it does not pick a story.
+    """
+    out = []
+    for f, w in wf.items:
+        m = evidence.get(f, 1.0)
+        nw = w * m
+        if nw > 0:
+            out.append((f, nw))
+    return WeightedField(tuple(out)).normalized()
+
+
+# ---------------------------------------------------------------------------
 # demo  (small substrate state, readable on a phone)
 # ---------------------------------------------------------------------------
 
@@ -258,3 +313,26 @@ if __name__ == "__main__":
     print(f"    +{ap1[0]}")
     print(f"                : survivors={{{', '.join(sorted(surv1))}}}  removed={{{', '.join(sorted(rem1))}}}")
     print(f"    note: discard here is FALSIFIER-driven (legitimate), not story-driven (PROJECT).")
+    print()
+
+    # 7. weighted field: decide on the leading hypothesis, hold the rest live
+    print("[7] WEIGHTED FIELD  (leading hypothesis + contingencies + pivot)")
+    wf = wfield(h1=0.30, h2=0.08, h3=0.07, h4=0.06, h5=0.05, h6=0.04)
+
+    def line(tag, wf):
+        lead, lw = wf.leading()
+        dist = "  ".join(f"{f}={w:.2f}" for f, w in sorted(wf.items, key=lambda kv: -kv[1]))
+        print(f"    {tag}")
+        print(f"        dist   : {dist}")
+        print(f"        lead   : {lead} ({lw:.2f})   spread/cost={wf.spread():.2f}")
+
+    line("initial (act on h1; h2..h6 held as contingencies):", wf)
+
+    # evidence weakly supports h1, weakens h2 -> lead holds, weight up, cost down
+    wf2 = update(wf, {"h1": 1.6, "h2": 0.5})
+    line("+evidence (supports h1):", wf2)
+
+    # falsifier rules h1 OUT entirely -> lead flips to a pre-modeled branch
+    wf3 = update(wf2, {"h1": 0.0, "h3": 1.8})
+    line("+falsifier (rules out h1; h3 was already a contingency):", wf3)
+    print("        note: pivot is free -- h3 was held live, not rebuilt from scratch.")
