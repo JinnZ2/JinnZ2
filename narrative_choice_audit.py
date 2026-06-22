@@ -51,6 +51,27 @@ class ChoicePoint:
 CASCADE: List[ChoicePoint] = [
 
     ChoicePoint(
+        index=-1,
+        name="BOUNDARY",
+        fork="WHERE the self / not-self line is cut -- and whether a fixed "
+             "line is cut at all",
+        collapse="a cut is fixed (usually at skin or human-DNA) and treated as "
+                 "given/natural rather than chosen; the symbiotic extent of "
+                 "self is amputated from the model",
+        hidden=(
+            "the cut is arbitrary: it dissolves under inspection "
+            "(DNA -> gut biome -> food -> soil -> ecosystem, no stable stop)",
+            "the gut biome shaping cognition and the very sense of 'who I am'",
+            "that WHERE to cut is a choice, not a fact",
+            "permeability: matter / energy / information crossing the line "
+            "continuously",
+        ),
+        substrate_path="hold the boundary as permeable and relational -- "
+                       "observer effect; self-extent is a gradient, not a wall; "
+                       "you are a coupling, not a bounded thing",
+    ),
+
+    ChoicePoint(
         index=0,
         name="SEPARATION",
         fork="identify AS a separate/bounded individual"
