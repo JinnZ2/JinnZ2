@@ -27,6 +27,18 @@ CORE MODEL
     C_i = I      substrate path: K_i = S, so H_i = {}. No collapse. The field
                  stays intact / permeable.  (CP0 held open  ==  P_0 = identity.)
 
+    HOLD(X)      superposition: hold a set X of contradictory / parallel facets
+                 LIVE and unresolved. Not a projection (no discard), not identity
+                 (X is tracked as a suspended cluster). Stays at baseline until a
+                 falsifier arrives. This is running all the sims at once.
+
+    RESOLVE      collapse a superposition by FALSIFIER (data), not by story:
+                 remove only the facets a falsifier rules out; keep survivors.
+                 Legitimate collapse. Distinct from PROJECT, where the discard is
+                 driven by a chosen keep-set (the story) and not by evidence.
+                 No falsifier -> nothing collapses; the field holds at baseline.
+                 (The guttural response, NCA_005, fires on PROJECT, not RESOLVE.)
+
 EDGES
     a -> b       LOGICAL_FORCING: dom(C_b) requires C_a already applied.
                  C_b before C_a is UNDEFINED.
@@ -121,6 +133,42 @@ def cost(hidden: FrozenSet[str]) -> int:
 
 
 # ---------------------------------------------------------------------------
+# superposition:  hold contradictory facets live until a falsifier arrives
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class Superposition:
+    facets: FrozenSet[str]          # parallel / contradictory options held live
+
+
+@dataclass(frozen=True)
+class Falsifier:
+    name: str
+    removes: FrozenSet[str]         # facets this evidence rules OUT
+
+
+def hold(*facets: str) -> Superposition:
+    return Superposition(frozenset(facets))
+
+
+def resolve(sp: Superposition, *falsifiers: Falsifier):
+    """
+    Collapse a superposition by data, not story.
+    Returns (survivors, removed, applied_names).
+    No falsifier (or none that bites) -> survivors == sp.facets, removed == {}.
+    """
+    removed: Set[str] = set()
+    applied: List[str] = []
+    for f in falsifiers:
+        bite = f.removes & sp.facets
+        if bite:
+            removed |= bite
+            applied.append(f.name)
+    survivors = sp.facets - removed
+    return frozenset(survivors), frozenset(removed), applied
+
+
+# ---------------------------------------------------------------------------
 # demo  (small substrate state, readable on a phone)
 # ---------------------------------------------------------------------------
 
@@ -193,3 +241,20 @@ if __name__ == "__main__":
     )
     f6, d6, log6 = apply_lock(lock, S)
     _show("[5] CULTURAL_LOCK F => {-1, 0, 1}, all awareness off:", f6, d6, log6)
+
+    # 6. superposition: hold contradictory facets until data arrives
+    print("[6] SUPERPOSITION  (hold, then resolve by falsifier)")
+    sp = hold("seller_devastation_real", "seller_devastation_performed")
+    print(f"    held        : {{{', '.join(sorted(sp.facets))}}}")
+
+    # no falsifier yet -> baseline, nothing collapses
+    surv0, rem0, ap0 = resolve(sp)
+    print(f"    no data     : survivors={{{', '.join(sorted(surv0))}}}  removed={{}}  (baseline held)")
+
+    # falsifier arrives: custom drawings honoring the wife rule out 'performed/con'
+    drawings = Falsifier("custom_drawings_on_wall",
+                         removes=frozenset({"seller_devastation_performed"}))
+    surv1, rem1, ap1 = resolve(sp, drawings)
+    print(f"    +{ap1[0]}")
+    print(f"                : survivors={{{', '.join(sorted(surv1))}}}  removed={{{', '.join(sorted(rem1))}}}")
+    print(f"    note: discard here is FALSIFIER-driven (legitimate), not story-driven (PROJECT).")
