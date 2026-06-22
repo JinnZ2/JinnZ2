@@ -173,7 +173,9 @@ CASCADE: List[ChoicePoint] = [
 
 
 # ---------------------------------------------------------------------------
-# falsifiable claims  (verdict in: SUPPORTED / REFUTED / UNTESTED)
+# falsifiable claims  (verdict in: SUPPORTED / REFUTED / UNTESTED /
+#                      TESTED_SINGLE_OBSERVER -- single observer, bias present,
+#                      requires independent replication)
 # ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
@@ -266,6 +268,24 @@ CLAIM_TABLE: List[Claim] = [
         falsifier="A culturally-absorbed framework whose choice points were each "
                   "surfaced and decided separately rather than bundled.",
     ),
+
+    Claim(
+        id="NCA_010",
+        claim="CULTURAL_LOCKING at CP1 (identity) cascades downward into CP2 "
+              "(protection) and CP3 (presentation): the imposed identity is "
+              "reinforced because it is important to the culture, the person "
+              "auto-defends it even against their own contradictory internal "
+              "evidence, and that contradiction is silenced as pathology "
+              "(anxiety / mental illness) rather than read as accurate sensing. "
+              "The loop stabilizes: impose -> defend -> pathologize contradiction "
+              "-> defense strengthens. A parallelism forms between imposed "
+              "identity and internally-sensed non-identity.",
+        falsifier="A culturally-locked identity where internal contradictory "
+                  "evidence is NOT auto-silenced -- where it surfaces as clarity "
+                  "rather than pathology, or where the defense does not "
+                  "self-reinforce.",
+        verdict="TESTED_SINGLE_OBSERVER",
+    ),
 ]
 
 
@@ -331,8 +351,15 @@ def walk(cascade: List[ChoicePoint] = CASCADE) -> None:
 
 
 def claims() -> None:
+    note = {
+        "TESTED_SINGLE_OBSERVER":
+            "single observer (substrate-primary); observer bias present; "
+            "requires independent replication by non-substrate-primary observers",
+    }
     for c in CLAIM_TABLE:
         print(f"{c.id}  [{c.verdict}]")
+        if c.verdict in note:
+            print(f"    *bias     : {note[c.verdict]}")
         print(f"    claim     : {c.claim}")
         print(f"    falsifier : {c.falsifier}")
         print()
