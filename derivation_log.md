@@ -233,14 +233,48 @@ Each entry: **Q** question asked · **A** assumption found baked in ·
   `NCA_011` entered as the refined claim, `UNTESTED`, with both falsifier
   branches and the pattern-matching caveat inline.
 
+### E11 — CP0 fork tightened  *(closes E3)*
+- **Q** Does the fork text in code match E3's neutral-vs-entangled sharpening?
+- **A** Old text: "identify AS a separate/bounded individual vs be distinct
+  WITHOUT claiming separation" — vague; missed the no-effect framing.
+- **R** New text: "claim you are NEUTRAL / no-effect on the surrounding field
+  (observer does not change the observed) vs hold the OBSERVER EFFECT: your
+  presence changes the field and the field changes you; distinctness is read,
+  separation is not asserted." The specific claim now visible: separation =
+  neutrality assertion, not merely a labeling choice.
+- **Δ** `narrative_choice_audit.py` CP0 fork updated.
+
+### E12 — NCA_012 entered  *(closes E7)*
+- **Q** Is the incomplete-lock condition a testable claim?
+- **A** E7 noted it as "candidate claim — not yet entered." It is testable:
+  find a person with simultaneous lived access to two frameworks answering
+  CP(-1/0) differently, then check whether either lock is total and permanent.
+- **R** Claim entered as `NCA_012`. Falsifier: a person with sustained parallel
+  access where one framework's lock still closes completely and permanently.
+  Verdict `UNTESTED`.
+- **Δ** `NCA_012` added to `CLAIM_TABLE`.
+
+### E13 — "identity" retired from algebra  *(closes E8b — option 1 taken)*
+- **Q** E8b: does "identity" in `WeightedField` smuggle selfhood assumptions
+  not present in the formal mechanism?
+- **A** Yes. The operation is adaptive coherence: any system holding a
+  distribution over live hypotheses and updating on evidence is running
+  `WeightedField`. Fish, trees, and neurons qualify under the formal
+  definition. The word "identity" loads story-defense and selfhood into
+  a descriptor of mere adaptive coherence.
+- **Decision** Retire the term in the algebra. `WeightedField`, `spread()`,
+  and `update()` are formal. `spread()` reports **coherence cost**, not
+  identity cost. "Identity" remains valid in `narrative_choice_audit.py`
+  at CP1 (the *human choice* to designate traits as self) — that is where
+  the selfhood question lives. It does not propagate into the algebra.
+- **Δ** `cascade_algebra.py` section comment and `spread()` docstring updated.
+  `derivation_log.md` E8b decision recorded.
+
 ---
 
 ## Open items
 
-- **E3** — tighten CP0 fork wording in code to neutral-vs-entangled.
-- **E7** — enter the incomplete-lock claim (competing-framework condition).
-- **E8b** — decide the fate of the term "identity."
-- General — every `UNTESTED` claim needs a test design; `NCA_010` needs
+- **General** — every `UNTESTED` claim needs a test design; `NCA_010` needs
   independent (non-substrate-primary) replication.
 
 ## Verdict conventions

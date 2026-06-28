@@ -170,9 +170,13 @@ def resolve(sp: Superposition, *falsifiers: Falsifier):
 
 
 # ---------------------------------------------------------------------------
-# weighted superposition:  identity as a probability distribution over selves
+# weighted superposition:  decision distribution over live hypotheses.
 #   decide on the leading hypothesis; keep every other branch live as a
 #   contingency; update weights as evidence arrives; pivot with no rework.
+#   "identity" retired from the algebra: the operation is adaptive coherence —
+#   any adaptive system (fish, tree, neuron) runs this mechanism. selfhood /
+#   story-defense are not in it. spread() = coherence cost, not identity cost.
+#   (derivation_log E8b — option 1 taken: retire the term)
 # ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
@@ -194,7 +198,7 @@ class WeightedField:
 
     def spread(self) -> float:
         """Normalized Shannon entropy in [0,1]. 0 = concentrated (one hypothesis
-        dominates, low identity cost). 1 = uniform (all live, high identity cost)."""
+        dominates, low coherence cost). 1 = uniform (all live, high coherence cost)."""
         n = self.normalized()
         k = len(n.items)
         if k <= 1:

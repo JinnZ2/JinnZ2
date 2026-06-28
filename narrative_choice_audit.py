@@ -74,8 +74,11 @@ CASCADE: List[ChoicePoint] = [
     ChoicePoint(
         index=0,
         name="SEPARATION",
-        fork="identify AS a separate/bounded individual"
-             "  vs  be distinct WITHOUT claiming separation",
+        fork="claim you are NEUTRAL / no-effect on the surrounding field "
+             "(observer does not change the observed)  "
+             "vs  hold the OBSERVER EFFECT: your presence changes the field "
+             "and the field changes you; distinctness is read, separation "
+             "is not asserted",
         collapse="self reifies into a fixed entity that must be defended; "
                  "coupling to the surrounding field is severed in the model",
         hidden=(
@@ -308,6 +311,19 @@ CLAIM_TABLE: List[Claim] = [
                   "Caveat: claim rests on historical-pattern reasoning; examples "
                   "are real, survey is not systematic; check against trusted "
                   "sources before treating as SUPPORTED.",
+    ),
+
+    Claim(
+        id="NCA_012",
+        claim="A cultural lock at CP(-1/0) is incomplete when the person has "
+              "simultaneous access to a competing framework that answers those "
+              "nodes differently. The variable is not 'can the node reopen' "
+              "but 'was a parallel frame available': multiple frames held live "
+              "(a physics-first elder, distinct relational systems) prevent "
+              "any single framework from forcing full closure.",
+        falsifier="A person with sustained, lived access to two frameworks that "
+                  "answer CP(-1) and CP(0) differently, where one framework's "
+                  "lock nonetheless closes completely and permanently.",
     ),
 ]
 
