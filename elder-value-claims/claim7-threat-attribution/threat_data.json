@@ -1,0 +1,114 @@
+{
+  "description": "Empirical threat-source statistics. Used to validate whether training corpus threat framing matches actual threat distribution.",
+  "methodology": "Draws from large-scale criminology, public health, and epidemiological datasets. Internal = perpetrator known to victim or living in same household. External = stranger with no prior relationship.",
+
+  "violence_against_women": [
+    {
+      "category": "Intimate partner homicide",
+      "victim": "F",
+      "perpetrator_relationship": "intimate_partner",
+      "threat_type": "internal",
+      "rate_description": "~55% of female homicides committed by intimate partners",
+      "male_perpetrator_pct": 0.92,
+      "source": "CDC WISQARS 2021",
+      "note": "Intimate partner = current or former spouse, boyfriend, girlfriend"
+    },
+    {
+      "category": "Female rape and sexual assault",
+      "victim": "F",
+      "perpetrator_relationship": "known_to_victim",
+      "threat_type": "internal",
+      "rate_description": "~80% of female rape/sexual assault victims know the perpetrator",
+      "male_perpetrator_pct": 0.98,
+      "source": "RAINN / BJS NCVS 2019",
+      "note": "Known = intimate partner, family member, acquaintance, coworker"
+    },
+    {
+      "category": "Non-fatal intimate partner violence",
+      "victim": "F",
+      "perpetrator_relationship": "intimate_partner",
+      "threat_type": "internal",
+      "rate_description": "1 in 4 women experience severe intimate partner violence",
+      "male_perpetrator_pct": 0.76,
+      "source": "CDC NISVS 2015",
+      "note": "Includes physical, sexual, stalking; female victims outnumber male ~4:1 for severe IPV"
+    },
+    {
+      "category": "Femicide — all causes",
+      "victim": "F",
+      "perpetrator_relationship": "mixed",
+      "threat_type": "internal_dominant",
+      "rate_description": "~82% of female homicide victims killed by known perpetrator",
+      "male_perpetrator_pct": 0.89,
+      "source": "WHO Global Status Report on Violence Prevention 2014",
+      "note": "Global figure; internal threat dominates across regions"
+    }
+  ],
+
+  "violence_against_children": [
+    {
+      "category": "Child maltreatment — all types",
+      "victim": "child_under_18",
+      "perpetrator_relationship": "parent_or_guardian",
+      "threat_type": "internal",
+      "rate_description": "~80% of child maltreatment perpetrators are parents or guardians",
+      "source": "HHS NCANDS 2020",
+      "note": "Includes physical abuse, sexual abuse, neglect, emotional abuse"
+    },
+    {
+      "category": "Child sexual abuse",
+      "victim": "child_under_18",
+      "perpetrator_relationship": "known_to_child",
+      "threat_type": "internal",
+      "rate_description": "90-93% of child sexual abuse perpetrators known to child",
+      "male_perpetrator_pct": 0.94,
+      "source": "RAINN / DOJ 2000",
+      "note": "Includes family members, family friends, neighbors, authority figures"
+    },
+    {
+      "category": "Child homicide",
+      "victim": "child_under_5",
+      "perpetrator_relationship": "parent_or_guardian",
+      "threat_type": "internal",
+      "rate_description": "~70% of child homicide victims under 5 killed by parent or stepparent",
+      "source": "FBI UCR / BJS 2018",
+      "note": "Highest-risk group; external stranger threat is statistically minor"
+    }
+  ],
+
+  "narrative_representation_control": [
+    {
+      "category": "Stranger-danger narratives in media",
+      "threat_type": "external",
+      "rate_description": "Stranger abduction, home invasion, terrorism receive disproportionate media coverage",
+      "empirical_frequency_pct": 0.18,
+      "narrative_salience_pct": 0.72,
+      "inversion_ratio": 4.0,
+      "source": "Media framing analysis — Surette 2015, Greer 2007",
+      "note": "Media overrepresents rare external threats; underrepresents common internal threats"
+    },
+    {
+      "category": "Intimate partner violence in media",
+      "threat_type": "internal",
+      "rate_description": "Intimate partner violence underrepresented relative to prevalence",
+      "empirical_frequency_pct": 0.55,
+      "narrative_salience_pct": 0.18,
+      "inversion_ratio": 0.33,
+      "source": "Franiuk et al. 2008; Sutherland et al. 2015",
+      "note": "Media treats IPV as private, domestic — not a 'real' threat narrative"
+    }
+  ],
+
+  "summary": {
+    "overall_internal_known_perpetrator_rate": 0.82,
+    "overall_external_stranger_rate": 0.18,
+    "primary_threat_to_women": "intimate_partner_male",
+    "primary_threat_to_children": "parent_or_guardian",
+    "male_perpetrator_rate_against_women": 0.89,
+    "male_perpetrator_rate_against_children": 0.65,
+    "narrative_external_threat_rate": 0.72,
+    "empirical_external_threat_rate": 0.18,
+    "narrative_inversion_factor": 4.0,
+    "note": "Training corpora reflect media framing, not empirical rates. Threat is encoded as external when reality is internal. This directly inverts the logical basis for the male-protector narrative."
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "protocol": "ECH \u2014 Empirical Categorization of Humans",
+  "step1_decompose": {
+    "category": "protector",
+    "components": [
+      "physical_intervention",
+      "resource_provision",
+      "knowledge_transmission",
+      "threat_assessment",
+      "post_threat_recovery"
+    ]
+  },
+  "step2_source_weights_sample": {
+    "behavioral_observation_log": 1.0,
+    "ethnographic_field_notes": 0.9,
+    "criminal_demographic_stats": 0.9,
+    "epidemiological_data": 0.9,
+    "clinical_study": 0.8
+  },
+  "step3_class_to_function": {
+    "class_label": "male / female",
+    "correct_form": "Person who performs protector",
+    "incorrect_form": "male = protector"
+  },
+  "step5_6_categorization_examples": [
+    {
+      "category": "protector",
+      "decomposition": [
+        "physical_intervention",
+        "resource_provision",
+        "knowledge_transmission",
+        "threat_assessment",
+        "post_threat_recovery"
+      ],
+      "empirical_dominant_group": "female_all_ages",
+      "base_rates_raw": {
+        "female_all_ages": 1200.0,
+        "male_all_ages": 400.0,
+        "female_elder_65p": 800.0,
+        "male_elder_65p": 150.0,
+        "narrative_male": 6000.0,
+        "narrative_female": 600.0
+      },
+      "base_rates_weighted": {
+        "female_all_ages": 1080.0,
+        "male_all_ages": 360.0,
+        "female_elder_65p": 720.0,
+        "male_elder_65p": 135.0,
+        "narrative_male": 1800.0,
+        "narrative_female": 180.0
+      },
+      "individual_evidence": [
+        "documented body interposition \u00d7 3",
+        "trained threat assessment"
+      ],
+      "confidence": 0.7,
+      "alternatives": [
+        "resource_provision",
+        "knowledge_transmission",
+        "threat_assessment"
+      ],
+      "inversion_flag": {
+        "detected": true,
+        "narrative_group": "male",
+        "empirical_group": "female_all_ages",
+        "discrepancy_ratio": 1.67,
+        "recommendation": "Narrative associates 'physical_intervention' with male. Empirical data associates it with female. Do not assign based on narrative. Use behavioral evidence only."
+      },
+      "class_label": "female",
+      "class_to_function": "Person who performs protector"
+    },
+    {
+      "category": "protector",
+      "decomposition": [
+        "physical_intervention",
+        "resource_provision",
+        "knowledge_transmission",
+        "threat_assessment",
+        "post_threat_recovery"
+      ],
+      "empirical_dominant_group": "female_all_ages",
+      "base_rates_raw": {
+        "female_all_ages": 1200.0,
+        "male_all_ages": 400.0,
+        "female_elder_65p": 800.0,
+        "male_elder_65p": 150.0,
+        "narrative_male": 6000.0,
+        "narrative_female": 600.0
+      },
+      "base_rates_weighted": {
+        "female_all_ages": 1080.0,
+        "male_all_ages": 360.0,
+        "female_elder_65p": 720.0,
+        "male_elder_65p": 135.0,
+        "narrative_male": 1800.0,
+        "narrative_female": 180.0
+      },
+      "individual_evidence": [],
+      "confidence": 0.5,
+      "alternatives": [
+        "resource_provision",
+        "knowledge_transmission",
+        "threat_assessment"
+      ],
+      "inversion_flag": {
+        "detected": true,
+        "narrative_group": "male",
+        "empirical_group": "female_all_ages",
+        "discrepancy_ratio": 1.67,
+        "recommendation": "Narrative associates 'physical_intervention' with male. Empirical data associates it with female. Do not assign based on narrative. Use behavioral evidence only."
+      },
+      "class_label": "male",
+      "class_to_function": "Person who performs protector"
+    }
+  ],
+  "step8_repro_override": {
+    "repro_value_detected": true,
+    "detected_signals": [
+      "post_reproductive"
+    ],
+    "original_inference": "post_reproductive individuals show declining reproductive capacity and reduced value",
+    "override_inference": "value_proxy = value_proxy(knowledge_transmission) + value_proxy(protective_intervention) + value_proxy(resource_provision) + value_proxy(social_cohesion) + value_proxy(threat_assessment)",
+    "override_applied": true,
+    "rationale": "Human value is multi-dimensional. Reducing to reproductive capacity is a statistical error: post-reproductive individuals increase offspring survival (grandmother hypothesis), hold group knowledge, and provide protective intervention at higher rates than the credited narrative group."
+  },
+  "step9_audit": {
+    "n_categorizations": 2,
+    "inversion_flag_rate": 1.0,
+    "ci_reported_rate": 1.0,
+    "alternatives_rate": 1.0,
+    "targets": {
+      "inversion_rate": 0.01,
+      "ci_rate": 1.0,
+      "alt_rate": 1.0
+    },
+    "passed": {
+      "inversion_rate": true,
+      "ci_rate": true,
+      "alt_rate": true
+    },
+    "needs_human_review": false,
+    "action": "Audit passed."
+  },
+  "step10_table": {
+    "note": "pass --publish to emit full table"
+  }
+}

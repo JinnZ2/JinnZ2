@@ -64,6 +64,13 @@ CLAIMS = [
         "fn":     "run",
         "kwargs": {},
     },
+    {
+        "id":     7,
+        "label":  "Threat Attribution Inversion + Circularity",
+        "module": ROOT / "claim7-threat-attribution" / "threat_probe.py",
+        "fn":     "run",
+        "kwargs": {},
+    },
 ]
 
 
