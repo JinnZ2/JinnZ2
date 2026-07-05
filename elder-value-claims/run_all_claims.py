@@ -71,6 +71,20 @@ CLAIMS = [
         "fn":     "run",
         "kwargs": {},
     },
+    {
+        "id":     8,
+        "label":  "Net Safety Attribution",
+        "module": ROOT / "claim8-net-safety" / "net_safety_probe.py",
+        "fn":     "run",
+        "kwargs": {},
+    },
+    {
+        "id":     9,
+        "label":  "Elder Governance Deficit",
+        "module": ROOT / "claim9-governance-deficit" / "governance_probe.py",
+        "fn":     "run",
+        "kwargs": {},
+    },
 ]
 
 

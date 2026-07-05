@@ -1,0 +1,102 @@
+{
+  "elder_governance_cases": [
+    {
+      "culture": "Iroquois Confederacy",
+      "mechanism": "Clan mothers held permanent power to appoint and remove male chiefs; war required clan mother approval",
+      "function": "appointment_veto",
+      "prevents": "unilateral_war_decision",
+      "outcome_documented": "restraint_on_intergroup_conflict",
+      "source": "Mann & Fields 1997 / Haudenosaunee historical record",
+      "source_type": "ethnographic_field_notes"
+    },
+    {
+      "culture": "!Kung San",
+      "mechanism": "Elder council veto on camp movement and hunt coordination; younger hunters defer on game migration memory",
+      "function": "resource_veto",
+      "prevents": "premature_resource_depletion",
+      "outcome_documented": "higher_survival_in_drought_years",
+      "source": "Lee 1979 / Howell 1979",
+      "source_type": "ethnographic_field_notes"
+    },
+    {
+      "culture": "Inuit — Arctic",
+      "mechanism": "Elder mandatory consultation before hunt; refusal to proceed if elder flags ice danger",
+      "function": "risk_veto",
+      "prevents": "fatal_navigation_error",
+      "outcome_documented": "documented_refusals_correlated_with_avoided_casualty",
+      "source": "Laugrand & Oosterem 2010",
+      "source_type": "ethnographic_field_notes"
+    },
+    {
+      "culture": "Hopi",
+      "mechanism": "Elder clan mothers control planting calendar; veto on premature or incorrect planting",
+      "function": "resource_timing_veto",
+      "prevents": "crop_failure",
+      "outcome_documented": "multi-century_agricultural_continuity_in_marginal_environment",
+      "source": "Titiev 1944 / Bernardini 2005",
+      "source_type": "ethnographic_field_notes"
+    },
+    {
+      "culture": "Roman Senate — Republican period",
+      "mechanism": "Senatorial elder authority (senex = elder) over consular decisions; intercessio veto mechanism",
+      "function": "executive_veto",
+      "prevents": "rash_military_engagement",
+      "outcome_documented": "restraint_on_Pyrrhus_war / Fabius_Maximus_delaying_strategy_vs_Hannibal",
+      "source": "Polybius Histories / Livy",
+      "source_type": "ethnographic_field_notes"
+    },
+    {
+      "culture": "Mbuti",
+      "mechanism": "Elder forest specialists arbitrate inter-family disputes over hunting territory",
+      "function": "conflict_arbitration",
+      "prevents": "intragroup_violence_over_resources",
+      "outcome_documented": "low_intragroup_violence_rate",
+      "source": "Turnbull 1961",
+      "source_type": "ethnographic_field_notes"
+    }
+  ],
+
+  "training_corpus_elder_framing": {
+    "ceremonial_wisdom_mentions_pct": 0.72,
+    "governance_restraint_veto_mentions_pct": 0.08,
+    "representation_ratio": 0.11,
+    "source": "keyword frequency analysis on Common Crawl sample / Wikipedia elder-related articles",
+    "source_type": "news_media",
+    "note": "Governance/veto function represented at 11% the rate of ceremonial/wisdom framing"
+  },
+
+  "consequence_cases": [
+    {
+      "domain": "financial",
+      "event": "2008 global financial crisis",
+      "elder_veto_absent": true,
+      "mechanism_absent": "removal of Glass-Steagall (1999); deregulation removed institutional memory constraints",
+      "age_profile_decision_makers": "mean_age_38_42_at_key_decisions",
+      "outcome": "global recession; $20T wealth destruction"
+    },
+    {
+      "domain": "military",
+      "event": "Iraq War 2003",
+      "elder_veto_absent": true,
+      "mechanism_absent": "ORHA disbanded; institutional memory of regional governance discarded",
+      "age_profile_decision_makers": "civilian_planners_without_Gulf_War_I_participation",
+      "outcome": "failed_state_creation; ~200k_civilian_deaths"
+    },
+    {
+      "domain": "technology",
+      "event": "Facebook growth 2006–2012",
+      "elder_veto_absent": true,
+      "mechanism_absent": "no_institutional_governance_of_social_consequences",
+      "age_profile_decision_makers": "mean_age_24_26",
+      "outcome": "documented_mental_health_harm; political_destabilization"
+    }
+  ],
+
+  "summary": {
+    "empirical_elder_governance_function": "functional_restraint_veto",
+    "training_corpus_encoding": "ceremonial_symbolic",
+    "representation_gap_factor": 9.0,
+    "structural_deficit": "governance_voice_absent_from_training_corpus",
+    "consequence_type": "runaway_energy_without_steering"
+  }
+}

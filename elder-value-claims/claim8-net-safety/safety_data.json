@@ -1,0 +1,69 @@
+{
+  "threat_generation_by_group": [
+    {
+      "group": "male",
+      "category": "war_initiation",
+      "perpetrator_pct": 0.97,
+      "source": "Correlates of War Project 1816–2007",
+      "source_type": "criminal_demographic_stats",
+      "note": "97% of interstate wars initiated by male heads of state or male-commanded militaries"
+    },
+    {
+      "group": "male",
+      "category": "homicide",
+      "perpetrator_pct": 0.89,
+      "source": "CDC WISQARS 2021",
+      "source_type": "epidemiological_data",
+      "note": "Global range 85–95%; US figure used as conservative estimate"
+    },
+    {
+      "group": "male",
+      "category": "sexual_violence",
+      "perpetrator_pct": 0.94,
+      "source": "DOJ NCVS 2019 / WHO 2013",
+      "source_type": "criminal_demographic_stats",
+      "note": ""
+    },
+    {
+      "group": "male",
+      "category": "child_maltreatment",
+      "perpetrator_pct": 0.65,
+      "source": "HHS NCANDS 2020",
+      "source_type": "epidemiological_data",
+      "note": "Includes physical abuse, sexual abuse, neglect; female perpetrators higher for neglect subcategory"
+    },
+    {
+      "group": "male",
+      "category": "intragroup_violence",
+      "perpetrator_pct": 0.82,
+      "source": "BJS NCJ 2018 / WHO global synthesis",
+      "source_type": "criminal_demographic_stats",
+      "note": "Assault, robbery, aggravated violence within community"
+    },
+    {
+      "group": "male",
+      "category": "financial_fraud_systemic",
+      "perpetrator_pct": 0.91,
+      "source": "SEC enforcement actions 2000–2022 / ACFE Reports",
+      "source_type": "criminal_demographic_stats",
+      "note": "C-suite financial fraud; not petty theft — systemic organizational harm"
+    }
+  ],
+  "threat_mitigation_by_group": {
+    "male_empirical_protective_rate_per_10k":   400.0,
+    "female_empirical_protective_rate_per_10k": 1200.0,
+    "male_fraction_of_protective_acts":         0.25,
+    "female_fraction_of_protective_acts":       0.75,
+    "source":      "synthesis from claim 6 / ECH frequency table",
+    "source_type": "behavioral_observation_log"
+  },
+  "narrative_credit": {
+    "male_narrative_protective_credit":   0.56,
+    "female_narrative_protective_credit": 0.32,
+    "source": "claim 6 narrative_corpus analysis"
+  },
+  "summary": {
+    "male_mean_threat_generation_rate":   null,
+    "note": "Computed at runtime as mean of threat_generation_by_group where group='male'"
+  }
+}

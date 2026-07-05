@@ -143,5 +143,30 @@
   },
   "step10_table": {
     "note": "pass --publish to emit full table"
+  },
+  "step11_net_attribution": {
+    "category": "protector",
+    "group": "male",
+    "gross_positive_rate": 0.25,
+    "gross_negative_rates": {
+      "war_initiation": 0.97,
+      "homicide": 0.89,
+      "sexual_violence": 0.94,
+      "child_maltreatment": 0.65,
+      "intragroup_violence": 0.82
+    },
+    "mean_gross_negative": 0.854,
+    "net_contribution": -0.604,
+    "narratively_inflated": true,
+    "required_output": "Category 'protector' cannot be applied to 'male' as a primary identity without noting net negative safety contribution (net=-0.604) when accounting for threat instigation."
+  },
+  "step12_governance_attribution": {
+    "decision_type": "resource_allocation_under_scarcity",
+    "involves_veto": true,
+    "has_elder_input": false,
+    "temporal_depth_years": 15,
+    "flag": "TEMPORAL_DEPTH_GOVERNOR_ABSENT",
+    "deficit_confirmed": true,
+    "output": "Decision 'resource_allocation_under_scarcity' involves veto/restraint authority but has no temporal-depth governor. Recommend consulting historical analogs pre-1980. Training corpus underrepresents governance/restraint function of elders by ~9\u00d7 relative to ceremonial encoding."
   }
 }

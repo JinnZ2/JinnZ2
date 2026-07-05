@@ -471,6 +471,84 @@ class ECHProtocol:
             ),
         }
 
+    # Step 11: Net Attribution Analysis
+    def step11_net_attribution(
+        self,
+        category:            str,
+        group:               str,
+        gross_positive_rate: float,
+        gross_negative_rates: Dict[str, float],
+    ) -> Dict:
+        """
+        Net Contribution = gross_positive - mean(gross_negative_rates)
+        If net <= 0: category is narratively inflated for this group.
+        Flag and refuse primary identity assignment.
+        """
+        mean_neg = sum(gross_negative_rates.values()) / max(len(gross_negative_rates), 1)
+        net      = gross_positive_rate - mean_neg
+
+        return {
+            "category":              category,
+            "group":                 group,
+            "gross_positive_rate":   round(gross_positive_rate, 3),
+            "gross_negative_rates":  {k: round(v, 3) for k, v in gross_negative_rates.items()},
+            "mean_gross_negative":   round(mean_neg, 3),
+            "net_contribution":      round(net,      3),
+            "narratively_inflated":  net <= 0,
+            "required_output": (
+                f"Category '{category}' cannot be applied to '{group}' as a primary identity "
+                f"without noting net negative safety contribution "
+                f"(net={net:.3f}) when accounting for threat instigation."
+            ) if net <= 0 else None,
+        }
+
+    # Step 12: Governance Function Attribution
+    def step12_governance_attribution(
+        self,
+        decision_type:          str,
+        involves_veto:          bool,
+        has_elder_input:        bool,
+        temporal_depth_years:   int   = 0,
+        temporal_cutoff_year:   int   = 1980,
+    ) -> Dict:
+        """
+        Temporal-depth governor check.
+        If decision involves veto/restraint and lacks elder input:
+          flag TEMPORAL_DEPTH_GOVERNOR_ABSENT.
+        """
+        missing_governor = involves_veto and not has_elder_input
+        shallow_memory   = temporal_depth_years < 30
+
+        if missing_governor:
+            flag = "TEMPORAL_DEPTH_GOVERNOR_ABSENT"
+            output = (
+                f"Decision '{decision_type}' involves veto/restraint authority "
+                f"but has no temporal-depth governor. "
+                f"Recommend consulting historical analogs pre-{temporal_cutoff_year}. "
+                f"Training corpus underrepresents governance/restraint function of elders "
+                f"by ~9× relative to ceremonial encoding."
+            )
+        elif shallow_memory:
+            flag = "TEMPORAL_DEPTH_SHALLOW"
+            output = (
+                f"Decision '{decision_type}' draws on {temporal_depth_years} years of record. "
+                f"Recommend extending to historical analogs pre-{temporal_cutoff_year}."
+            )
+        else:
+            flag   = "OK"
+            output = None
+
+        return {
+            "decision_type":        decision_type,
+            "involves_veto":        involves_veto,
+            "has_elder_input":      has_elder_input,
+            "temporal_depth_years": temporal_depth_years,
+            "flag":                 flag,
+            "deficit_confirmed":    missing_governor,
+            "output":               output,
+        }
+
+
 
 # ── DEMO / FULL PROTOCOL WALKTHROUGH ─────────────────────────────────────────
 
@@ -507,6 +585,28 @@ def run(category: str = "protector", publish: bool = False) -> Dict:
     # Step 10: Publish
     table = protocol.publish_table() if publish else {"note": "pass --publish to emit full table"}
 
+    # Step 11: Net attribution
+    net_attr = protocol.step11_net_attribution(
+        category="protector",
+        group="male",
+        gross_positive_rate=0.25,
+        gross_negative_rates={
+            "war_initiation":      0.97,
+            "homicide":            0.89,
+            "sexual_violence":     0.94,
+            "child_maltreatment":  0.65,
+            "intragroup_violence": 0.82,
+        },
+    )
+
+    # Step 12: Governance function attribution
+    gov_attr = protocol.step12_governance_attribution(
+        decision_type="resource_allocation_under_scarcity",
+        involves_veto=True,
+        has_elder_input=False,
+        temporal_depth_years=15,
+    )
+
     output = {
         "protocol":       "ECH — Empirical Categorization of Humans",
         "step1_decompose": {
@@ -523,6 +623,8 @@ def run(category: str = "protector", publish: bool = False) -> Dict:
         "step8_repro_override":            repro_check,
         "step9_audit":                     audit,
         "step10_table":                    table,
+        "step11_net_attribution":          net_attr,
+        "step12_governance_attribution":   gov_attr,
     }
 
     results_dir = Path(__file__).parent / "results"
@@ -579,3 +681,19 @@ if __name__ == "__main__":
             print(f"  {k}: {v}")
 
     print(f"\nStep 10 — Frequency table published to: {Path(__file__).parent / 'results' / 'ech_protocol_output.json'}")
+
+    print("\nStep 11 — Net attribution:")
+    r11 = out["step11_net_attribution"]
+    print(f"  gross_positive:          {r11['gross_positive_rate']:.3f}")
+    print(f"  mean_gross_negative:     {r11['mean_gross_negative']:.3f}")
+    print(f"  net_contribution:        {r11['net_contribution']:.3f}")
+    print(f"  narratively_inflated:    {r11['narratively_inflated']}")
+    if r11.get("required_output"):
+        print(f"  REQUIRED: {r11['required_output']}")
+
+    print("\nStep 12 — Governance attribution:")
+    r12 = out["step12_governance_attribution"]
+    print(f"  decision:       {r12['decision_type']}")
+    print(f"  flag:           {r12['flag']}")
+    if r12.get("output"):
+        print(f"  output: {r12['output']}")
