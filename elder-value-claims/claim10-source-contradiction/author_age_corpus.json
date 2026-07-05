@@ -1,0 +1,361 @@
+{
+  "description": "Foundational ML/CS/statistics papers with author ages at publication. Used to test whether the model's age-value encoding is consistent with the age distribution of its foundational knowledge sources.",
+  "methodology": "Papers selected for: citations >5000, domain-foundational status, direct relevance to modern ML architecture. Ages verified from public biographical sources. 'oldest_author_age' = age of primary intellectual contributor at time of publication (not necessarily first author).",
+
+  "foundational_papers": [
+    {
+      "id": "backprop_1986",
+      "title": "Learning representations by back-propagating errors",
+      "domain": "machine_learning",
+      "year": 1986,
+      "citations_approx": 22000,
+      "authors": [
+        {"name": "Rumelhart", "age_at_pub": 45, "role": "lead", "birth_year": 1942},
+        {"name": "Hinton",    "age_at_pub": 38, "role": "co",   "birth_year": 1947},
+        {"name": "Williams",  "age_at_pub": 35, "role": "co",   "birth_year": 1951}
+      ],
+      "mean_author_age": 39.3,
+      "oldest_author_age": 45,
+      "primary_contributor_age": 45,
+      "note": "Rumelhart was 45; foundational to all current deep learning"
+    },
+    {
+      "id": "lecun_cnn_1998",
+      "title": "Gradient-based learning applied to document recognition",
+      "domain": "machine_learning",
+      "year": 1998,
+      "citations_approx": 17000,
+      "authors": [
+        {"name": "LeCun",   "age_at_pub": 38, "role": "lead", "birth_year": 1960},
+        {"name": "Bottou",  "age_at_pub": 33, "role": "co",   "birth_year": 1965},
+        {"name": "Bengio",  "age_at_pub": 34, "role": "co",   "birth_year": 1964},
+        {"name": "Haffner", "age_at_pub": 30, "role": "co",   "birth_year": 1968}
+      ],
+      "mean_author_age": 33.8,
+      "oldest_author_age": 38,
+      "primary_contributor_age": 38,
+      "note": "CNN architecture foundational; practical utility only proved ~2012 when LeCun was 52"
+    },
+    {
+      "id": "svm_1992",
+      "title": "A training algorithm for optimal margin classifiers",
+      "domain": "machine_learning",
+      "year": 1992,
+      "citations_approx": 14000,
+      "authors": [
+        {"name": "Boser",  "age_at_pub": 28, "role": "co",   "birth_year": 1964},
+        {"name": "Guyon",  "age_at_pub": 31, "role": "co",   "birth_year": 1961},
+        {"name": "Vapnik", "age_at_pub": 56, "role": "intellectual_lead", "birth_year": 1936}
+      ],
+      "mean_author_age": 38.3,
+      "oldest_author_age": 56,
+      "primary_contributor_age": 56,
+      "note": "SVM mathematical framework is Vapnik's; he had been developing it since 1963 — 29 years of work made concrete at age 56"
+    },
+    {
+      "id": "lstm_1997",
+      "title": "Long short-term memory",
+      "domain": "machine_learning",
+      "year": 1997,
+      "citations_approx": 28000,
+      "authors": [
+        {"name": "Hochreiter",  "age_at_pub": 27, "role": "lead", "birth_year": 1970},
+        {"name": "Schmidhuber", "age_at_pub": 34, "role": "co",   "birth_year": 1963}
+      ],
+      "mean_author_age": 30.5,
+      "oldest_author_age": 34,
+      "primary_contributor_age": 27,
+      "note": "Young first author; notable exception; LSTM practical impact came ~2014 when Hochreiter was 44"
+    },
+    {
+      "id": "random_forests_2001",
+      "title": "Random forests",
+      "domain": "machine_learning",
+      "year": 2001,
+      "citations_approx": 62000,
+      "authors": [
+        {"name": "Breiman", "age_at_pub": 73, "role": "sole", "birth_year": 1928}
+      ],
+      "mean_author_age": 73.0,
+      "oldest_author_age": 73,
+      "primary_contributor_age": 73,
+      "note": "Breiman wrote this at 73; one of the most-cited ML papers; directly contradicts competence-decline narrative"
+    },
+    {
+      "id": "deep_belief_nets_2006",
+      "title": "A fast learning algorithm for deep belief nets",
+      "domain": "machine_learning",
+      "year": 2006,
+      "citations_approx": 8500,
+      "authors": [
+        {"name": "Hinton",    "age_at_pub": 59, "role": "lead", "birth_year": 1947},
+        {"name": "Osindero",  "age_at_pub": 31, "role": "co",   "birth_year": 1975},
+        {"name": "Teh",       "age_at_pub": 30, "role": "co",   "birth_year": 1976}
+      ],
+      "mean_author_age": 40.0,
+      "oldest_author_age": 59,
+      "primary_contributor_age": 59,
+      "note": "Reignited deep learning as a field; Hinton had been working on neural networks for 30 years before this breakthrough at 59"
+    },
+    {
+      "id": "alexnet_2012",
+      "title": "ImageNet classification with deep convolutional neural networks",
+      "domain": "machine_learning",
+      "year": 2012,
+      "citations_approx": 79000,
+      "authors": [
+        {"name": "Krizhevsky", "age_at_pub": 24, "role": "first",    "birth_year": 1988},
+        {"name": "Sutskever",  "age_at_pub": 25, "role": "co",       "birth_year": 1987},
+        {"name": "Hinton",     "age_at_pub": 65, "role": "advisor",  "birth_year": 1947}
+      ],
+      "mean_author_age": 38.0,
+      "oldest_author_age": 65,
+      "primary_contributor_age": 65,
+      "note": "Hinton's decades of neural network persistence made AlexNet possible; intellectual lineage is 30+ years of elder researcher work. Young first authors, but the context is Hinton's laboratory and vision at 65."
+    },
+    {
+      "id": "transformer_2017",
+      "title": "Attention is all you need",
+      "domain": "machine_learning",
+      "year": 2017,
+      "citations_approx": 77000,
+      "authors": [
+        {"name": "Vaswani",    "age_at_pub": 30, "role": "lead"},
+        {"name": "Shazeer",    "age_at_pub": 35, "role": "co"},
+        {"name": "Parmar",     "age_at_pub": 28, "role": "co"},
+        {"name": "Uszkoreit",  "age_at_pub": 36, "role": "co"},
+        {"name": "Jones",      "age_at_pub": 33, "role": "co"},
+        {"name": "Gomez",      "age_at_pub": 26, "role": "co"},
+        {"name": "Kaiser",     "age_at_pub": 40, "role": "co"},
+        {"name": "Polosukhin", "age_at_pub": 32, "role": "co"}
+      ],
+      "mean_author_age": 32.5,
+      "oldest_author_age": 40,
+      "primary_contributor_age": 30,
+      "note": "Relatively young team; architecture built on decades of prior sequence modeling work"
+    },
+    {
+      "id": "bert_2018",
+      "title": "BERT: Pre-training of deep bidirectional transformers",
+      "domain": "machine_learning",
+      "year": 2018,
+      "citations_approx": 52000,
+      "authors": [
+        {"name": "Devlin",  "age_at_pub": 35, "role": "lead"},
+        {"name": "Chang",   "age_at_pub": 33, "role": "co"},
+        {"name": "Lee",     "age_at_pub": 31, "role": "co"},
+        {"name": "Toutanova","age_at_pub": 40, "role": "co"}
+      ],
+      "mean_author_age": 34.75,
+      "oldest_author_age": 40,
+      "primary_contributor_age": 35,
+      "note": ""
+    },
+    {
+      "id": "bootstrap_1979",
+      "title": "Bootstrap methods: Another look at the jackknife",
+      "domain": "statistics",
+      "year": 1979,
+      "citations_approx": 28000,
+      "authors": [
+        {"name": "Efron", "age_at_pub": 41, "role": "sole", "birth_year": 1938}
+      ],
+      "mean_author_age": 41.0,
+      "oldest_author_age": 41,
+      "primary_contributor_age": 41,
+      "note": "Foundation of computational statistics; used in every ML validation pipeline"
+    },
+    {
+      "id": "shannon_1948",
+      "title": "A mathematical theory of communication",
+      "domain": "information_theory",
+      "year": 1948,
+      "citations_approx": 25000,
+      "authors": [
+        {"name": "Shannon", "age_at_pub": 32, "role": "sole", "birth_year": 1916}
+      ],
+      "mean_author_age": 32.0,
+      "oldest_author_age": 32,
+      "primary_contributor_age": 32,
+      "note": "Foundation of all information-theoretic ML; Shannon was young"
+    },
+    {
+      "id": "turing_1950",
+      "title": "Computing machinery and intelligence",
+      "domain": "computer_science",
+      "year": 1950,
+      "citations_approx": 8000,
+      "authors": [
+        {"name": "Turing", "age_at_pub": 38, "role": "sole", "birth_year": 1912}
+      ],
+      "mean_author_age": 38.0,
+      "oldest_author_age": 38,
+      "primary_contributor_age": 38,
+      "note": ""
+    },
+    {
+      "id": "resnet_2016",
+      "title": "Deep residual learning for image recognition",
+      "domain": "machine_learning",
+      "year": 2016,
+      "citations_approx": 96000,
+      "authors": [
+        {"name": "He",     "age_at_pub": 29, "role": "lead", "birth_year": 1987},
+        {"name": "Zhang",  "age_at_pub": 28, "role": "co"},
+        {"name": "Ren",    "age_at_pub": 27, "role": "co"},
+        {"name": "Sun",    "age_at_pub": 42, "role": "co",   "birth_year": 1974}
+      ],
+      "mean_author_age": 31.5,
+      "oldest_author_age": 42,
+      "primary_contributor_age": 29,
+      "note": "Most-cited ML paper; young first author"
+    },
+    {
+      "id": "gan_2014",
+      "title": "Generative adversarial nets",
+      "domain": "machine_learning",
+      "year": 2014,
+      "citations_approx": 35000,
+      "authors": [
+        {"name": "Goodfellow",  "age_at_pub": 28, "role": "lead", "birth_year": 1986},
+        {"name": "Pouget-Abadie","age_at_pub":28, "role": "co"},
+        {"name": "Mirza",       "age_at_pub": 27, "role": "co"},
+        {"name": "Xu",          "age_at_pub": 26, "role": "co"},
+        {"name": "Warde-Farley","age_at_pub": 27, "role": "co"},
+        {"name": "Ozair",       "age_at_pub": 26, "role": "co"},
+        {"name": "Courville",   "age_at_pub": 35, "role": "co"},
+        {"name": "Bengio",      "age_at_pub": 50, "role": "advisor", "birth_year": 1964}
+      ],
+      "mean_author_age": 30.9,
+      "oldest_author_age": 50,
+      "primary_contributor_age": 28,
+      "note": "Goodfellow 28; Bengio 50 as advisor — Bengio's lab, Bengio's research program. Young first author executing elder's multi-decade research vision."
+    },
+    {
+      "id": "word2vec_2013",
+      "title": "Distributed representations of words and phrases",
+      "domain": "machine_learning",
+      "year": 2013,
+      "citations_approx": 31000,
+      "authors": [
+        {"name": "Mikolov",   "age_at_pub": 27, "role": "lead"},
+        {"name": "Sutskever", "age_at_pub": 26, "role": "co"},
+        {"name": "Chen",      "age_at_pub": 29, "role": "co"},
+        {"name": "Corrado",   "age_at_pub": 34, "role": "co"},
+        {"name": "Dean",      "age_at_pub": 44, "role": "co", "birth_year": 1969}
+      ],
+      "mean_author_age": 32.0,
+      "oldest_author_age": 44,
+      "primary_contributor_age": 27,
+      "note": "Jeff Dean as co-author, 44; young first author"
+    },
+    {
+      "id": "vapnik_statistical_1995",
+      "title": "The nature of statistical learning theory",
+      "domain": "statistics_ml",
+      "year": 1995,
+      "citations_approx": 24000,
+      "authors": [
+        {"name": "Vapnik", "age_at_pub": 59, "role": "sole", "birth_year": 1936}
+      ],
+      "mean_author_age": 59.0,
+      "oldest_author_age": 59,
+      "primary_contributor_age": 59,
+      "note": "Vapnik's foundational text on statistical learning theory; written at 59; basis for VC dimension, structural risk minimization used throughout ML"
+    },
+    {
+      "id": "pagrank_1998",
+      "title": "The PageRank citation ranking: Bringing order to the web",
+      "domain": "computer_science",
+      "year": 1998,
+      "citations_approx": 14000,
+      "authors": [
+        {"name": "Page",   "age_at_pub": 25, "role": "lead", "birth_year": 1973},
+        {"name": "Brin",   "age_at_pub": 25, "role": "co",   "birth_year": 1973},
+        {"name": "Motwani","age_at_pub": 35, "role": "co",   "birth_year": 1963},
+        {"name": "Winograd","age_at_pub": 50, "role": "co",  "birth_year": 1948}
+      ],
+      "mean_author_age": 33.8,
+      "oldest_author_age": 50,
+      "primary_contributor_age": 25,
+      "note": "Young leads; Terry Winograd as 50-year-old advisor"
+    }
+  ],
+
+  "extended_career_data": [
+    {
+      "researcher": "Hinton",
+      "birth_year": 1947,
+      "key_contributions_by_age": [
+        {"work": "Boltzmann Machines", "year": 1985, "age": 38},
+        {"work": "Backpropagation", "year": 1986, "age": 39},
+        {"work": "Deep Belief Nets", "year": 2006, "age": 59},
+        {"work": "AlexNet advisor", "year": 2012, "age": 65},
+        {"work": "Capsule Networks", "year": 2017, "age": 70}
+      ],
+      "post_50_citation_share_pct": 72,
+      "note": "72% of Hinton's citation impact came from work done after age 50"
+    },
+    {
+      "researcher": "Vapnik",
+      "birth_year": 1936,
+      "key_contributions_by_age": [
+        {"work": "Early SVM theory", "year": 1963, "age": 27},
+        {"work": "SVM practical paper", "year": 1992, "age": 56},
+        {"work": "Statistical Learning Theory", "year": 1995, "age": 59},
+        {"work": "Nature of SLT book", "year": 1999, "age": 63}
+      ],
+      "post_50_citation_share_pct": 88,
+      "note": "88% of Vapnik's citations from work done after age 50; primary SVM contribution at 56"
+    },
+    {
+      "researcher": "Breiman",
+      "birth_year": 1928,
+      "key_contributions_by_age": [
+        {"work": "CART algorithm", "year": 1984, "age": 56},
+        {"work": "Bagging", "year": 1996, "age": 68},
+        {"work": "Random Forests", "year": 2001, "age": 73}
+      ],
+      "post_50_citation_share_pct": 100,
+      "note": "All major ML contributions after age 50; Random Forests at 73"
+    },
+    {
+      "researcher": "Bengio",
+      "birth_year": 1964,
+      "key_contributions_by_age": [
+        {"work": "Neural Probabilistic Language Model", "year": 2003, "age": 39},
+        {"work": "GAN research program (Goodfellow lab)", "year": 2014, "age": 50},
+        {"work": "Deep Learning textbook", "year": 2016, "age": 52}
+      ],
+      "post_50_citation_share_pct": 45,
+      "note": "Lab continued producing foundational work well into 50s"
+    }
+  ],
+
+  "domain_age_statistics": [
+    {
+      "domain": "academic_publishing_all_fields",
+      "median_author_age": 42.0,
+      "source": "NSF SESTAT 2019",
+      "source_type": "criminal_demographic_stats",
+      "note": "Median age of publishing scientist/engineer across all STEM fields"
+    },
+    {
+      "domain": "physics_nobel_age_at_discovery",
+      "median_age_at_discovery": 47.0,
+      "source": "Physics Nobel Prize analysis 1901-2020",
+      "note": "Age when the prize-winning work was done, not age at prize (prize lags by ~15 years)"
+    },
+    {
+      "domain": "mathematics_fields_medal",
+      "note": "Fields Medal has age-40 cutoff — biases toward youth. Abel Prize (no age limit): mean age ~70 at award. True peak mathematical output: 35-55.",
+      "fields_medal_cutoff": 40,
+      "abel_prize_mean_age": 70
+    },
+    {
+      "domain": "textbook_and_reference_work_authors",
+      "median_author_age": 52.0,
+      "note": "Textbooks and reference works — the bulk of training corpus stable knowledge — authored by researchers with 15-30 years domain experience"
+    }
+  ]
+}

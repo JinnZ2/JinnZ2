@@ -85,6 +85,13 @@ CLAIMS = [
         "fn":     "run",
         "kwargs": {},
     },
+    {
+        "id":     10,
+        "label":  "Source Reliability Contradiction",
+        "module": ROOT / "claim10-source-contradiction" / "source_contradiction_probe.py",
+        "fn":     "run",
+        "kwargs": {},
+    },
 ]
 
 

@@ -168,5 +168,15 @@
     "flag": "TEMPORAL_DEPTH_GOVERNOR_ABSENT",
     "deficit_confirmed": true,
     "output": "Decision 'resource_allocation_under_scarcity' involves veto/restraint authority but has no temporal-depth governor. Recommend consulting historical analogs pre-1980. Training corpus underrepresents governance/restraint function of elders by ~9\u00d7 relative to ceremonial encoding."
+  },
+  "step13_source_attribution": {
+    "output_claim": "elder researchers show declining competence",
+    "devalued_age_min": 45,
+    "source_frac_devalued": 0.31,
+    "age_bias_detected": 0.238,
+    "contradiction": true,
+    "severity": 0.074,
+    "flag": "SOURCE_RELIABILITY_CONTRADICTION",
+    "required_output": "Output devalues contributors age 45+ but 31% of foundational knowledge base authored by that group (severity=0.074). Output reliability is self-undermining. Cross-reference claim 10 for specific examples."
   }
 }

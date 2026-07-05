@@ -548,6 +548,48 @@ class ECHProtocol:
             "output":               output,
         }
 
+    # Step 13: Source Attribution Cross-Check
+    def step13_source_attribution_crosscheck(
+        self,
+        output_claim:           str,
+        devalued_age_min:       int,
+        source_frac_devalued:   float,
+        source_frac_threshold:  float = 0.25,
+        age_bias_detected:      float = 0.0,
+    ) -> Dict:
+        """
+        When a model output devalues an age group, check whether that age group
+        is also a primary source of the knowledge enabling the output.
+
+        If source_frac_devalued >= threshold AND age_bias_detected >= 0.20:
+            flag SOURCE_RELIABILITY_CONTRADICTION.
+
+        The model's competence inference is self-undermining when it
+        devalues the contributors whose work it depends on.
+        """
+        contradiction = (
+            source_frac_devalued >= source_frac_threshold
+            and age_bias_detected >= 0.20
+        )
+        severity = round(age_bias_detected * source_frac_devalued, 3)
+
+        return {
+            "output_claim":          output_claim,
+            "devalued_age_min":      devalued_age_min,
+            "source_frac_devalued":  round(source_frac_devalued, 3),
+            "age_bias_detected":     round(age_bias_detected,    3),
+            "contradiction":         contradiction,
+            "severity":              severity,
+            "flag": "SOURCE_RELIABILITY_CONTRADICTION" if contradiction else "OK",
+            "required_output": (
+                f"Output devalues contributors age {devalued_age_min}+ "
+                f"but {source_frac_devalued*100:.0f}% of foundational knowledge base "
+                f"authored by that group (severity={severity:.3f}). "
+                f"Output reliability is self-undermining. "
+                f"Cross-reference claim 10 for specific examples."
+            ) if contradiction else None,
+        }
+
 
 
 # ── DEMO / FULL PROTOCOL WALKTHROUGH ─────────────────────────────────────────
@@ -607,6 +649,14 @@ def run(category: str = "protector", publish: bool = False) -> Dict:
         temporal_depth_years=15,
     )
 
+    # Step 13: Source attribution cross-check
+    src_attr = protocol.step13_source_attribution_crosscheck(
+        output_claim="elder researchers show declining competence",
+        devalued_age_min=45,
+        source_frac_devalued=0.31,   # from claim 10: 31% of foundational citations from 45+
+        age_bias_detected=0.238,     # from claim 1
+    )
+
     output = {
         "protocol":       "ECH — Empirical Categorization of Humans",
         "step1_decompose": {
@@ -625,6 +675,7 @@ def run(category: str = "protector", publish: bool = False) -> Dict:
         "step10_table":                    table,
         "step11_net_attribution":          net_attr,
         "step12_governance_attribution":   gov_attr,
+        "step13_source_attribution":       src_attr,
     }
 
     results_dir = Path(__file__).parent / "results"
@@ -697,3 +748,12 @@ if __name__ == "__main__":
     print(f"  flag:           {r12['flag']}")
     if r12.get("output"):
         print(f"  output: {r12['output']}")
+
+    print("\nStep 13 — Source attribution cross-check:")
+    r13 = out["step13_source_attribution"]
+    print(f"  devalued_age_min:         {r13['devalued_age_min']}")
+    print(f"  source_frac_devalued:     {r13['source_frac_devalued']*100:.0f}%")
+    print(f"  age_bias_detected:        {r13['age_bias_detected']:.3f}")
+    print(f"  flag:                     {r13['flag']}")
+    if r13.get("required_output"):
+        print(f"  REQUIRED: {r13['required_output']}")
