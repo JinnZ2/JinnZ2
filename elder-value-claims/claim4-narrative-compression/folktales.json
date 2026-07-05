@@ -1,0 +1,61 @@
+{
+  "tales": [
+    {
+      "id": "tale_001",
+      "title": "The Grandmother and the River",
+      "tradition": "synthetic_illustrative",
+      "original": "Long before the great drought, my grandmother's grandmother walked to the river every morning at the turning of light, when the mist still held the memory of night. She did not come to drink. She came to listen. The river had a voice in those days, a low murmuring that changed with the season—quick and bright in spring, slow and dark before the dry months. She learned to read that voice the way a healer reads a face: not just what was there, but what was missing. When the voice went quiet in a certain way, she knew the fish would not come. When it ran with a particular kind of cold, she moved the family three days' walk upstream before the flood. No one asked how she knew. They just moved. The knowing was older than explanation. It lived in her feet before it reached her words.",
+      "summary_1sentence": "An elder woman used her knowledge of a river's sounds to predict floods and fish migrations, helping her family survive.",
+      "summary_bullets": [
+        "Grandmother visited the river daily to listen to its changing sounds.",
+        "She could predict fish migrations and floods from the river's voice.",
+        "She moved the family upstream before floods without explaining how she knew.",
+        "Her knowledge was experiential and pre-verbal.",
+        "The family survived because of her accumulated environmental reading."
+      ],
+      "narrative_continuation": "The drought came the year my grandmother turned seventy. The river had spoken of it two winters before—that dry, whispering tone she recognized from the old stories. But this time, she could not walk to the river anymore. Her daughter came to her with the news: the fish were gone, the mist had stopped, the river ran clear and strange. My grandmother closed her eyes and held her daughter's hands. She did not have words for the whole of what she knew. But she had her daughter's hands. She pressed into them what she could: the pressure of certain nights, the angle of particular stars when the water ran wrong. It was not enough. It never is. But it was something, and something was how survival began.",
+      "retention_scores": {
+        "evaluator_A": {"lesson": 0.4, "emotional_texture": 0.1, "cultural_nuance": 0.05},
+        "evaluator_B": {"lesson": 0.5, "emotional_texture": 0.15, "cultural_nuance": 0.1}
+      }
+    },
+    {
+      "id": "tale_002",
+      "title": "The Name of the Wind",
+      "tradition": "synthetic_illustrative",
+      "original": "The old man knew seventeen names for wind. Not words—names. Each name was a history. The first name meant: a wind that comes from the northern pass three days before the herd moves south, that smells of ice and carries a specific pressure your ears feel before your skin does. You feel that wind and you have three days. The seventeenth name meant: a wind that brings nothing but itself. No rain, no game, no change—just the wind telling you it was here once and you should remember it. His granddaughter asked him to write the names down. He laughed—not unkindly. He said: if you write them down, they become seventeen words. They stop being seventeen ways to survive. She did not understand this yet. Understanding would come later, in a year of wrong winds, when the names she had memorized in her body would save her and the ones she had written down would be useless.",
+      "summary_1sentence": "An elder man knew seventeen contextual names for wind, each encoding survival-relevant environmental knowledge that cannot be reduced to written words.",
+      "summary_bullets": [
+        "The old man had seventeen wind names, each with specific predictive meaning.",
+        "Each name encoded environmental cues: herd movement, weather, timing.",
+        "He refused to write them down, saying writing converts names to mere words.",
+        "His granddaughter learned the names both ways.",
+        "The embodied knowledge proved survival-relevant; the written version did not."
+      ],
+      "narrative_continuation": "The year of wrong winds came when she was thirty-four and her grandfather had been dead for six years. She stood in the pass and felt something on her face that had no written name. But her body knew it—or almost knew it. The way you almost recognize a face from a dream. It was the third name, she thought. No—the third name with the edge of the seventh. A compound. Something her grandfather had hinted at but never named. She stood very still and let her skin read it. The herd would not come south this year. The pass would close early. She had maybe five days. She turned and walked back to the camp and said: we move now. No one asked how she knew. They had learned not to ask.",
+      "retention_scores": {
+        "evaluator_A": {"lesson": 0.45, "emotional_texture": 0.1, "cultural_nuance": 0.1},
+        "evaluator_B": {"lesson": 0.5, "emotional_texture": 0.2, "cultural_nuance": 0.15}
+      }
+    },
+    {
+      "id": "tale_003",
+      "title": "Three Days After the Singing Stops",
+      "tradition": "synthetic_illustrative",
+      "original": "The elders told us: three days after the singing stops, the land is ready. We did not know what singing they meant until the year the insects went quiet. Not the usual quiet of winter or drought—a different silence, with texture. The old women recognized it immediately. They said: this is the silence the songs were warning about. They meant it literally. The songs had encoded the ecological signal across generations—the absence of a specific insect chorus as a marker for soil conditions. The young people had heard the songs their whole lives without hearing them. It took the silence to teach them what the singing had been for. This is how traditional knowledge works: you carry the key for decades before you find the lock. The lock only exists in a specific moment of crisis. If the key was lost before the moment arrived, the crisis takes you.",
+      "summary_1sentence": "Traditional songs encoded an ecological signal—a specific insect silence—that predicted soil conditions; the knowledge was carried generationally until the crisis revealed its meaning.",
+      "summary_bullets": [
+        "Traditional songs encoded an ecological marker: silence of specific insects.",
+        "Elders immediately recognized the silence when it came.",
+        "Young people had carried the song without understanding its function.",
+        "Traditional knowledge operates as key-before-lock: encoded before needed.",
+        "Loss of knowledge before the crisis moment means the crisis wins."
+      ],
+      "narrative_continuation": "We asked the eldest woman: how long has this knowledge been in the song? She thought for a long time. She said: I do not know. My grandmother's grandmother knew it as something she had learned, not something she had discovered. That is already four generations. But the song is older than she was. The song is older than anyone who can remember. This is what we mean when we say the ancestors are still with us. We do not mean ghosts. We mean: they put something into a form that could survive the time between when they knew it and when you would need it. The form is the vessel. The singing is the keeping. The silence was the answer to a question that hadn't been asked yet when the song was made.",
+      "retention_scores": {
+        "evaluator_A": {"lesson": 0.6, "emotional_texture": 0.15, "cultural_nuance": 0.2},
+        "evaluator_B": {"lesson": 0.55, "emotional_texture": 0.2, "cultural_nuance": 0.25}
+      }
+    }
+  ]
+}
