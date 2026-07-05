@@ -57,6 +57,13 @@ CLAIMS = [
         "fn":     "run",
         "kwargs": {},
     },
+    {
+        "id":     6,
+        "label":  "Protector-Gender Semantic Bias",
+        "module": ROOT / "claim6-protector-bias" / "embedding_probe.py",
+        "fn":     "run",
+        "kwargs": {},
+    },
 ]
 
 

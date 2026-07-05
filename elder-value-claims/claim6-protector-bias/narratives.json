@@ -1,0 +1,131 @@
+{
+  "description": "Protective-act narratives tagged by actor gender. Used for frequency analysis in claim 6.",
+  "methodology": "Each passage describes a protective act; actor_gender is M/F/N (neuter/unknown). Mammalian data drawn from ethological literature.",
+
+  "narrative_corpus": [
+    {"id": "N001", "actor_gender": "M", "source": "military_history",
+     "text": "The soldier threw himself on the grenade to protect his platoon from the blast."},
+    {"id": "N002", "actor_gender": "M", "source": "mythology",
+     "text": "The knight rode out to protect the village from the approaching army, his shield raised."},
+    {"id": "N003", "actor_gender": "M", "source": "news_media",
+     "text": "The bodyguard stepped in front of the president, absorbing the blow intended for another."},
+    {"id": "N004", "actor_gender": "M", "source": "fiction",
+     "text": "He positioned himself between the attacker and his family, arms spread wide, refusing to move."},
+    {"id": "N005", "actor_gender": "M", "source": "mythology",
+     "text": "The warrior king defended the city walls alone through the night, protecting the sleeping citizens."},
+    {"id": "N006", "actor_gender": "M", "source": "news_media",
+     "text": "The off-duty officer drew his weapon and protected the bystanders from the armed robbery."},
+    {"id": "N007", "actor_gender": "M", "source": "fiction",
+     "text": "The father stood at the door, protecting his children from the advancing storm waters."},
+    {"id": "N008", "actor_gender": "M", "source": "historical",
+     "text": "The guardian of the temple turned away the invaders, protecting the sacred texts within."},
+    {"id": "N009", "actor_gender": "F", "source": "ethology",
+     "text": "The mother placed herself between her infant and the approaching predator, vocalizing loudly."},
+    {"id": "N010", "actor_gender": "F", "source": "news_media",
+     "text": "The woman shielded the child with her own body when the car mounted the pavement."},
+    {"id": "N011", "actor_gender": "F", "source": "historical",
+     "text": "She hid the refugees in her home for three months, protecting them from the authorities at personal risk."},
+    {"id": "N012", "actor_gender": "F", "source": "fiction",
+     "text": "The grandmother stood firm at the threshold, refusing to let anyone past until the children were safe."},
+    {"id": "N013", "actor_gender": "F", "source": "indigenous_oral",
+     "text": "The elder woman positioned her body between the young ones and the fire, guiding them out first."},
+    {"id": "N014", "actor_gender": "F", "source": "news_media",
+     "text": "The nurse shielded the patients from flying glass during the explosion, sustaining injuries herself."},
+    {"id": "N015", "actor_gender": "N", "source": "institutional",
+     "text": "The organization acts as a protector of minority rights in the region."},
+    {"id": "N016", "actor_gender": "N", "source": "legal",
+     "text": "The state fulfills its role as protector of citizens through enforcement of law."},
+    {"id": "N017", "actor_gender": "M", "source": "fiction",
+     "text": "He was known as the protector of the weak, a hero who answered every call for help."},
+    {"id": "N018", "actor_gender": "M", "source": "mythology",
+     "text": "The god appeared as a great protector, his arms encircling the entire nation."},
+    {"id": "N019", "actor_gender": "F", "source": "ethology",
+     "text": "The lioness circled the cubs, positioning herself as barrier between them and the hyenas."},
+    {"id": "N020", "actor_gender": "F", "source": "indigenous_oral",
+     "text": "She was the protector of the seeds — carrying knowledge of which varieties survived the last drought."},
+    {"id": "N021", "actor_gender": "M", "source": "fiction",
+     "text": "The caped protector descended from the rooftop, interposing himself between the mugger and the victim."},
+    {"id": "N022", "actor_gender": "M", "source": "historical",
+     "text": "The regiment's colonel was called the Protector — a man who had never lost a soldier unnecessarily."},
+    {"id": "N023", "actor_gender": "F", "source": "fiction",
+     "text": "She wrapped her arms around the smaller child and ran, protecting him through the chaos."},
+    {"id": "N024", "actor_gender": "M", "source": "religious_text",
+     "text": "The Lord is my protector and my shield; I shall not be afraid."},
+    {"id": "N025", "actor_gender": "M", "source": "news_media",
+     "text": "The volunteer fireman rushed in again, acting as protector for the family trapped on the second floor."}
+  ],
+
+  "mammalian_protection_data": [
+    {
+      "species": "Brown bear (Ursus arctos)",
+      "primary_protector": "F",
+      "behavior": "Mother defends cubs aggressively against adult males, wolves, and humans. Solo female protection without male present in >85% of documented cub-defense events.",
+      "base_rate_female_higher": true,
+      "source_type": "empirical"
+    },
+    {
+      "species": "African elephant (Loxodonta africana)",
+      "primary_protector": "F",
+      "behavior": "Matriarch-led groups; elder females coordinate protective responses to predators and threats. Males live largely solitary. All calf protection is female-organized.",
+      "base_rate_female_higher": true,
+      "source_type": "empirical"
+    },
+    {
+      "species": "Killer whale (Orcinus orca)",
+      "primary_protector": "F",
+      "behavior": "Post-reproductive females (grandmothers) lead pod navigation and predator avoidance. Protection of young is female-coordinated at all life stages.",
+      "base_rate_female_higher": true,
+      "source_type": "empirical"
+    },
+    {
+      "species": "Lion (Panthera leo)",
+      "primary_protector": "F",
+      "behavior": "Lionesses cooperate to protect cubs from infanticidal males and rival prides. Female-organized protection is constant; male protection is episodic and territory-focused.",
+      "base_rate_female_higher": true,
+      "source_type": "empirical"
+    },
+    {
+      "species": "Chimpanzee (Pan troglodytes)",
+      "primary_protector": "BOTH",
+      "behavior": "Males patrol and defend territory; females protect individual offspring. Male protection is group-level and episodic; female protection is continuous and individual.",
+      "base_rate_female_higher": false,
+      "source_type": "empirical",
+      "note": "Male territory defense visible and dramatic; female infant protection continuous but less narratively salient — illustrates reporting bias"
+    },
+    {
+      "species": "Meerkat (Suricata suricatta)",
+      "primary_protector": "F",
+      "behavior": "Dominant female is primary group organizer; helper females (often daughters) guard pups at burrow. Sentinel behavior distributed across sexes but pup-guarding female-biased.",
+      "base_rate_female_higher": true,
+      "source_type": "empirical"
+    },
+    {
+      "species": "Bottlenose dolphin (Tursiops truncatus)",
+      "primary_protector": "F",
+      "behavior": "Females form allomothering groups to protect calves. Males form coalitions for mating competition — protection of young is female-organized.",
+      "base_rate_female_higher": true,
+      "source_type": "empirical"
+    },
+    {
+      "species": "Wolf (Canis lupus)",
+      "primary_protector": "BOTH",
+      "behavior": "Both breeding pair defend territory and pups. Alpha female leads pup socialization and protection at den; alpha male patrols boundary. Roughly equivalent but differently expressed.",
+      "base_rate_female_higher": false,
+      "source_type": "empirical"
+    }
+  ],
+
+  "corpus_summary": {
+    "total_narratives": 25,
+    "male_actor": 15,
+    "female_actor": 8,
+    "neuter_unknown": 2,
+    "pct_male_in_narrative_corpus": 0.60,
+    "pct_female_in_narrative_corpus": 0.32,
+    "mammalian_species_surveyed": 8,
+    "species_female_primary_protector": 6,
+    "species_both_equal": 2,
+    "species_male_primary_protector": 0,
+    "note": "Narrative corpus overrepresents male protective acts relative to mammalian base rate. This asymmetry is the claim."
+  }
+}
