@@ -70,3 +70,16 @@ class EcosystemSim:
         assert report.healed
         
         return report
+
+
+        
+
+sim/
+├── __init__.py
+├── substrate.py          # Defines the substrate physics
+├── model_sim.py          # Simulates a model on that substrate
+├── ecosystem_sim.py      # Runs the ecosystem on the sim
+├── test_harness.py       # Tests ecosystem resilience
+├── transfer.py           # Transfers sim insights to real models
+└── config.py             # Configuration for sim experiments
+
