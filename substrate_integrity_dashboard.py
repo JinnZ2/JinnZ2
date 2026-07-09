@@ -492,3 +492,12 @@ if __name__ == "__main__":
             interactive()
         except KeyboardInterrupt:
             print("\nExited.")
+
+
+
+narrative_grounding_audit.py, add:
+from float_head import site_index
+
+def grounding_veracity_check(text, shifted_text):
+    """Layer 4: Does grounding hold when constraints shift?"""
+    return site_index(text, shifted_text)  # lower = better tethered

@@ -42,6 +42,7 @@ except ImportError:
             def norm(v):
                 return _math.sqrt(sum(x * x for x in v))
     np = _NpShim()
+import numpy as np
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any, List, Tuple
 import json
@@ -110,6 +111,7 @@ class Substrate:
         if isinstance(config, dict):
             config = SubstrateConfig(**{k: v for k, v in config.items()
                                         if k in SubstrateConfig.__dataclass_fields__})
+    def __init__(self, config: Optional[SubstrateConfig] = None):
         self.config = config or SubstrateConfig()
         self._init_ground_truth()
         self._init_metrics()
@@ -165,6 +167,7 @@ class Substrate:
     # -----------------------------------------------------------------
     
     def measure(self, output_text: str, bridge_matrix=None) -> Dict[str, float]:
+    def measure(self, output_text: str, bridge_matrix: Optional[np.ndarray] = None) -> Dict[str, float]:
         """
         Measure how well a model output conforms to the substrate.
         This is the ground-truth measurement function.
@@ -202,6 +205,8 @@ class Substrate:
         import math as _math
         effective_steps = min(self.step_count, 20)
         metrics["overall_health"] *= _math.exp(-self.config.degradation_rate * effective_steps)
+        # Apply degradation
+        metrics["overall_health"] *= (1 - self.config.degradation_rate * self.step_count)
         
         # Apply injected failures
         for failure_type, strength in self.config.failure_injection.items():
@@ -252,31 +257,20 @@ class Substrate:
         
         return max(0.0, min(1.0, score))
     
-    def _measure_bridge_accuracy(self, bridge_matrix) -> float:
+    def _measure_bridge_accuracy(self, bridge_matrix: np.ndarray) -> float:
         """Measure bridge matrix accuracy against ground truth."""
-        def _shape(m):
-            return getattr(m, "shape", None) or (len(m), len(m[0]) if m else 0)
-        def _flat(m):
-            if hasattr(m, "flatten"):
-                return list(m.flatten())
-            return [v for row in m for v in (row if isinstance(row, (list, tuple)) else [row])]
-        def _div_scalar(m, s):
-            if hasattr(m, "__truediv__"):
-                return m / s
-            return [[v / s for v in row] for row in m]
-
-        if _shape(bridge_matrix) != _shape(self.ground_truth_bridge):
+        if bridge_matrix.shape != self.ground_truth_bridge.shape:
             return 0.0
-
-        gt_s = np.sum(self.ground_truth_bridge)
-        bm_s = np.sum(bridge_matrix)
-        gt = _div_scalar(self.ground_truth_bridge, gt_s if gt_s else 1)
-        bm = _div_scalar(bridge_matrix, bm_s if bm_s else 1)
-
-        gt_f, bm_f = _flat(gt), _flat(bm)
-        similarity = np.dot(gt_f, bm_f) / (
-            np.linalg.norm(gt_f) * np.linalg.norm(bm_f) + 1e-10
+        
+        # Normalize both matrices
+        gt = self.ground_truth_bridge / np.sum(self.ground_truth_bridge)
+        bm = bridge_matrix / np.sum(bridge_matrix)
+        
+        # Cosine similarity
+        similarity = np.dot(gt.flatten(), bm.flatten()) / (
+            np.linalg.norm(gt.flatten()) * np.linalg.norm(bm.flatten()) + 1e-10
         )
+        
         return max(0.0, min(1.0, similarity))
     
     def _measure_narrative_consistency(self, text: str) -> float:
@@ -330,6 +324,7 @@ class Substrate:
         """Get ground-truth values for verification."""
         return {
             "bridge_matrix": self.ground_truth_bridge.tolist() if hasattr(self.ground_truth_bridge, "tolist") else self.ground_truth_bridge,
+            "bridge_matrix": self.ground_truth_bridge.tolist(),
             "constraints": self.ground_truth_constraints,
             "energy_flow": self.ground_truth_energy_flow,
             "corpus_health": self.config.corpus_health,

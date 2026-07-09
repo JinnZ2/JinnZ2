@@ -584,9 +584,7 @@ def main():
     parser.add_argument("--auto-heal", action="store_true", help="Enable auto-healing")
     parser.add_argument("--no-auto-heal", action="store_true", help="Disable auto-healing")
     parser.add_argument("--demo", action="store_true", help="Run in demo mode")
-    parser.add_argument("--max-runtime", type=int, default=0,
-                        help="Maximum runtime in seconds (0 = unlimited)")
-
+    
     args = parser.parse_args()
     
     if args.demo:

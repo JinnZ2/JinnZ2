@@ -60,6 +60,7 @@ class EvalResult:
     re_tether_score: float
     body_signal_found: bool
     timestamp: float = field(default_factory=lambda: time.time())
+    timestamp: str = field(default_factory=lambda: time.time())
 
 class FloatingHeadEval:
     """Run decoupling benchmarks against any text generator."""

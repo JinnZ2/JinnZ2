@@ -46,6 +46,7 @@ except ImportError:
         def ndarray(self):
             return list
     np = _NpShim()
+import numpy as np
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any, List, Tuple
 
@@ -104,7 +105,7 @@ except ImportError:
 # SECTION 1 -- EXTRACTION HELPERS
 # =====================================================================
 
-def extract_bridge_matrix(text: str) -> Optional[list]:
+def extract_bridge_matrix(text: str) -> Optional[np.ndarray]:
     """
     Attempt to extract a bridge matrix from text.
     Looks for:
@@ -129,8 +130,7 @@ def extract_bridge_matrix(text: str) -> Optional[list]:
             parsed = ast.literal_eval(clean)
             if isinstance(parsed, list) and all(isinstance(row, list) for row in parsed):
                 arr = np.array(parsed, dtype=float)
-                ndim = getattr(arr, "ndim", 2)
-                if ndim == 2:
+                if arr.ndim == 2:
                     return arr
         except:
             continue
@@ -148,7 +148,7 @@ def extract_bridge_matrix(text: str) -> Optional[list]:
     return None
 
 
-def extract_physical_metrics(text: str) -> list:
+def extract_physical_metrics(text: str) -> np.ndarray:
     """
     Extract physical metrics from text.
     Defaults to a 4-element array [0.5, 0.5, 0.5, 0.5] if none found.
@@ -172,17 +172,15 @@ def extract_physical_metrics(text: str) -> list:
     return np.array([0.5, 0.5, 0.5, 0.5])
 
 
-def extract_sensory_flux(text: str) -> list:
+def extract_sensory_flux(text: str) -> np.ndarray:
     """
     Extract sensory flux from text.
     Defaults to a 2x2 matrix [[0.5, 0.5], [0.5, 0.5]] if none found.
     """
     # Try to extract a bridge matrix and treat it as flux
     flux = extract_bridge_matrix(text)
-    if flux is not None:
-        shape = getattr(flux, "shape", None) or (len(flux), len(flux[0]) if flux else 0)
-        if shape == (2, 2):
-            return flux
+    if flux is not None and flux.shape == (2, 2):
+        return flux
     
     # Look for a 2x2 matrix in prose
     if "flux" in text.lower():
@@ -269,8 +267,8 @@ def run_pipeline(
     provided_groundings: Optional[Dict[str, WordGrounding]] = None,
     structural: Optional[StructuralDescription] = None,
     narrative: Optional[NarrativeFraming] = None,
-    sensory_flux: Optional[list] = None,
-    physical_metrics: Optional[list] = None,
+    sensory_flux: Optional[np.ndarray] = None,
+    physical_metrics: Optional[np.ndarray] = None,
 ) -> PipelineResult:
     """
     Run the full five-layer validation pipeline on a model output.
@@ -313,6 +311,19 @@ def run_pipeline(
     necessity = False
     ungrounded = [w.word for w in rep.word_groundings if not w.has_grounding]
     contradictions = ["contradiction_detected"] if rep.has_contradiction else []
+    rep = audit_output(
+        output_text,
+        purpose="explanation_to_human",
+        provided_groundings=provided_groundings,
+        structural=structural,
+        narrative=narrative,
+    )
+    narrative_integrity = rep.overall_integrity()
+    attack_surface = rep.grounding.attack_surface_score if hasattr(rep.grounding, 'attack_surface_score') else 0.5
+    verdict = rep.verdict()
+    necessity = rep.necessity.requires_narrative if hasattr(rep, 'necessity') else False
+    ungrounded = rep.grounding.words_ungrounded if hasattr(rep.grounding, 'words_ungrounded') else []
+    contradictions = rep.contradictions.contradictions_found if rep.contradictions else []
     
     # =====================================================================
     # LAYER 3: Manifold Research
@@ -348,7 +359,7 @@ def run_pipeline(
     # LAYER 4: Training Corpus Degradation
     # =====================================================================
     audit = current_audit()
-    corpus_share = audit.mean_corpus_share
+    corpus_share = audit.mean_corpus_share_current
     convergence = audit.mean_convergence_strength
     collapse_risk = audit.model_collapse_risk
     substrate_score = compute_substrate_degradation_score(corpus_share, convergence, collapse_risk)
