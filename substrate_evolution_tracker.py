@@ -597,6 +597,22 @@ def plot_evolution(
 # SECTION 7 -- ENTRYPOINT
 # =====================================================================
 
+def _export_convergence_table(data_dir: str, output_path: str) -> None:
+    """Write a markdown convergence table from stored evolution data."""
+    import os
+    import json
+    store = EvolutionStore(data_dir)
+    models = store.list_models()
+    if not models:
+        table = "# Convergence Table\n\nNo data found.\n"
+    else:
+        table = format_evolution_table(models, store)
+        table = "# Convergence Table\n\n" + table + "\n"
+    with open(output_path, "w") as f:
+        f.write(table)
+    print(f"Convergence table written to {output_path}")
+
+
 def demo():
     """Run a demo with mock data."""
     print("🧩 SUBSTRATE EVOLUTION TRACKER — DEMO")
@@ -637,6 +653,17 @@ def demo():
 
 def main():
     """Main entrypoint for running the tracker."""
+    import argparse as _ap
+    _parser = _ap.ArgumentParser(add_help=False)
+    _parser.add_argument("--export", action="store_true")
+    _parser.add_argument("--output", type=str, default="CONVERGENCE_TABLE.md")
+    _parser.add_argument("--data-dir", type=str, default="ecosystem_data")
+    _args, _ = _parser.parse_known_args()
+
+    if _args.export:
+        _export_convergence_table(_args.data_dir, _args.output)
+        return
+
     print("=== Substrate Evolution Tracker ===")
     print("This module runs the validation pipeline on a fixed prompt set")
     print("and tracks results over time.")

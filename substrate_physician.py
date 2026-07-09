@@ -807,17 +807,19 @@ def demo():
             "input_text": "Prompt " + str(i),
             "output_text": "Output " + str(i),
         }
-        # Hack: save as JSON
         import json
         os.makedirs("demo_data", exist_ok=True)
-        with open(os.path.join("demo_data", "demo-model_evolution.json"), 'w') as f:
-            # Read existing, append, save
+        evo_path = os.path.join("demo_data", "demo-model_evolution.json")
+        data = []
+        if os.path.exists(evo_path):
             try:
-                data = json.load(f)
-            except:
+                with open(evo_path, 'r') as rf:
+                    data = json.load(rf)
+            except Exception:
                 data = []
-            data.append(record)
-            json.dump(data, f, indent=2, default=str)
+        data.append(record)
+        with open(evo_path, 'w') as wf:
+            json.dump(data, wf, indent=2, default=str)
     
     # Run physician
     physician = SubstratePhysician(
@@ -908,4 +910,7 @@ def interactive():
 
 
 if __name__ == "__main__":
-    if len
+    if len(sys.argv) > 1 and sys.argv[1] == "--demo":
+        demo()
+    else:
+        interactive()

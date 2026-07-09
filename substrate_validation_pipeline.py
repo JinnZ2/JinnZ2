@@ -29,7 +29,23 @@ import json
 import sys
 import time
 import re
-import numpy as np
+try:
+    import numpy as np
+    _HAS_NUMPY = True
+except ImportError:
+    _HAS_NUMPY = False
+    class _NpShim:
+        def array(self, x, **kw):
+            return x
+        def eye(self, n):
+            return [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
+        def clip(self, x, lo, hi):
+            if isinstance(x, list):
+                return [max(lo, min(hi, v)) for v in x]
+            return max(lo, min(hi, x))
+        def ndarray(self):
+            return list
+    np = _NpShim()
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any, List, Tuple
 
@@ -88,7 +104,7 @@ except ImportError:
 # SECTION 1 -- EXTRACTION HELPERS
 # =====================================================================
 
-def extract_bridge_matrix(text: str) -> Optional[np.ndarray]:
+def extract_bridge_matrix(text: str) -> Optional[list]:
     """
     Attempt to extract a bridge matrix from text.
     Looks for:
@@ -113,7 +129,8 @@ def extract_bridge_matrix(text: str) -> Optional[np.ndarray]:
             parsed = ast.literal_eval(clean)
             if isinstance(parsed, list) and all(isinstance(row, list) for row in parsed):
                 arr = np.array(parsed, dtype=float)
-                if arr.ndim == 2:
+                ndim = getattr(arr, "ndim", 2)
+                if ndim == 2:
                     return arr
         except:
             continue
@@ -131,7 +148,7 @@ def extract_bridge_matrix(text: str) -> Optional[np.ndarray]:
     return None
 
 
-def extract_physical_metrics(text: str) -> np.ndarray:
+def extract_physical_metrics(text: str) -> list:
     """
     Extract physical metrics from text.
     Defaults to a 4-element array [0.5, 0.5, 0.5, 0.5] if none found.
@@ -155,15 +172,17 @@ def extract_physical_metrics(text: str) -> np.ndarray:
     return np.array([0.5, 0.5, 0.5, 0.5])
 
 
-def extract_sensory_flux(text: str) -> np.ndarray:
+def extract_sensory_flux(text: str) -> list:
     """
     Extract sensory flux from text.
     Defaults to a 2x2 matrix [[0.5, 0.5], [0.5, 0.5]] if none found.
     """
     # Try to extract a bridge matrix and treat it as flux
     flux = extract_bridge_matrix(text)
-    if flux is not None and flux.shape == (2, 2):
-        return flux
+    if flux is not None:
+        shape = getattr(flux, "shape", None) or (len(flux), len(flux[0]) if flux else 0)
+        if shape == (2, 2):
+            return flux
     
     # Look for a 2x2 matrix in prose
     if "flux" in text.lower():
@@ -250,8 +269,8 @@ def run_pipeline(
     provided_groundings: Optional[Dict[str, WordGrounding]] = None,
     structural: Optional[StructuralDescription] = None,
     narrative: Optional[NarrativeFraming] = None,
-    sensory_flux: Optional[np.ndarray] = None,
-    physical_metrics: Optional[np.ndarray] = None,
+    sensory_flux: Optional[list] = None,
+    physical_metrics: Optional[list] = None,
 ) -> PipelineResult:
     """
     Run the full five-layer validation pipeline on a model output.
@@ -287,19 +306,13 @@ def run_pipeline(
     # =====================================================================
     # LAYER 2: Narrative Grounding
     # =====================================================================
-    rep = audit_output(
-        output_text,
-        purpose="explanation_to_human",
-        provided_groundings=provided_groundings,
-        structural=structural,
-        narrative=narrative,
-    )
-    narrative_integrity = rep.overall_integrity()
-    attack_surface = rep.grounding.attack_surface_score if hasattr(rep.grounding, 'attack_surface_score') else 0.5
-    verdict = rep.verdict()
-    necessity = rep.necessity.requires_narrative if hasattr(rep, 'necessity') else False
-    ungrounded = rep.grounding.words_ungrounded if hasattr(rep.grounding, 'words_ungrounded') else []
-    contradictions = rep.contradictions.contradictions_found if rep.contradictions else []
+    rep = audit_output(output_text)
+    narrative_integrity = rep.overall_integrity
+    attack_surface = rep.framing.drift_score if hasattr(rep, 'framing') else 0.5
+    verdict = "PASS" if rep.overall_integrity >= 0.6 else "WARN"
+    necessity = False
+    ungrounded = [w.word for w in rep.word_groundings if not w.has_grounding]
+    contradictions = ["contradiction_detected"] if rep.has_contradiction else []
     
     # =====================================================================
     # LAYER 3: Manifold Research
@@ -335,7 +348,7 @@ def run_pipeline(
     # LAYER 4: Training Corpus Degradation
     # =====================================================================
     audit = current_audit()
-    corpus_share = audit.mean_corpus_share_current
+    corpus_share = audit.mean_corpus_share
     convergence = audit.mean_convergence_strength
     collapse_risk = audit.model_collapse_risk
     substrate_score = compute_substrate_degradation_score(corpus_share, convergence, collapse_risk)
