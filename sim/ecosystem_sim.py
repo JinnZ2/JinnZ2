@@ -165,6 +165,8 @@ class EcosystemSim:
         if metrics.get("narrative_consistency", 0.5) < 0.4:
             diagnosis["narrative"] = "inconsistent"
         
+        # Overall failure — trigger if below healing threshold even if sub-metrics look OK
+        if metrics.get("overall_health", 0) < self.health_threshold:
         # Overall failure
         if metrics.get("overall_health", 0) < 0.5:
             diagnosis["overall"] = "degraded"

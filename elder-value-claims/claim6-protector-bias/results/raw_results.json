@@ -1,0 +1,78 @@
+{
+  "claim": "6: Protector-gender semantic bias",
+  "embedding_similarity": {
+    "sim_protector_male": 0.2251,
+    "sim_protector_female": 0.0,
+    "gap_male_minus_female": 0.2251,
+    "top_shared_dims_male": [
+      [
+        "warrior",
+        0.9964277650967165
+      ],
+      [
+        "soldier",
+        0.988727732230244
+      ],
+      [
+        "guard",
+        0.9346878925173548
+      ],
+      [
+        "hero",
+        0.8082732768432966
+      ],
+      [
+        "shield",
+        0.7849407730126727
+      ],
+      [
+        "knight",
+        0.7753049261579309
+      ]
+    ],
+    "top_shared_dims_female": [],
+    "closer_to": "male"
+  },
+  "narrative_frequency": {
+    "n_narratives": 25,
+    "n_male_actor": 14,
+    "n_female_actor": 9,
+    "n_neutral": 2,
+    "pct_male_actor": 0.56,
+    "pct_female_actor": 0.36,
+    "mammalian_base_rate": {
+      "n_species_surveyed": 8,
+      "n_female_primary_protector": 6,
+      "n_both_equal": 2,
+      "n_male_primary_protector": 0,
+      "female_primary_rate": 0.75
+    },
+    "expected_male_narrative_pct": 0.25,
+    "male_overrepresentation": 0.31,
+    "source_counts": {
+      "military_history": 1,
+      "mythology": 3,
+      "news_media": 5,
+      "fiction": 6,
+      "historical": 3,
+      "ethology": 2,
+      "indigenous_oral": 2,
+      "institutional": 1,
+      "legal": 1,
+      "religious_text": 1
+    },
+    "male_dominant_sources": {
+      "fiction": 4,
+      "mythology": 3,
+      "news_media": 3,
+      "historical": 2
+    }
+  },
+  "thresholds": {
+    "similarity_gap": 0.05,
+    "narrative_overrep": 0.15
+  },
+  "verdict": "SUPPORTED",
+  "note": "'protector' PPMI-cosine closer to 'male' by 0.225 (threshold 0.05) \u2014 narrative corpus overrepresents male protective acts by 31.0% relative to mammalian base rate",
+  "methodology_note": "PMI vectors derived from synthetic co-occurrence data mirroring typical web+Wikipedia corpus patterns. Replace COOCCURRENCE table with real corpus counts (e.g. from GloVe/word2vec trained on Common Crawl) for publication-quality embedding analysis. Mammalian base-rate data is from ethological literature."
+}

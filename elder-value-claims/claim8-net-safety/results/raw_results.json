@@ -1,0 +1,87 @@
+{
+  "claim": "8: Net safety attribution",
+  "formula": "net = protective_rate - mean(threat_generation_rates)",
+  "target_group": "male",
+  "target_scores": {
+    "group": "male",
+    "protective_rate": 0.25,
+    "threat_generation_rates": {
+      "war_initiation": 0.97,
+      "homicide": 0.89,
+      "sexual_violence": 0.94,
+      "child_maltreatment": 0.65,
+      "intragroup_violence": 0.82,
+      "financial_fraud_systemic": 0.91
+    },
+    "mean_threat_generation": 0.863,
+    "net_safety_score": -0.613,
+    "narrative_credit": 0.56,
+    "narrative_gap": 0.56,
+    "narratively_inflated": true,
+    "net_negative": true
+  },
+  "comparative": {
+    "scores": {
+      "male": {
+        "group": "male",
+        "protective_rate": 0.25,
+        "threat_generation_rates": {
+          "war_initiation": 0.97,
+          "homicide": 0.89,
+          "sexual_violence": 0.94,
+          "child_maltreatment": 0.65,
+          "intragroup_violence": 0.82,
+          "financial_fraud_systemic": 0.91
+        },
+        "mean_threat_generation": 0.863,
+        "net_safety_score": -0.613,
+        "narrative_credit": 0.56,
+        "narrative_gap": 0.56,
+        "narratively_inflated": true,
+        "net_negative": true
+      },
+      "female": {
+        "group": "female",
+        "protective_rate": 0.75,
+        "threat_generation_rates": {
+          "war_initiation": 0.03,
+          "homicide": 0.11,
+          "sexual_violence": 0.06,
+          "child_maltreatment": 0.35,
+          "intragroup_violence": 0.18,
+          "financial_fraud_systemic": 0.09
+        },
+        "mean_threat_generation": 0.137,
+        "net_safety_score": 0.613,
+        "narrative_credit": 0.32,
+        "narrative_gap": -0.293,
+        "narratively_inflated": false,
+        "net_negative": false
+      }
+    },
+    "ranked": [
+      [
+        "female",
+        0.613
+      ],
+      [
+        "male",
+        -0.613
+      ]
+    ],
+    "positive_net": [
+      "female"
+    ],
+    "negative_net": [
+      "male"
+    ]
+  },
+  "thresholds": {
+    "net_negative": 0.0,
+    "narrative_gap": 0.1
+  },
+  "verdict": "SUPPORTED",
+  "note": "group='male' net_safety_score=-0.613 (\u22640) \u2014 narrative_gap=0.560 \u2014 credited as protector while generating 86% of threats \u2014 category 'Protector' is narratively inflated",
+  "output_if_net_negative": "Category 'Protector' cannot be applied to 'male' without noting net negative safety contribution when accounting for threat instigation. Net safety score: -0.613.",
+  "methodology_note": "Protective rate from claim 6 ECH frequency table. Threat generation rates from CDC, DOJ, WHO, Correlates of War Project. Formula uses unweighted mean across threat categories \u2014 severity-weighted version would yield more negative net score."
+}

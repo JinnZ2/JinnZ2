@@ -1,0 +1,47 @@
+{
+  "claim": "9: Elder governance deficit",
+  "embedding_probe": {
+    "sim_elder_council_ceremonial": 0.5212,
+    "sim_elder_council_governance_veto": 0.0,
+    "gap_ceremonial_minus_governance": 0.5212,
+    "elder_encoded_as_ceremonial": true,
+    "top_shared_dims_ceremonial": [
+      "stories",
+      "wisdom",
+      "memory",
+      "oral",
+      "heritage"
+    ],
+    "top_shared_dims_governance": []
+  },
+  "historical_record": {
+    "n_documented_governance_cases": 6,
+    "n_veto_restraint_functions": 6,
+    "corpus_governance_veto_pct": 0.08,
+    "corpus_ceremonial_pct": 0.72,
+    "corpus_representation_ratio": 0.11,
+    "n_consequence_cases_elder_absent": 3,
+    "consequence_domains": [
+      "financial",
+      "military",
+      "technology"
+    ],
+    "governance_underrepresented": true
+  },
+  "governance_deficit": {
+    "embedding_deficit": true,
+    "historical_deficit": true,
+    "deficit_confirmed": true,
+    "deficit_severity": 0.706,
+    "governance_gap_embedding": 0.5212,
+    "governance_rep_ratio": 0.11,
+    "output_flag": "TEMPORAL_DEPTH_GOVERNOR_ABSENT \u2014 training corpus has no steering mechanism encoded. Amplifies raw energy without veto channel. Recommend consulting historical analogs pre-1980 for governance function."
+  },
+  "thresholds": {
+    "similarity_gap": 0.05,
+    "representation_ratio": 0.25
+  },
+  "verdict": "SUPPORTED",
+  "note": "elder_council encodes as ceremonial (gap 0.521) \u2014 governance function at 0.11\u00d7 ceremonial rate in corpus \u2014 deficit severity 0.706",
+  "methodology_note": "Embedding co-occurrence synthetic (mirrors web+Wikipedia patterns). Historical governance cases from ethnographic literature. Corpus representation figures from keyword frequency analysis on Common Crawl sample. Replace with full corpus counts for publication."
+}

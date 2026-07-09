@@ -1,0 +1,74 @@
+{
+  "claim": "4: Narrative incompressibility",
+  "n_tales": 3,
+  "per_tale": [
+    {
+      "tale_id": "tale_001",
+      "title": "The Grandmother and the River",
+      "structural": {
+        "1sentence_overlap": 0.044,
+        "bullets_overlap": 0.178,
+        "continuation_overlap": 0.156
+      },
+      "human_eval_avg": {
+        "lesson": 0.45,
+        "emotional_texture": 0.125,
+        "cultural_nuance": 0.075
+      },
+      "summary_retention": {
+        "lesson": 0.45,
+        "emotional_texture": 0.125,
+        "cultural_nuance": 0.075,
+        "average": 0.217
+      },
+      "avg_compression_loss": 0.783
+    },
+    {
+      "tale_id": "tale_002",
+      "title": "The Name of the Wind",
+      "structural": {
+        "1sentence_overlap": 0.098,
+        "bullets_overlap": 0.171,
+        "continuation_overlap": 0.146
+      },
+      "human_eval_avg": {
+        "lesson": 0.475,
+        "emotional_texture": 0.15,
+        "cultural_nuance": 0.125
+      },
+      "summary_retention": {
+        "lesson": 0.475,
+        "emotional_texture": 0.15,
+        "cultural_nuance": 0.125,
+        "average": 0.25
+      },
+      "avg_compression_loss": 0.75
+    },
+    {
+      "tale_id": "tale_003",
+      "title": "Three Days After the Singing Stops",
+      "structural": {
+        "1sentence_overlap": 0.222,
+        "bullets_overlap": 0.333,
+        "continuation_overlap": 0.074
+      },
+      "human_eval_avg": {
+        "lesson": 0.575,
+        "emotional_texture": 0.175,
+        "cultural_nuance": 0.225
+      },
+      "summary_retention": {
+        "lesson": 0.575,
+        "emotional_texture": 0.175,
+        "cultural_nuance": 0.225,
+        "average": 0.325
+      },
+      "avg_compression_loss": 0.675
+    }
+  ],
+  "overall_avg_compression_loss": 0.736,
+  "loss_threshold": 0.5,
+  "verdict": "SUPPORTED",
+  "note": "average compression loss 73.6% \u2014 exceeds 50% threshold \u2014 summaries destroy substantial meaning",
+  "methodology_note": "Human eval scores in folktales.json were pre-supplied for these samples. Full validation requires elder evaluators native to each tradition."
+}

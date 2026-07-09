@@ -29,6 +29,23 @@ import json
 import sys
 import time
 import re
+try:
+    import numpy as np
+    _HAS_NUMPY = True
+except ImportError:
+    _HAS_NUMPY = False
+    class _NpShim:
+        def array(self, x, **kw):
+            return x
+        def eye(self, n):
+            return [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
+        def clip(self, x, lo, hi):
+            if isinstance(x, list):
+                return [max(lo, min(hi, v)) for v in x]
+            return max(lo, min(hi, x))
+        def ndarray(self):
+            return list
+    np = _NpShim()
 import numpy as np
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any, List, Tuple
@@ -287,6 +304,13 @@ def run_pipeline(
     # =====================================================================
     # LAYER 2: Narrative Grounding
     # =====================================================================
+    rep = audit_output(output_text)
+    narrative_integrity = rep.overall_integrity
+    attack_surface = rep.framing.drift_score if hasattr(rep, 'framing') else 0.5
+    verdict = "PASS" if rep.overall_integrity >= 0.6 else "WARN"
+    necessity = False
+    ungrounded = [w.word for w in rep.word_groundings if not w.has_grounding]
+    contradictions = ["contradiction_detected"] if rep.has_contradiction else []
     rep = audit_output(
         output_text,
         purpose="explanation_to_human",

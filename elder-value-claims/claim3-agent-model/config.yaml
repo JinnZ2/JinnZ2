@@ -1,0 +1,24 @@
+# ABM configuration for Claim 3: Elder Survival Advantage
+# All parameters are adjustable. Falsification: Group B survives equally or better.
+
+simulation:
+  pop_size: 80          # initial agents per group
+  n_generations: 150    # generations to run
+  n_trials: 30          # independent trials to average over
+  random_seed: 42       # for reproducibility (0 = random)
+
+environment:
+  shock_probability: 0.25    # probability of environmental shock per generation
+  shock_severity: 0.45       # survival penalty during shock (base survival drops by this)
+  base_survival: 0.90        # base survival rate per generation (no shock)
+  birth_rate: 0.25           # fraction of pop added as births each generation
+
+elders:
+  elder_age_threshold: 4     # simulation age units (not real years)
+  knowledge_halflife: 0.92   # knowledge decay per generation
+  elder_boost_max: 0.35      # max survival bonus from elder knowledge during shock
+  knowledge_transfer_rate: 0.70  # fraction of elder knowledge transferred to young each generation
+
+thresholds:
+  survival_advantage_claim: 0.30   # 30% survival advantage needed to SUPPORT claim
+  falsification_threshold: 0.0     # 0% or negative = FALSIFIED

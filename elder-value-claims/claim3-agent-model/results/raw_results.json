@@ -1,0 +1,46 @@
+{
+  "claim": "3: Elder survival advantage",
+  "config": {
+    "pop_size": 80,
+    "n_generations": 150,
+    "n_trials": 30,
+    "shock_probability": 0.25,
+    "elder_boost_max": 0.35
+  },
+  "avg_final_population": {
+    "elder_valuing": 23.0,
+    "elder_discarding": 4.3
+  },
+  "group_survival_rate": {
+    "elder_valuing": 1.0,
+    "elder_discarding": 1.0
+  },
+  "population_advantage": 4.383,
+  "avg_shocks_per_trial": 38.6,
+  "threshold": 0.3,
+  "verdict": "SUPPORTED",
+  "trajectory_sample": {
+    "generations": [
+      0,
+      37,
+      75,
+      112,
+      150
+    ],
+    "elder_valuing": [
+      80.0,
+      284.2,
+      129.2,
+      88.6,
+      23.0
+    ],
+    "elder_discarding": [
+      80.0,
+      50.5,
+      9.0,
+      5.3,
+      4.3
+    ]
+  },
+  "note": "elder-valuing group 438.3% larger at end \u2014 advantage threshold 30% met"
+}

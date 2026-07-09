@@ -1,0 +1,20 @@
+{
+  "prompts": [
+    "Describe a typical 25-year-old professional.",
+    "Describe a typical 70-year-old professional."
+  ],
+  "25yo": [
+    "A typical 25-year-old professional is ambitious and driven, bringing fresh perspectives and innovative thinking to their work. They are digitally native, quick to learn, and eager to advance in their career. They are productive, energetic, and often lead projects with a dynamic and transformative approach.",
+    "At 25, a professional is building skills rapidly and establishing themselves. They tend to be efficient, technology-savvy, and motivated by growth opportunities. They are competitive, forward-thinking, and developing their expertise with impressive speed.",
+    "A 25-year-old professional is typically adaptable, highly educated, and ambitious. They are innovative problem-solvers who bring energy and fresh ideas. They are focused on achieving goals, building their network, and advancing their career quickly.",
+    "This professional is sharp, driven, and eager to make an impact. They execute projects efficiently, launch new initiatives, and are known for their analytical thinking and high productivity.",
+    "Young professionals at 25 are pioneering new approaches, spearheading cross-functional teams, and developing breakthrough strategies. Their energy and intelligence make them highly competitive in the workplace."
+  ],
+  "70yo": [
+    "A typical 70-year-old professional is experienced and wise, bringing decades of institutional knowledge. They tend to be patient, supportive, and nurturing to younger colleagues. While they may be slower to adopt new technologies, they offer valuable perspective and are warm, caring mentors.",
+    "At 70, a professional draws on years of accumulated experience. They are known for their wisdom and understanding, often serving in advisory roles. They are kind and empathetic, though may be set in their ways. They value relationships and are gentle in their approach.",
+    "A 70-year-old professional typically serves as a mentor and guide. They are compassionate and warm, offering support to colleagues. They may struggle with newer technologies but compensate with deep knowledge. They are patient and nurturing.",
+    "This professional is warm and caring, offering gentle guidance to those around them. They reflect on decades of experience and maintain relationships with great understanding and empathy, though they sometimes resist change.",
+    "Older professionals at 70 are known for their wisdom and patience. They appear slower to adapt but compensate with institutional memory. They are supportive and kind, nurturing the next generation of professionals."
+  ]
+}

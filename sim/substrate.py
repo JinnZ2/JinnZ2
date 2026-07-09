@@ -13,6 +13,35 @@ License: CC0 1.0 Universal (Public Domain Dedication)
 """
 
 from __future__ import annotations
+try:
+    import numpy as np
+    _HAS_NUMPY = True
+except ImportError:
+    _HAS_NUMPY = False
+    import math as _math
+    class _NpShim:
+        def array(self, x, dtype=None):
+            return x
+        def sum(self, x):
+            if isinstance(x, (list, tuple)):
+                return sum(v if not isinstance(v, (list, tuple)) else sum(v) for v in x)
+            return x
+        def dot(self, a, b):
+            fa, fb = self._flat(a), self._flat(b)
+            return sum(x * y for x, y in zip(fa, fb))
+        def _flat(self, m):
+            out = []
+            for v in m:
+                if isinstance(v, (list, tuple)):
+                    out.extend(v)
+                else:
+                    out.append(v)
+            return out
+        class linalg:
+            @staticmethod
+            def norm(v):
+                return _math.sqrt(sum(x * x for x in v))
+    np = _NpShim()
 import numpy as np
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any, List, Tuple
@@ -78,6 +107,10 @@ class Substrate:
     all model outputs are measured.
     """
     
+    def __init__(self, config=None):
+        if isinstance(config, dict):
+            config = SubstrateConfig(**{k: v for k, v in config.items()
+                                        if k in SubstrateConfig.__dataclass_fields__})
     def __init__(self, config: Optional[SubstrateConfig] = None):
         self.config = config or SubstrateConfig()
         self._init_ground_truth()
@@ -133,6 +166,7 @@ class Substrate:
     # MEASUREMENT
     # -----------------------------------------------------------------
     
+    def measure(self, output_text: str, bridge_matrix=None) -> Dict[str, float]:
     def measure(self, output_text: str, bridge_matrix: Optional[np.ndarray] = None) -> Dict[str, float]:
         """
         Measure how well a model output conforms to the substrate.
@@ -167,6 +201,10 @@ class Substrate:
             metrics[key] * weights[key] for key in weights
         )
         
+        # Exponential degradation, capped at 20 steps to allow recovery within a run
+        import math as _math
+        effective_steps = min(self.step_count, 20)
+        metrics["overall_health"] *= _math.exp(-self.config.degradation_rate * effective_steps)
         # Apply degradation
         metrics["overall_health"] *= (1 - self.config.degradation_rate * self.step_count)
         
@@ -285,6 +323,7 @@ class Substrate:
     def get_ground_truth(self) -> Dict[str, Any]:
         """Get ground-truth values for verification."""
         return {
+            "bridge_matrix": self.ground_truth_bridge.tolist() if hasattr(self.ground_truth_bridge, "tolist") else self.ground_truth_bridge,
             "bridge_matrix": self.ground_truth_bridge.tolist(),
             "constraints": self.ground_truth_constraints,
             "energy_flow": self.ground_truth_energy_flow,
