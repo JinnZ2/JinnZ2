@@ -148,6 +148,33 @@ CLAIM_TABLE = [
         ),
         "status": "held",
     },
+    {
+        "id": "SD-6",
+        "claim": (
+            "Governance corollary of SD-2. A leader who no longer does loses "
+            "the instrument, not only the labor. Hands still in the work is a "
+            "calibration requirement and a write-side eligibility requirement "
+            "at once: it keeps the leader's read calibrated to conditions that "
+            "do not negotiate, keeps the leader inside the replication gate as "
+            "an observer rather than above it as testimony, and keeps the "
+            "leader's emotional panel pointed at the group's load rather than "
+            "the leader's own comfort. Not held by all groups."
+        ),
+        "condition": (
+            "Compare two leaders under a decision with a physical consequence "
+            "for the group: one whose hands are still in the work the decision "
+            "concerns, one whose are not. Watch a decision play out against "
+            "terrain."
+        ),
+        "tell": (
+            "The detached leader commits readings terrain refuses, or reads a "
+            "gap while insulated from it, or authors on authority without "
+            "having re-encountered the condition. The hands-in leader's calls "
+            "verify by outcome. If the detached leader's calls hold against "
+            "terrain as reliably as the hands-in leader's, SD-6 is refuted."
+        ),
+        "status": "open",
+    },
 ]
 
 # ---------------------------------------------------------------------------
