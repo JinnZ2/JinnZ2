@@ -2,6 +2,12 @@
 # CC0-1.0 / public domain. No rights reserved.
 # stdlib-only. phone-buildable. single file.
 #
+# ── STANDARD ──────────────────────────────────────────────────────────
+#   claims:       8
+#   last updated: 2026-07-19
+#   self-test:    GREEN  (8 held, 0 open, 0 closed, 1 not-universal)
+# ──────────────────────────────────────────────────────────────────────
+#
 # COMPANION ANCHOR to sensing_as_doing.py.
 # This is an ANCHOR, not a proof. It commits a reading in tradition form:
 # fixed reference standards a future embodied reader runs the replication
@@ -38,6 +44,20 @@ class Claim:
 
     def is_falsifiable(self) -> bool:
         return "refut" in self.tell.lower() or "refuted" in self.tell.lower()
+
+
+@dataclass(frozen=True)
+class RefutationEvent:
+    claim_id: str
+    timestamp: str               # ISO date or run counter
+    condition_attempted: str     # What exactly was done (the walk, the experiment)
+    outcome: str                 # What the tell actually returned
+    verdict: str                 # "refuted" | "ambiguous" | "confirmed" (still falsifiable)
+    scope: str                   # Domain in which this test was run
+    environment: str             # Physical / social / informational surrounds
+    known_variables: str         # What was controlled or measured
+    unknown_variables: str       # Suspected confounders, missing data, open edges
+    notes: str                   # Freeform
 
 
 CLAIM_TABLE: List[Claim] = [
