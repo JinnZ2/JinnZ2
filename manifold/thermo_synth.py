@@ -114,6 +114,10 @@ LIBRARY: List[Phenomenon] = [
                requires=["power", "mass"],
                equation="dT = Q / (m * c)   [raise a mass toward a phase point]"),
 
+    Phenomenon("thermal_accumulation", produces="heat", form="ENABLE",
+               requires=["power", "liquid_mass"],
+               equation="Q = P * t   [power dwell in a thermal mass; t operator-specified]"),
+
     Phenomenon("vaporization", produces="vapor_mass", form="ENABLE",
                requires=["heat", "liquid_mass"],
                equation="Q_needed = m * L_vap   [liquid -> gas at boiling point]",
