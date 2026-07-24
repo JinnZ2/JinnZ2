@@ -1,78 +1,60 @@
-# OPEN E9 — WALKING vs INTERMITTENT criterion
+# OPEN QUESTION E9 -- WALKING criterion is false-alarm-prone at small n
 
-Status: OPEN / EMPIRICAL
-Do not patch until E9 is run. Resolution requires a new log entry that
-supersedes 03efe4e41e61, plus a versioned change. Never an untracked edit.
+Status: OPEN / EMPIRICAL. Do NOT patch with a guessed threshold.
+Logged: divergence_log.ndjson, entry 03efe4e41e61, 2026-07-24
+Register: EXPERIMENT_register.md E9
 
----
+## What happened
 
-## First Real Log Entry
+divlog.residual() classifies a disagreement history's SHAPE. WALKING (real
+drift) fires when the band-gap sequence between the two axes is monotonic.
 
-```
-id           03efe4e41e61
-subject      residual.WALKING_criterion
-kind         band_only   (same digest, different band -- real divergence)
-digest       n3-gaps:-1,0,+2
-SPEC_intent  INTERMITTENT
-BEHAVIOR     WALKING
-status       OPEN
-```
+During the divlog build, a series intended as INTERMITTENT (noisy, no trend)
+was classified WALKING. Investigation: the series had gaps -1, 0, +2, which
+IS monotonic, so the code was correct per its own rule. The test was mis-built.
 
-The trigger: a series of n=3 band-differences with values [-1, 0, +2].
-The current criterion (`all(d >= diffs[0])`) passes this as WALKING because
-every diff is >= the first diff (-1). The spec intent for this series was
-INTERMITTENT.
+But the mis-build exposed a real defect in the SPEC, not the code:
 
-This is logged, not patched. The entry is the artifact.
+    at n=3, "monotonic" and "trending" are nearly the same thing BY CHANCE.
+    a short random walk is monotonic often enough that WALKING will cry drift
+    on noise. This is a criterion (bias) problem, not a sensitivity problem
+    (modes.py / signal-detection vocabulary): the classifier errs toward false
+    alarms.
 
----
+## Why we are NOT fixing it now
 
-## What E9 Must Answer
+The correct repair is a number -- a minimum run length, or a monotonicity that
+must survive some noise band -- and that number is an EMPIRICAL question about
+how real inter-module divergence behaves over time. Guessing it here would be
+exactly the substitution the calibration-audit repo exists to prevent: an
+inferred prior overriding measurement that does not exist yet.
 
-E9: WALKING vs INTERMITTENT -- report BOTH error rates.
+## What Claude Code should do in the repo
 
-A criterion change fixes one error by introducing the other. Reporting only
-the fix is reporting only one side of the tradeoff. E9 is not runnable until
-we have a noise scale from real divergence histories (E16). A synthetic sweep
-run before E16 reports false-alarm and miss rates against a made-up baseline,
-which is itself a fabrication.
+    1. Land divlog.py v1 AS IS. It is correct per spec. Do not special-case.
+    2. Copy this file into the repo as an open issue / docs entry.
+    3. Copy divergence_log.ndjson entry 03efe4e41e61 as the first log record --
+       it is the worked example of the log's own purpose.
+    4. DONE ALREADY -- divlog.py v1 ships with a pointer comment at residual()'s
+       WALKING branch. Do not add a second one.
+    5. Leave residual() returning WALKING on monotonic sequences. When E9 is
+       resolved, the fix is a NEW divlog entry that `supersedes` 03efe4e41e61,
+       plus a versioned change to the rule -- never an untracked edit.
 
-### Synthetic arm (runnable now)
+## How E9 gets resolved (the experiment, not the guess)
 
-Sweep candidate WALKING criteria over n = 3..30 synthetic series:
-- current: `all(d >= diffs[0])`
-- strict consecutive: `all(diffs[i+1] >= diffs[i] for i in range(n-1))`
-- slope-sign: sign of linear regression slope
-- threshold: `|diffs[-1] - diffs[0]| > k` for some k
+    SYNTHETIC arm: generate known INTERMITTENT (stationary + noise) and known
+    WALKING (monotone trend + noise) series across n = 3..30. Sweep candidate
+    rules (min run length; Mann-Kendall-style trend test; require gap change to
+    exceed a noise estimate). Report BOTH false-alarm and miss rates at each n.
+    A rule with zero false alarms and high misses is not a win -- it is the
+    criterion pushed the other way (E9 acceptance requires both curves).
 
-For each candidate: what fraction of truly-intermittent series are
-mis-classified WALKING (false alarm)? What fraction of truly-walking
-series are mis-classified INTERMITTENT (miss)?
+    FIELD arm: only real inter-module divergence histories fix the noise scale.
+    Kavik's operational logs over months (register E16) supply it. Until then
+    the synthetic arm bounds the rule; the field arm calibrates it.
 
-Report both rates. Do not pick the criterion with the lowest false-alarm
-rate alone.
+## Invariant reminder for whoever closes this
 
-### Field arm (blocked on E16)
-
-Only real divergence histories can set the noise scale. A series that looks
-WALKING in synthetic data may be noise at the scale of real instrument drift.
-E16 (log becomes a baseline) must register before E9 can interpret field data.
-
----
-
-## Resolution Rule
-
-1. Run E9 synthetic arm. Record both error rates in this file.
-2. Wait for E16 (field histories). Re-run with real noise scale.
-3. Select criterion. Write a new divlog.py version with the change.
-4. Append a new log entry:
-   ```
-   supersedes   03efe4e41e61
-   subject      residual.WALKING_criterion
-   kind         band_only
-   digest       <new criterion string>
-   note         E9 resolved: <criterion chosen>, FA=<rate>, miss=<rate>
-   ```
-5. Commit entry + code change together.
-
-The old entry 03efe4e41e61 stays in the log. Append-only.
+    resolution is a new superseding entry + a versioned rule change.
+    the log is append-only. the old behavior stays on the record.
