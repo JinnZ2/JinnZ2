@@ -5,18 +5,24 @@ Tests the REFUSALS, not the acceptances. A registry is only as good as what
 it turns away; an accept-anything workbench hands junk to field scientists,
 whose time is the one resource this design cannot manufacture.
 
-T-I1  no falsifier            -> MissingFalsifier
-T-I2  unnamed principle       -> IncompleteInstrument (magic)
-T-I3  empty blind_to          -> IncompleteInstrument (supremacy claim)
-T-I4  R3 with no borrowed_from-> IncompleteInstrument (reach with no across)
-T-I5  R2 with no resolution   -> ContestedEntry (danger bin unlabelled)
-T-I6  R2/OPEN, no harm named  -> ContestedEntry, NOT auto-moved to R4
-T-I7  CONTESTED, 1 frame      -> ContestedEntry (verdict with extra steps)
-T-I8  CONTESTED, undated frame-> ContestedEntry (look back that doesn't)
-T-I9  CONTESTED, 2 dated      -> registers, held_open True, no ranking field
-T-I10 reclassify held-open    -> syndrome logged, frames kept
-T-I11 valid R3/R4 proposal    -> registers, actor routing, emit() carries
-                                 falsifier + UNVALIDATED_PENDING_FIELD
+T-I1  no falsifier              -> MissingFalsifier
+T-I2  unnamed principle         -> IncompleteInstrument (magic)
+T-I3  empty blind_to            -> IncompleteInstrument (supremacy claim)
+T-I4  R3 with no borrowed_from  -> IncompleteInstrument (reach with no across)
+T-I5  R2 with no resolution     -> ContestedEntry (danger bin unlabelled)
+T-I6a R2/DEPENDENCY bad layer   -> ContestedEntry (layer outside the stack)
+T-I6b R2/DEPENDENCY no collapse -> ContestedEntry (removes_above empty)
+T-I6c R2/DEPENDENCY happy path  -> registers, held_open=False (structural not live)
+T-I7  CONTESTED, 1 frame        -> ContestedEntry (verdict with extra steps)
+T-I8  CONTESTED, undated frame  -> ContestedEntry (look back that doesn't)
+T-I9  CONTESTED, 2 dated        -> registers, held_open True, no ranking field
+T-I10 reclassify held-open      -> syndrome logged, frames kept
+T-I11 valid R3/R4 proposal      -> registers, actor routing, emit() carries
+                                   falsifier + UNVALIDATED_PENDING_FIELD
+
+D11 note: R2/OPEN is gone. OPEN was CONTESTED that hadn't noticed itself --
+'whose harm' is the same contest as 'whose party.' Replaced by R2/DEPENDENCY,
+a structural claim about the physical stack, not a value label.
 """
 
 import os
@@ -65,9 +71,29 @@ ok.append(expect(I.ContestedEntry,
                  lambda: I.register(base(why_absent="R2")),
                  "T-I5 R2 unlabelled"))
 ok.append(expect(I.ContestedEntry,
-                 lambda: I.register(base(why_absent="R2", resolution=I.OPEN,
-                                         harm="", harmed_party="")),
-                 "T-I6 R2/OPEN unnamed harm (not auto-moved)"))
+                 lambda: I.register(base(why_absent="R2", resolution=I.DEPENDENCY,
+                                         reaches_layer="economics",
+                                         removes_above=["money"])),
+                 "T-I6a DEPENDENCY layer outside stack"))
+ok.append(expect(I.ContestedEntry,
+                 lambda: I.register(base(why_absent="R2", resolution=I.DEPENDENCY,
+                                         reaches_layer="ecology",
+                                         removes_above=[])),
+                 "T-I6b DEPENDENCY empty removes_above"))
+
+dep = I.register(base(name="structural-probe", why_absent="R2",
+                      resolution=I.DEPENDENCY,
+                      reaches_layer="ecology",
+                      removes_above=["biology", "culture"]))
+t6c = (dep.resolution == I.DEPENDENCY and not dep.held_open
+       and dep.reaches_layer == "ecology"
+       and dep.removes_above == ["biology", "culture"])
+print(f"  {'PASS' if t6c else 'FAIL'} T-I6c R2/DEPENDENCY "
+      f"held_open={dep.held_open} layer={dep.reaches_layer} "
+      f"collapses={dep.removes_above}")
+for line in dep.loud:
+    print(f"       loud: {line}")
+ok.append(t6c)
 
 one_frame = [I.Frame("frame-a", "practice a", "source a", "era a")]
 ok.append(expect(I.ContestedEntry,

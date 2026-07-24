@@ -1,6 +1,15 @@
 """
-instruments.py -- registry of measuring instruments that DO NOT YET EXIST. v1.
+instruments.py -- registry of measuring instruments that DO NOT YET EXIST. v2.
 CC0. stdlib only. Phone-buildable.
+
+D11  R2/OPEN is gone. It was CONTESTED that hadn't noticed itself: "whose harm"
+     is the same contest as "whose party." Replaced with R2/DEPENDENCY, which
+     is a STRUCTURAL claim about the physical stack, not a value label.
+     reaches_layer  -- which layer of DEPENDENCY_STACK the barrier sits at
+     removes_above  -- what collapses if that layer is removed
+     DEPENDENCY_STACK (base first, physical not moral):
+         energy -> earth -> ecology -> biology -> culture
+     Ordering is not editable. The arrows already point.
 
 WHY THIS MODULE EXISTS (D1)
     Today blind_to is a flat declared field. It hides a distinction that
@@ -63,7 +72,8 @@ WHY_ABSENT: Dict[str, Dict[str, str]] = {
            "unlock": "science reaches the effect the instrument would exploit",
            "actor": "NOT AI"},
     "R2": {"label": "framework-barred",
-           "unlock": "a value-frame shifts, or the contest closes",
+           "unlock": "DEPENDENCY: a lower layer is circumvented or substituted; "
+                     "CONTESTED: the contest closes or reclassifies",
            "actor": "HUMANS -- NOT AI"},
     "R3": {"label": "uncombined",
            "unlock": "cross-DOMAIN transfer: every transduction principle "
@@ -90,10 +100,13 @@ WHY_ABSENT: Dict[str, Dict[str, str]] = {
 # much of what gets filed R2 ("not respectable") is misfiled R4.
 AI_LANE = ("R3", "R4")
 
-# R2 resolution states (D6, D7)
-OPEN = "OPEN"              # a settled barrier: harm named, party named
+# R2 resolution states (D6, D7, D11)
+DEPENDENCY = "DEPENDENCY"  # structural: a physical stack layer removed collapses above
 CONTESTED = "CONTESTED"    # a live disagreement BETWEEN value-frames
-RESOLUTIONS = (OPEN, CONTESTED)
+RESOLUTIONS = (DEPENDENCY, CONTESTED)
+
+# Physical stack, base first. Ordering is not editable. (D11)
+DEPENDENCY_STACK = ("energy", "earth", "ecology", "biology", "culture")
 
 HANDOFF_STATE = "UNVALIDATED_PENDING_FIELD"
 
@@ -180,11 +193,12 @@ class Instrument:
     # not a reach claim.
 
     # --- R2 only ----------------------------------------------------------
-    harm: str = ""            # the SPECIFIC harm the barrier prevents
-    harmed_party: str = ""    # WHO is harmed
-    resolution: str = ""      # OPEN | CONTESTED, R2 only
+    resolution: str = ""      # DEPENDENCY | CONTESTED, R2 only
+    reaches_layer: str = ""   # R2/DEPENDENCY: which DEPENDENCY_STACK layer
+    removes_above: List[str] = field(default_factory=list)
+    # R2/DEPENDENCY: what collapses if reaches_layer is removed
     frames: List[Frame] = field(default_factory=list)
-    contest: str = ""         # what exactly the frames disagree ON
+    contest: str = ""         # R2/CONTESTED: what exactly the frames disagree ON
 
     # --- provenance of the ROW itself -------------------------------------
     row_source: Optional[str] = None
@@ -265,35 +279,36 @@ def _door(inst: Instrument) -> List[str]:
     if inst.why_absent == "R2":
         loud += _r2_door(inst)
     else:
-        if inst.resolution or inst.frames or inst.harm or inst.harmed_party:
+        if inst.resolution or inst.frames or inst.reaches_layer or inst.removes_above:
             loud.append(
                 f"{inst.why_absent} row carries R2-only fields "
-                f"(resolution/frames/harm/harmed_party) -- ignored downstream")
+                f"(resolution/frames/reaches_layer/removes_above) -- ignored downstream")
 
     return loud
 
 
 def _r2_door(inst: Instrument) -> List[str]:
-    """R2 is the danger bin. (D6, D7)
+    """R2 is the danger bin. (D6, D7, D11)
 
-    It holds two unlike things: arbitrary taboo, and load-bearing ethics.
-    An entry must carry WHICH, and AI never overrules the second.
+    Two unlike things live here: structural physical dependency (DEPENDENCY)
+    and live value-frame disagreement (CONTESTED). An entry must carry WHICH.
 
-    The discriminator first proposed was 'names a specific harm and a
-    harmed party'. The operator broke it: autopsy, fetal tissue, a
-    stillborn eaten by the pack -- whether a harmed party exists there IS
-    the contested question. The test smuggled in the thing it was meant to
-    decide. Same failure shape as a detector that fires on surface form.
+    DEPENDENCY is a physical claim about the stack, not a value label. The
+    stack (energy -> earth -> ecology -> biology -> culture) orders by what
+    each layer depends on for existence. Removing a lower layer collapses
+    everything above it. That ordering is not editable; the arrows already
+    point. reaches_layer names the layer; removes_above names what collapses.
 
-    Repair: a third state. Not 'settled ethics' and not 'mere fashion' --
-    CONTESTED, a live disagreement BETWEEN value-frames. Held open. Logged,
+    CONTESTED is a live disagreement BETWEEN value-frames. Held open. Logged,
     timestamped, frames named, never auto-resolved.
 
-    NO AUTO-RECLASSIFICATION. An entry that is neither harm-named nor
-    CONTESTED is REFUSED, not silently moved to R3/R4. The door declines;
-    it does not decide. Moving it is an operator act, because deciding
-    that a barrier is 'merely' fashion is itself a value judgment, and
-    auto-resolution is exactly what this framework forbids everywhere else.
+    The earlier OPEN branch ('harm + harmed party') was CONTESTED that hadn't
+    noticed itself: 'whose harm' is the same contest as 'whose party.' The
+    test smuggled in the thing it was meant to decide -- same failure shape as
+    a detector firing on surface form. OPEN is gone (D11).
+
+    NO AUTO-RECLASSIFICATION. An unlabelled R2 row is REFUSED, not silently
+    moved. The door declines; it does not decide. (D6)
     """
     loud: List[str] = []
 
@@ -301,22 +316,23 @@ def _r2_door(inst: Instrument) -> List[str]:
         raise ContestedEntry(
             f"instrument '{inst.name}': why_absent=R2 requires resolution in "
             f"{RESOLUTIONS}. R2 is the danger bin; an unlabelled R2 row hides "
-            f"load-bearing ethics and arbitrary taboo in one place. (D6)")
+            f"structural dependency and value-frame contest in one place. (D6)")
 
-    if inst.resolution == OPEN:
-        # The settled branch. Both fields required -- this is the version of
-        # the harmed-party test that survives, because it is only applied
-        # where the operator has already asserted the contest is NOT live.
-        if not (inst.harm or "").strip() or not (inst.harmed_party or "").strip():
+    if inst.resolution == DEPENDENCY:
+        if (inst.reaches_layer or "").strip() not in DEPENDENCY_STACK:
             raise ContestedEntry(
-                f"instrument '{inst.name}': R2/OPEN requires BOTH harm and "
-                f"harmed_party. If neither can be named, the row is not "
-                f"settled -- it is either CONTESTED or it was never R2. "
-                f"Reclassification is the operator's move, not the door's. "
-                f"(D6: no auto-resolution)")
+                f"instrument '{inst.name}': R2/DEPENDENCY requires reaches_layer "
+                f"in {DEPENDENCY_STACK}. The stack is physical; a layer outside "
+                f"it is not a structural claim.")
+        if not inst.removes_above:
+            raise ContestedEntry(
+                f"instrument '{inst.name}': R2/DEPENDENCY requires removes_above "
+                f"to be non-empty. What collapses when reaches_layer is removed? "
+                f"An unnamed collapse is not a structural claim.")
         loud.append(
-            f"R2/OPEN: load-bearing ethical barrier. actor={inst.actor}. "
-            f"AI hands this back untouched -- no repair route is offered.")
+            f"R2/DEPENDENCY: structural barrier. removing '{inst.reaches_layer}' "
+            f"collapses {inst.removes_above}. ordering is physical, not editable. "
+            f"actor={inst.actor}.")
 
     if inst.resolution == CONTESTED:
         if len(inst.frames) < 2:
@@ -410,9 +426,10 @@ def record_frame(name: str, frame: Frame) -> Instrument:
 
     There is deliberately no close_contest(). Closing is not an operation
     this module has standing to perform, and providing a function for it
-    would make the overreach a one-liner. A contest closes when an operator
-    edits the entry to R2/OPEN with a harm and a party named, and that edit
-    goes through the same door as everything else.
+    would make the overreach a one-liner. A contest closes when the operator
+    reclassifies the entry -- to R2/DEPENDENCY if the barrier is structural,
+    or to a non-R2 code if it was misfiled -- and that reclassify() call
+    goes through the log, not around it.
     """
     inst = REGISTRY[name]
     if not inst.held_open:
