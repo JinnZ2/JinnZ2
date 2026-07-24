@@ -1,117 +1,153 @@
 """
-entrain.py -- zeitgeber: phase-lock tracking between a module and its primary.
-CC0. stdlib only.
+entrain.py -- zeitgeber: phase-lock tracking between peripherals and primary.
+CC0. stdlib only. Imports clock.
 
-reference_version() is the enforcement mechanism. A module that reads a
-primary (a mode table, a corpus snapshot, a config) is only comparable to
-another module that read the SAME version of that primary. ref_version
-makes that checkable.
+Peripheral oscillators run free between pulls. They are not forced into
+lockstep; they are pulled back on a schedule.
 
-  ENTRAINED    -- module's ref_version matches current primary at every
-                  recorded observation, or re-matched after a gap
-  FREE_RUNNING -- no ref_version ever recorded: module is flying blind;
-                  readings cannot be placed in primary's history
-  DRIFTED      -- was entrained but has fallen behind current primary
-  NEVER        -- ref_version was recorded but never matched current primary
-                  (different fork, or primary was never the same)
+reference_version() fingerprints the CURRENT state of clock.CHANNELS and
+clock.VOLATILITY. Changing a channel or a volatility class changes the
+string. That is the point: it makes silent registry edits visible (T6).
 
-No verdict on what the mismatch means. Phase is a structural report.
+phase() classifies the relationship between a peripheral and the current
+primary. FREE_RUNNING fires when the reference moved, regardless of interval
+-- a module inside its schedule can still be stale if the standard changed.
+
+entrain() records the pull. It does NOT change any module's readings.
+Entraining is re-reading the reference, not overwriting anyone's answer.
+
+No verdict. No score. Phase is a structural report.
 """
 
 import hashlib
 import json
 from dataclasses import dataclass, field
-from typing import Optional, List
+from datetime import date
+from typing import Optional, List, Dict
 
-
-def reference_version(primary: dict) -> str:
-    """
-    Content-addressed fingerprint of the primary at a moment.
-
-    `primary` is whatever the module treats as its ground truth -- a mode
-    table dict, a corpus snapshot, a config. Caller supplies a stable,
-    deterministic, serializable dict. reference_version() never reads the
-    primary; it only fingerprints what the caller hands it.
-    """
-    canonical = json.dumps(primary, sort_keys=True, separators=(',', ':'))
-    return hashlib.sha256(canonical.encode()).hexdigest()[:16]
-
-
-PHASES = ("ENTRAINED", "FREE_RUNNING", "DRIFTED", "NEVER")
+import clock
 
 
 @dataclass
-class PhaseReading:
-    phase: str                     # one of PHASES
-    current_ref: str               # fingerprint of primary right now
-    observed_refs: List[Optional[str]]
-    match_count: int               # how many observations matched current
-    total: int                     # total non-None observations
+class Peripheral:
+    name: str
+    entrain_interval_days: float
+    last_entrained: Optional[str] = None   # ISO date string
+    ref_version: Optional[str] = None      # version of primary it last read
+
+
+PERIPHERALS: Dict[str, Peripheral] = {}
+
+
+def register_peripheral(p: Peripheral) -> Peripheral:
+    """The door. No supremacy -- interval is operator-supplied."""
+    PERIPHERALS[p.name] = p
+    return p
+
+
+# --------------------------------------------------------- primary fingerprint
+
+def reference_version() -> str:
+    """
+    Deterministic fingerprint of the CURRENT primary state:
+      - sorted clock.CHANNELS keys + their targets
+      - sorted clock.VOLATILITY keys + span_days
+
+    Stable hash (sha256, first 12 hex). Any registry edit changes this
+    string, making the edit visible to every peripheral's phase check.
+    No arguments -- reads primary directly, never a copy.
+    """
+    data = {
+        "channels":   {k: clock.CHANNELS[k].target
+                       for k in sorted(clock.CHANNELS)},
+        "volatility": {k: clock.VOLATILITY[k].span_days
+                       for k in sorted(clock.VOLATILITY)},
+    }
+    canonical = json.dumps(data, sort_keys=True, separators=(',', ':'))
+    return hashlib.sha256(canonical.encode()).hexdigest()[:12]
+
+
+# ------------------------------------------------------------------- phase
+
+@dataclass
+class Phase:
+    name: str
+    status: str                       # ENTRAINED | FREE_RUNNING | DRIFTED | NEVER
+    days_since: Optional[float]       # None if never entrained
+    interval: float
+    ref_current: str                  # current primary fingerprint
+    ref_held: Optional[str]           # what the peripheral last read
     loud: List[str] = field(default_factory=list)
 
 
-def phase(observed_refs: List[Optional[str]], current_ref: str) -> PhaseReading:
-    """
-    Classify the phase relationship between a module's ref_version history
-    and the current primary fingerprint.
+def _days_between(earlier: Optional[str], later: str) -> Optional[float]:
+    if earlier is None:
+        return None
+    d1 = date.fromisoformat(earlier[:10])
+    d2 = date.fromisoformat(later[:10])
+    return float((d2 - d1).days)
 
-    observed_refs   list of ref_version strings the module recorded, oldest
-                    first. None entries mean the field was not recorded for
-                    that observation. Empty list -> FREE_RUNNING.
-    current_ref     reference_version() of primary right now.
+
+def phase(name: str, now: str) -> Phase:
+    """
+    Classify the phase relationship between peripheral `name` and primary.
+
+    ENTRAINED    within interval AND ref_version matches current primary
+    FREE_RUNNING within interval BUT ref_version is stale -- the reference
+                 moved under it; pull is DUE regardless of schedule (T6)
+    DRIFTED      past the entrain_interval_days threshold
+    NEVER        never entrained -- LOUD, UNDETERMINED (T5)
     """
     loud: List[str] = []
+    ref_current = reference_version()
 
-    if not observed_refs:
-        loud.append("no ref_version recorded -- module is flying blind; "
-                    "readings cannot be compared across modules")
-        return PhaseReading("FREE_RUNNING", current_ref, [], 0, 0, loud)
+    p = PERIPHERALS.get(name)
+    if p is None:
+        loud.append(f"peripheral '{name}' not registered -- "
+                    "register_peripheral() before calling phase()")
+        return Phase(name, "NEVER", None, 0.0, ref_current, None, loud)
 
-    none_count = sum(1 for r in observed_refs if r is None)
-    live = [r for r in observed_refs if r is not None]
+    if p.last_entrained is None:
+        loud.append(f"peripheral '{name}' has never been entrained -- "
+                    "readings are unanchored; phase UNDETERMINED (I4)")
+        return Phase(name, "NEVER", None, p.entrain_interval_days,
+                     ref_current, p.ref_version, loud)
 
-    if none_count:
-        loud.append(f"{none_count} observation(s) carried no ref_version -- "
-                    f"those readings are unlocatable in primary history")
+    days_since = _days_between(p.last_entrained, now)
 
-    if not live:
-        loud.append("all recorded ref_versions are None -- FREE_RUNNING")
-        return PhaseReading("FREE_RUNNING", current_ref, observed_refs,
-                            0, 0, loud)
+    if days_since is not None and days_since > p.entrain_interval_days:
+        return Phase(name, "DRIFTED", days_since, p.entrain_interval_days,
+                     ref_current, p.ref_version, loud)
 
-    matches = [r == current_ref for r in live]
-    match_count = sum(matches)
-    total = len(live)
+    if p.ref_version != ref_current:
+        loud.append(f"reference moved since last entrain: "
+                    f"held={str(p.ref_version)[:8]}..., "
+                    f"current={ref_current[:8]}... -- "
+                    f"pull is DUE regardless of schedule (I8)")
+        return Phase(name, "FREE_RUNNING", days_since, p.entrain_interval_days,
+                     ref_current, p.ref_version, loud)
 
-    if match_count == 0:
-        unique = set(live)
-        if len(unique) == 1:
-            loud.append(f"module consistently references a different primary "
-                        f"({live[0][:8]}...) -- possible fork, not stale version")
-        else:
-            loud.append(f"ref_versions are neither current nor consistent "
-                        f"({len(unique)} distinct values) -- module may be "
-                        f"reading multiple primaries")
-        return PhaseReading("NEVER", current_ref, observed_refs,
-                            0, total, loud)
+    return Phase(name, "ENTRAINED", days_since, p.entrain_interval_days,
+                 ref_current, p.ref_version, loud)
 
-    if match_count == total:
-        return PhaseReading("ENTRAINED", current_ref, observed_refs,
-                            match_count, total, loud)
 
-    # mixed: some matched, some didn't
-    last_match_idx = max(i for i, m in enumerate(matches) if m)
-    behind = (total - 1) - last_match_idx
+# ------------------------------------------------------------------ entrain
 
-    if behind == 0:
-        # most recent matches -- came back into phase
-        out_count = total - match_count
-        loud.append(f"re-entrained after {out_count} out-of-phase "
-                    f"observation(s)")
-        return PhaseReading("ENTRAINED", current_ref, observed_refs,
-                            match_count, total, loud)
-    else:
-        loud.append(f"was entrained, now {behind} observation(s) behind "
-                    f"current primary")
-        return PhaseReading("DRIFTED", current_ref, observed_refs,
-                            match_count, total, loud)
+def entrain(name: str, now: str) -> Phase:
+    """
+    Record the pull: set last_entrained=now, ref_version=current primary.
+    Does NOT change the module's readings -- entraining is re-reading the
+    reference, not overwriting anyone's answer (D11).
+    Returns the Phase immediately after the pull (should be ENTRAINED).
+    """
+    p = PERIPHERALS.get(name)
+    if p is None:
+        raise KeyError(f"peripheral '{name}' not registered")
+    ref_current = reference_version()
+    PERIPHERALS[name] = Peripheral(
+        name=name,
+        entrain_interval_days=p.entrain_interval_days,
+        last_entrained=now,
+        ref_version=ref_current,
+    )
+    return phase(name, now)
