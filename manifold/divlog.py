@@ -28,17 +28,18 @@ digest is what separates a baseline from a complaint list:
 
 residual() classifies the SHAPE of the band_only history, never severity:
 
-    NEW      n=1, no shape yet -- not a verdict
-    FLAT     constant band pair: calibration offset, not drift
-    WALKING  monotone trend in band distance: real drift
-    WIDENING spread to new governing channels: structural change
-    VARIABLE no pattern; not flat, not monotone, not widening
+    NEW          n=1, no shape yet -- not a verdict
+    FLAT         constant band pair: calibration offset, not drift
+    WALKING      monotone trend in band distance: real drift
+    WIDENING     spread to new governing channels: structural change
+    INTERMITTENT no monotone trend; not flat; not widening
 
 NO winner. NO cause. NO severity. T11 greps for them.
 """
 
 import json
 import hashlib
+import dataclasses
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Optional, List
@@ -46,7 +47,7 @@ from typing import Optional, List
 
 # ------------------------------------------------------------------ entry
 
-@dataclass
+@dataclass(frozen=True)
 class Entry:
     observed_at: str            # ISO datetime
     target: str                 # domain (e.g. "site.moisture")
@@ -70,8 +71,20 @@ class Entry:
     phase_a: str                # ENTRAINED | FREE_RUNNING | DRIFTED | NEVER
     phase_b: str
 
-    supersedes: Optional[str] = None   # prior entry key this revisits
+    supersedes: Optional[str] = None   # prior entry id this revisits
     note: str = ""                      # operator field, never parsed
+    id: str = field(default="")         # sha256[:12] of all fields except note+id
+
+    def __post_init__(self):
+        if not self.id:
+            facts = {
+                f.name: getattr(self, f.name)
+                for f in dataclasses.fields(self)
+                if f.name not in ("note", "id")
+            }
+            canonical = json.dumps(facts, sort_keys=True, separators=(',', ':'))
+            computed = hashlib.sha256(canonical.encode()).hexdigest()[:12]
+            object.__setattr__(self, "id", computed)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -101,7 +114,9 @@ def kind_for(digest_a: str, digest_b: str,
 
 
 def make_digest(facts: dict) -> str:
-    """Deterministic fingerprint of the fact-set a module read."""
+    """Deterministic fingerprint of the fact-set a module read.
+    Missing inputs must be represented as None, never absent -- two modules
+    that silently drop the same field must not fingerprint as identical."""
     canonical = json.dumps(facts, sort_keys=True, separators=(',', ':'))
     return hashlib.sha256(canonical.encode()).hexdigest()[:16]
 
@@ -109,7 +124,7 @@ def make_digest(facts: dict) -> str:
 # ------------------------------------------------------------------- log
 
 class DivLog:
-    """Append-only NDJSON log. Read is a full scan; file is the record."""
+    """Append-only NDJSON log. File is the record; scan is the query."""
 
     def __init__(self, path: str):
         self.path = Path(path)
@@ -118,12 +133,14 @@ class DivLog:
             self.path.touch()
 
     def append(self, e: Entry) -> None:
+        """Opens in append mode only. Never truncates."""
         with self.path.open("a") as f:
             f.write(e.to_json() + "\n")
 
-    def read(self, target: Optional[str] = None,
+    def load(self, target: Optional[str] = None,
              subject: Optional[str] = None,
              kind: Optional[str] = None) -> List[Entry]:
+        """Full scan with optional filters. Preserves file order."""
         entries = []
         with self.path.open() as f:
             for line in f:
@@ -140,12 +157,19 @@ class DivLog:
                 entries.append(Entry(**d))
         return entries
 
+    def history(self, target: str, subject: str) -> List[Entry]:
+        """The baseline query: all entries for this target/subject,
+        sorted chronologically by observed_at."""
+        return sorted(self.load(target=target, subject=subject),
+                      key=lambda e: e.observed_at)
+
     def residual(self, target: str, subject: str) -> dict:
         """
         Shape of the band_only history for this target/subject pair.
         Classifies shape only. n=1 returns NEW, not a verdict.
         """
-        entries = self.read(target=target, subject=subject, kind="band_only")
+        entries = [e for e in self.history(target, subject)
+                   if e.kind == "band_only"]
         n = len(entries)
 
         if n == 0:
@@ -161,7 +185,7 @@ class DivLog:
         gov_b    = [e.governing_b for e in entries]
 
         # WIDENING: governing pairs diversifying over time
-        gov_pairs = list(dict.fromkeys(zip(gov_a, gov_b)))  # ordered unique
+        gov_pairs = list(dict.fromkeys(zip(gov_a, gov_b)))  # ordered, unique
         if len(gov_pairs) > 1:
             return {"shape": "WIDENING", "n": n,
                     "governing_pairs": [f"{a}/{b}" for a, b in gov_pairs],
@@ -184,5 +208,5 @@ class DivLog:
                     "direction": direction,
                     "detail": "monotone trend in band distance: real drift"}
 
-        return {"shape": "VARIABLE", "n": n,
+        return {"shape": "INTERMITTENT", "n": n,
                 "detail": "no monotone trend; not flat; not widening"}
