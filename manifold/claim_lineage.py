@@ -1,89 +1,180 @@
 # claim_lineage.py
 # CC0. stdlib-only. phone-buildable.
 #
-# The lineage graph for falsifiable claims. A claim is a node in a DAG:
-# it has a statement, a prediction, and an explicit falsifier. Refinements
-# and supersessions are edges, not mutations -- the old node stays.
+# Falsification as a POINTER, not a tombstone.
 #
-# frontier() returns claims with no successors: the current leading edge.
-# ancestors() returns the chain of prior versions, oldest first.
+# A refuted claim is evidence the variable set was incomplete. The break
+# points at a missing dimension. The protocol does not retire the claim to a
+# graveyard -- it spawns a CHILD:  parent + the exposed variable + a NEW
+# independent falsifiable prediction that the new variable makes on its own.
 #
-# No verdict fields. No implicit now(). Append-only: a superseded claim
-# is kept; only the frontier moves. Same discipline as divlog.py.
+# GUARDRAIL (against epicycles): a child is admitted only if the new variable
+#   (a) is independently measurable, and
+#   (b) predicts something BEYOND rescuing the parent.
+# A variable whose only job is to save the old claim, predicting nothing new,
+# is an epicycle -> rejected. This is the line between science and rescue.
+#
+# The record grows a GENEALOGY of understanding, not a list of dead claims.
+#
+# energy_english: statements/break-notes recorded as given; no moral labels,
+# no intent, no interior-state overlay. Status is a measured position, not a
+# verdict on the claimant.
 
 from dataclasses import dataclass, field
-from typing import Optional, List
+from enum import Enum
+from typing import Optional
+
+
+class Status(Enum):
+    OPEN = "open"          # stated, not yet tested against its condition
+    STANDING = "standing"  # tested, its prediction has held so far
+    REFUTED = "refuted"    # tested, prediction broke -> pointer to missing var
+    RETIRED = "retired"    # superseded by an admitted child
+
+
+class EpicycleRejected(Exception):
+    """Raised when a proposed extension only rescues the parent."""
 
 
 @dataclass
 class Claim:
     cid: str
     statement: str
-    variables: tuple               # which variables the claim is over
-    prediction: str                # what this claim says will happen
-    refuted_if: str                # the observation that kills it
-    parent: Optional[str] = None   # cid this refines or extends
-    supersedes: Optional[str] = None  # cid this replaces (old stays in graph)
-    as_of: str = ""
-    notes: str = ""
+    variables: tuple[str, ...]         # dimensions the claim is defined over
+    prediction: str                    # its OWN independent falsifiable prediction
+    refuted_if: str                    # break condition (human-checkable)
+    parent: Optional[str] = None
+    added_variable: Optional[str] = None   # dimension a refutation exposed
+    status: Status = Status.OPEN
+    break_note: str = ""               # what broke it (recorded as given)
 
 
+@dataclass
 class Lineage:
-    """DAG of falsifiable claims. Nodes are never removed."""
+    claims: dict[str, Claim] = field(default_factory=dict)
 
-    def __init__(self):
-        self._claims: dict[str, Claim] = {}
-        self._children: dict[str, list] = {}   # cid -> [child cids]
-
+    # -- lifecycle ---------------------------------------------------------
     def add_root(self, claim: Claim) -> Claim:
-        """Add a claim with no parent. Returns the claim."""
-        self._claims[claim.cid] = claim
+        self.claims[claim.cid] = claim
         return claim
 
-    def refine(self, parent_cid: str, child: Claim) -> Claim:
-        """Add a claim that specialises or extends an existing one."""
-        if parent_cid not in self._claims:
-            raise KeyError(f"parent '{parent_cid}' not in lineage")
-        child.parent = parent_cid
-        self._claims[child.cid] = child
-        self._children.setdefault(parent_cid, []).append(child.cid)
+    def stand(self, cid: str) -> Claim:
+        """Mark a claim as having survived a test of its prediction."""
+        c = self.claims[cid]
+        c.status = Status.STANDING
+        return c
+
+    def refute(self, cid: str, break_note: str, exposed_variable: str) -> Claim:
+        """
+        A break is not death. Record what broke it and the dimension the
+        break points at. The claim is now a POINTER awaiting extension.
+        """
+        c = self.claims[cid]
+        c.status = Status.REFUTED
+        c.break_note = break_note
+        c.added_variable = exposed_variable
+        return c
+
+    def extend(
+        self,
+        refuted_cid: str,
+        child_cid: str,
+        statement: str,
+        new_variable: str,
+        new_prediction: str,
+        refuted_if: str,
+        *,
+        independently_measurable: bool,
+        predicts_beyond_parent: bool,
+    ) -> Claim:
+        """
+        Spawn a child from a REFUTED claim, enforcing the epicycle guardrail.
+        Only admitted if the new variable is independently measurable AND
+        makes a prediction beyond rescuing the parent.
+        """
+        parent = self.claims[refuted_cid]
+        if parent.status is not Status.REFUTED:
+            raise ValueError("extend only from a REFUTED claim")
+        if not (independently_measurable and predicts_beyond_parent):
+            raise EpicycleRejected(
+                f"'{new_variable}': measurable={independently_measurable}, "
+                f"predicts_beyond_parent={predicts_beyond_parent} "
+                f"-> epicycle, not admitted"
+            )
+        child = Claim(
+            cid=child_cid,
+            statement=statement,
+            variables=parent.variables + (new_variable,),
+            prediction=new_prediction,
+            refuted_if=refuted_if,
+            parent=refuted_cid,
+            added_variable=new_variable,
+            status=Status.OPEN,
+        )
+        self.claims[child_cid] = child
+        parent.status = Status.RETIRED      # superseded, not deleted
         return child
 
-    def supersede(self, old_cid: str, new_claim: Claim) -> Claim:
-        """Add a replacement. Old node stays; frontier moves to new_claim."""
-        if old_cid not in self._claims:
-            raise KeyError(f"'{old_cid}' not in lineage")
-        new_claim.supersedes = old_cid
-        self._claims[new_claim.cid] = new_claim
-        self._children.setdefault(old_cid, []).append(new_claim.cid)
-        return new_claim
+    # -- reading -----------------------------------------------------------
+    def genealogy(self, cid: str) -> list[str]:
+        """Ordered root -> ... -> cid lineage."""
+        chain, cur = [], self.claims.get(cid)
+        while cur:
+            chain.append(cur.cid)
+            cur = self.claims.get(cur.parent) if cur.parent else None
+        return list(reversed(chain))
 
-    def frontier(self) -> List[Claim]:
-        """Claims with no successors -- the current leading edge."""
-        has_children = set(self._children)
-        return [c for c in self._claims.values() if c.cid not in has_children]
+    def frontier(self) -> list[Claim]:
+        """Claims currently carrying the understanding (not retired/refuted)."""
+        return [c for c in self.claims.values()
+                if c.status in (Status.OPEN, Status.STANDING)]
 
-    def ancestors(self, cid: str) -> List[Claim]:
-        """Chain of prior versions, oldest first, ending just before cid."""
-        claim = self._claims.get(cid)
-        if claim is None:
-            return []
-        chain: List[Claim] = []
-        visited = {cid}
-        cur = claim
-        while cur.parent or cur.supersedes:
-            prior_cid = cur.supersedes or cur.parent
-            if prior_cid in visited or prior_cid not in self._claims:
-                break
-            visited.add(prior_cid)
-            prior = self._claims[prior_cid]
-            chain.append(prior)
-            cur = prior
-        chain.reverse()
-        return chain
+    def pending_pointers(self) -> list[Claim]:
+        """Refuted claims awaiting an extension -- the live search directions."""
+        return [c for c in self.claims.values() if c.status is Status.REFUTED]
 
-    def get(self, cid: str) -> Optional[Claim]:
-        return self._claims.get(cid)
 
-    def all_claims(self) -> List[Claim]:
-        return list(self._claims.values())
+# ---------------------------------------------------------------------------
+# self-check: refute -> extend, plus an epicycle rejection
+# ---------------------------------------------------------------------------
+if __name__ == "__main__":
+    L = Lineage()
+    L.add_root(Claim(
+        cid="K0",
+        statement="a border installation reads as pressure by density gradient alone",
+        variables=("density",),
+        prediction="pressure magnitude tracks the density gradient across the border",
+        refuted_if="two cases with equal density gradient show unequal pressure",
+    ))
+
+    # it breaks: equal density gradient, different pressure -> missing variable
+    L.refute("K0",
+             break_note="equal density gradient, pressure differed",
+             exposed_variable="capital_ownership_concentration")
+
+    # admitted extension: new var is measurable AND predicts on its own
+    child = L.extend(
+        "K0", "K1",
+        statement="pressure tracks density gradient CONDITIONED on ownership concentration",
+        new_variable="capital_ownership_concentration",
+        new_prediction="at fixed density gradient, higher ownership concentration "
+                        "raises pressure independently",
+        refuted_if="ownership concentration varies with no effect at fixed density",
+        independently_measurable=True,
+        predicts_beyond_parent=True,
+    )
+    print("genealogy K1:", L.genealogy("K1"))
+    print("frontier:", [c.cid for c in L.frontier()])
+
+    # attempted epicycle: a var that only rescues K1, predicts nothing new
+    L.refute("K1", break_note="another mismatch", exposed_variable="mood_of_the_week")
+    try:
+        L.extend("K1", "K2",
+                 statement="...but only when we say so",
+                 new_variable="mood_of_the_week",
+                 new_prediction="(none beyond rescuing K1)",
+                 refuted_if="n/a",
+                 independently_measurable=False,
+                 predicts_beyond_parent=False)
+    except EpicycleRejected as e:
+        print("rejected:", e)
