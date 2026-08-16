@@ -161,15 +161,31 @@ damage_mechanism:
 
 SCOPE: containment runs between A and B. It does not run
 WITHIN B. Human frameworks — religious, philosophical,
-cultural — are not cross-ranked against each other; no
-common axis exists, and each is assessed against its own
-scope and stated function.
+cultural — are not cross-ranked against each other. Under
+containment the axis is not absent: every B-framework
+traces to substrate and tracks something. What is absent is
+co-domain. Declared scopes do not coincide, so a ranking
+would compare readings taken over different domains. Each
+is assessed against its own scope and stated function.
 
 ```
 scope:
   A vs B   -> containment runs
-  B vs B   -> no cross-rank. no common axis.
-              assess each against its own scope and stated function
+  B vs B   -> no cross-rank
+
+  ground for the carve-out:
+    axis       NOT absent — every B-framework traces to substrate
+    co-domain  ABSENT — declared scopes do not coincide
+    -> a ranking would compare readings taken over different domains
+    -> assess each against its own scope and stated function
+
+  rule reads:  no cross-rank ABSENT CO-DOMAIN
+  not:         no axis exists
+
+  OPEN — overlap case
+    two B-frameworks whose declared scopes coincide on a single
+    physical regularity
+    unresolved in this spec. not defaulted in either direction.
 ```
 
 -----
