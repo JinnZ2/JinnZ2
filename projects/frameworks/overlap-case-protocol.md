@@ -160,6 +160,12 @@ soil carbon /      soil organic carbon,    continuous-cover     MIXED
     winner.
 ```
 
+The calibration set above was selected by the same judgment the
+protocol audits, which is `case_selection_drift` (§4) applied to
+§3 itself. The §6 ledger rule therefore binds here too: record
+every candidate case considered and rejected, with the reason.
+Without that list the calibration pass is unbounded.
+
 ```
 calibration pass criteria:
   - retrodicts the HIGH-settled cases from pre-recovery state
@@ -198,6 +204,11 @@ asymmetric_instrument  one side has had 10^2 years of
 ceiling_as_result      instrument cannot resolve the regularity,
                        and the null gets reported as a finding
                        -> R6 exists for this
+
+falsifier_unreachable  every case in the set sits at one point on
+                       the dimension the falsifier quantifies over
+                       -> the set cannot fail its own test
+                       -> see falsifier-dimension-mismatch.md
 
 winner_forcing         no both-wrong branch, so every run returns
                        a rank
