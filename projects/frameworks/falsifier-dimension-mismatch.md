@@ -34,6 +34,29 @@ worse: instrument count rises, specification tightens, and the
 falsifier moves further out of reach because none of the new work
 is on the axis it lives on.
 
+There is a second route to the same state, independent of
+dimension.
+
+```
+ROUTE 1  point set
+           every instrument at one value on the falsifier's
+           dimension -> nothing can vary -> nothing can fail
+
+ROUTE 2  shared term
+           an instrument supplies evidence for one side of a
+           relation AND is a term in the test of that relation
+           -> the term appears on both sides
+           -> the test is satisfied by construction
+
+           acute case: a mediation or ordering test where the
+           mediator is also the evidence that the link exists
+```
+
+Route 2 survives a fully swept set. Sweeping fixes the dimension
+and leaves the shared term in place, so an inventory can clear
+the D1-D5 audit and still be unfalsifiable. Both routes must be
+checked; passing one is not passing the other.
+
 -----
 
 ## AUDIT
@@ -65,6 +88,13 @@ D5  check the selection step.
       if the set's members were chosen by the same process the set
       audits, the dimension is unswept by construction
       -> a selected calibration set inherits the bias it tests for
+
+D6  check for shared terms (ROUTE 2).
+      for each stated relation, list the instruments supplying
+      evidence for it and the instruments appearing as terms in
+      its test
+      intersection non-empty -> that relation cannot fail
+      run this even when D3 passes
 ```
 
 D5 is the reflexive case and the easiest to miss: the mismatch can
@@ -88,8 +118,24 @@ right  add the dimension to the instruments already present
          and their point-ness is recorded rather than hidden
 ```
 
-Record which instruments cannot take the sweep. That list is a
-result — it bounds what the set can ever falsify.
+A separate list of un-sweepable instruments is not enough. An
+instrument with no sweep field does not thereby abstain — it
+asserts regime-invariance, silently, and the assertion never
+comes up for review.
+
+```
+sweep is a REQUIRED field on every instrument
+
+  sweep: <dimension, levels>   swept
+  sweep: None + REASON         declared point instrument
+  sweep: absent                INVALID. not a default, not an
+                               abstention — an undeclared
+                               invariance claim.
+```
+
+Making None legal but mandatory-with-reason is what forces the
+claim into view. The reasons, collected, are the bound on what
+the set can ever falsify.
 
 -----
 
