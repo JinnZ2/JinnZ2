@@ -186,6 +186,7 @@ scope:
     two B-frameworks whose declared scopes coincide on a single
     physical regularity
     unresolved in this spec. not defaulted in either direction.
+    protocol: projects/frameworks/overlap-case-protocol.md
 ```
 
 -----
