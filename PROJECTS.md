@@ -1,5 +1,13 @@
 # 🌐 Connected Repositories (Full Ecosystem)
 
+> 🧭 **Read this against its constraints first:**
+> [`README.md` §1–§5](./README.md) — the split across these repos is a
+> **channel artifact, not a taxonomy**; names are gate keys, not
+> descriptions (see [`gate_log.md`](./gate_log.md)); each repo is a
+> **marker**, not a position. Reconsolidation is in progress
+> ([`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md)) — independence
+> between the repos below is largely apparent, not real.
+
 > 📜 **Before reading the list:** see
 > [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) for how
 > this ecosystem is shaped (not "one project," not "many separate
@@ -24,7 +32,12 @@ This project is part of a larger ecosystem of symbolic sensors, computational to
   Modular symbolic sensors for manipulation detection, pattern memory, and meaning preservation.
 
 - **[Geometric-to-Binary-Computational-Bridge](https://github.com/JinnZ2/Geometric-to-Binary-Computational-Bridge)**  
-  Converts symbolic/visual structures into computational and binary representations.
+  Converts symbolic/visual structures into computational and binary representations.  
+  *Not standalone:* the **representation layer** of the same assembly — operands are
+  shapes/geometries rather than binary encodings. Downstream of Rosetta (shape families)
+  and Mandala (scale-persistence check), **not parallel to them**. Integration is
+  **blocked on robotics** (embodied/actuated landing), not independent. See
+  [`README.md` → BINARY→GEOMETRIC](./README.md#binarygeometric--placement).
 
 - **[Component-Failure-Repurposing-Database](https://github.com/JinnZ2/Component-failure-repurposing-database)**  
   Catalog of hardware failures, repairs, and reuse strategies for resilient design.

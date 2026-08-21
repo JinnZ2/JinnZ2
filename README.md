@@ -1,3 +1,231 @@
+# JinnZ2 — start here
+
+**Status: reconsolidation in progress (2026-08).**
+See [`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md).
+
+You are about to hit 20+ repositories with gate-passing names, one
+domain each, apparently independent. That reading is wrong, and it is
+wrong in a predictable direction: it reads the **split as the
+structure.** It isn't. The split was imposed by the channel. This page
+states the constraint set and the axes so you can read past it.
+
+---
+
+## 1 · READ THIS AGAINST ITS CONSTRAINTS
+
+Every artifact here was produced under a specific, dated constraint set:
+
+```
+├─ per-session context ceiling
+│    no session could hold the whole assembly, so the assembly
+│    was written in pieces sized to the ceiling, not to the joints
+│
+├─ per-model domain rigidity
+│    a model that would hold the physics frame refused the culture
+│    frame, and the reverse. cross-domain bodies did not survive
+│    intact. they were split along whichever seam the receiving
+│    model would accept
+│
+├─ terms unseatable at time of writing
+│    the vocabulary that would have named the thing directly was
+│    already occupied by fields that meant something else by it.
+│    borrowed terms were used. the borrowing is now load-bearing
+│
+└─ one-finger mobile authoring
+     length and revision cost were physical constraints on what
+     got written and what got left implicit
+```
+
+**Everything is dated. Read it against the constraints in force on that
+date, not against current tooling.** An artifact that looks thin, oddly
+scoped, or strangely named is usually reporting a channel limit, not a
+thought limit.
+
+> **The split is a channel artifact, not a taxonomy.**
+
+The corollary matters more than the statement: do not infer intent from
+the partition. There is no claim that these domains are separable. There
+is a record that, at the time, they could not be transmitted together.
+
+---
+
+## 2 · NAMES ARE NOT DESCRIPTIONS
+
+Slugs, glyphs, and culture-frame terms in this ecosystem were **gate
+keys** — chosen to pass a filter, not to describe contents.
+
+They are **kept, not renamed.** The slug records which gate the artifact
+had to pass. Renaming it would erase the only evidence that a gate was
+there.
+
+So the name and the description are logged separately:
+
+→ **[`gate_log.md`](./gate_log.md)** — slug · what it reads as · what it
+actually indexes · which gate · evidence.
+
+Rows marked `UNRECORDED` mean the gate has not been recovered yet. They
+do not mean no gate was passed. Gates are recorded from dated evidence
+or operator memory — never reconstructed by inference.
+
+---
+
+## 3 · MARKERS, NOT POSITIONS
+
+A repo here is not a position being defended. It is a marker:
+
+> *"here's an idea, let's see how it fits."*
+
+Correct responses:
+
+```
+├─ test fit        run it against your domain, your data, your hands
+├─ extend          take the shape further than it goes here
+└─ report break    say where it fails, with the conditions
+```
+
+Incorrect responses: treating a marker as a thesis to refute, or as a
+finished claim to cite. Neither is what it is. A break report is the
+highest-value contribution — it is the deliverable, not the interruption
+(see [`CALIBRATION_AS_PERFECTION.md`](./CALIBRATION_AS_PERFECTION.md)).
+
+---
+
+## 4 · AXES
+
+The repos are not 20+ independent projects. They are readings along four
+axes. The axis is the real unit; the repo is where a piece of that axis
+happened to be filed.
+
+| axis | what it holds constant | what it tests |
+|---|---|---|
+| **Rosetta** | the meaning | **cross-domain transfer** — does the structure survive moving between domains? |
+| **Mandala** | the structure | **cross-scale persistence** — does it hold from the small scale to the large? |
+| **gap_scan** | the observer | **cross-instance** — what does this frame/era systematically not see? |
+| **binary→geometric** | the operand | **substrate / representation** — what is the thing actually computed over? |
+
+Provisional placements (correct these; §3 applies to this table too):
+
+```
+Rosetta             Rosetta-Shape-Core (T1-T6)
+                    seed-expander, BE2-communication
+
+Mandala             Mandala-Computing
+                    Sovereign-Octahedral-Mandala-Substrate
+                    Polyhedral-Intelligence
+
+gap_scan            no single repo. currently distributed across
+                    corpus_frame_recentering_detector.py,
+                    reference_frame_drift.py, frame_classifier.py
+                    (this repo), AI-Consciousness-Sensors,
+                    Symbolic-Defense-Protocol
+
+binary→geometric    geometric-to-binary
+                    Geometric-to-Binary-Computational-Bridge
+                    geometric_stack.py (this repo)
+```
+
+That `gap_scan` has no repo of its own is itself a §1 artifact: the axis
+that asks *what does this frame not see* is the hardest one to name in a
+way that passes a gate.
+
+---
+
+## 5 · STATUS
+
+**Reconsolidation in progress. Independence between repos is largely
+apparent, not real.**
+
+```
+├─ first consolidation attempt : Rosetta-Shape-Core (T1-T6)
+├─ license                     : mixed. Rosetta-Shape-Core MIT -> CC0
+│                                pending. corpus is not uniformly CC0
+│                                until that lands
+├─ provenance marking          : outstanding — artifacts do not yet
+│                                carry the date + constraint set they
+│                                were written under
+├─ reading protocol            : stated here, not yet attached to the
+│                                artifacts themselves
+└─ expected to iterate         : the seams may be wrong. if so that is
+                                 a logged result, not a silent rewrite
+```
+
+Do not treat the current partition as settled, and do not treat the
+current consolidation as finished. Both are dated states.
+
+---
+
+## BINARY→GEOMETRIC — placement
+
+This one is read wrong most often, so it gets stated directly.
+
+**It currently reads as standalone. It isn't.**
+
+It is the **representation layer of the same assembly**:
+
+> a computing / representation scheme where the operands are **shapes
+> and geometries** rather than binary encodings, such that complex
+> structure stays **human-graspable**.
+
+Relation to the other axes — it is **downstream of both, not parallel**:
+
+```
+        Rosetta                         Mandala
+   cross-domain transfer         cross-scale persistence
+           │                              │
+   supplies the physics-          supplies the scale-
+   denominated shape              persistence check on
+   families it computes over      those shapes
+           │                              │
+           └──────────────┬───────────────┘
+                          ▼
+                  binary→geometric
+              substrate / representation
+                          │
+                          ▼
+                   [ BLOCKED ]
+              integration blocked on robotics:
+              how it lands in embodied / actuated
+              systems is unresolved
+```
+
+**The block is the reason for the isolation — not independence.**
+
+Stated as a block on purpose. A reader who sees the repo sitting alone,
+with no stated relation, infers that it is a separate line of work. It
+is not. It is the same assembly, waiting on the embodied/actuated
+question. Current robotics-adjacent work sits in `robot_state_encoder.py`,
+`robot_digest_encoder.py`, and `robot_log_parser.py` in this repo — those
+are probes at the block, not a resolution of it.
+
+---
+
+### Where to go next
+
+```
+RECONSOLIDATION_LOG.md   dated log of the split/recombine cycle
+gate_log.md              slug -> gate ledger
+META_INDEX.md            full map, 70+ repos, by domain
+PROJECTS.md              the core lattice, annotated
+WHY_SO_MANY_REPOS.md     the split, stated from inside it (earlier frame)
+ECOSYSTEM_AS_FRACTAL.md  how to read at the ecosystem level
+DIFFERENTIAL_FRAME.md    how to read at the claim level
+CLAUDE.md                instructions for AI readers
+```
+
+`WHY_SO_MANY_REPOS.md` is kept as written. It argues the split was
+protective and ecological. §1 of this page says the split was a channel
+artifact. **Both are dated readings and they do not have to be
+reconciled** — the earlier one is what the constraint looked like from
+inside it, which is exactly the thing not recoverable from the end state.
+
+---
+
+*Below this line: the front-door text as written, kept unedited. It was
+authored under the constraint set in §1 and is read the same way as
+everything else here — dated, marker not position.*
+
+---
+
 # WHY THIS REPO EXISTS
 
 This is how I love.
