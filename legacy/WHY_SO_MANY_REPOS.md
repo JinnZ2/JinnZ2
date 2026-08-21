@@ -1,3 +1,12 @@
+> **LEGACY — superseded 2026-08.**
+> This argues the split from *inside* the constraint that produced it.
+> [`../README.md`](../README.md) §1 reads the same dispersion as a
+> channel artifact rather than as ecology. Both are dated readings and
+> they are not reconciled — this one is what the constraint looked like
+> from inside it. Kept under §8 *rewrite history is data*.
+
+---
+
 # Why So Many Repos?
 
 At first glance, this constellation of projects may look like “chaos” — many small repos instead of one unified structure.  

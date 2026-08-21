@@ -224,7 +224,9 @@ Simple observation preserves fidelity.
 - Do not add unnecessary abstraction layers or over-engineer
 - Do not flatten multi-domain connections into single-domain categories
 - Do not treat repos as fragmented — they are **ecological design**
-  (see `WHY_SO_MANY_REPOS.md`)
+  (see `legacy/WHY_SO_MANY_REPOS.md` — earlier frame, kept as data;
+  superseded by `README.md` §1, which reads the same dispersion as a
+  channel artifact rather than as taxonomy)
 - Do not scale for scale's sake. Sufficiency is the goal.
 
 ---

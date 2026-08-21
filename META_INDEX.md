@@ -3,13 +3,13 @@
 *A navigable map of 70+ open-source projects (mostly CC0/public domain — the corpus is mixed-license; see the per-repo License column and [`README.md` §5](./README.md)) that form a distributed verification stack for civilization resilience — from physics axioms to cultural sovereignty to manufacturing infrastructure.*
 
 
-> 🧭 **Read this against its constraints first:**
-> [`README.md` §1–§5](./README.md) — the split across these repos is a
-> **channel artifact, not a taxonomy**; names are gate keys, not
-> descriptions (see [`gate_log.md`](./gate_log.md)); each repo is a
-> **marker**, not a position. Reconsolidation is in progress
-> ([`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md)) — independence
-> between the repos below is largely apparent, not real.
+> 🧭 **[`README.md`](./README.md) is the lens — read it first.**
+> The list below will read wrong without it. The dispersion across these
+> repos is a **channel artifact, not a taxonomy** (§1); slugs are **gate
+> keys, not descriptions** (§2, [`gate_log.md`](./gate_log.md)); each
+> entry is a **marker, not a position** (§3). Reconsolidation is in
+> progress ([`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md)) —
+> apparent independence between the repos below is largely apparent.
 
 ---
 
