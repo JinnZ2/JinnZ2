@@ -1,13 +1,15 @@
 # 🌐 JinnZ2 Ecosystem — META-INDEX
 
-*A navigable map of 70+ open-source projects (mostly CC0/public domain — the corpus is mixed-license; see the per-repo License column and [`README.md` §5](./README.md)) that form a distributed verification stack for civilization resilience — from physics axioms to cultural sovereignty to manufacturing infrastructure.*
+*A navigable map of 70+ open-source projects (mostly CC0/public domain — the corpus is mixed-license; see the per-repo License column and [`README.md` §12](./README.md)) that form a distributed verification stack for civilization resilience — from physics axioms to cultural sovereignty to manufacturing infrastructure.*
 
 
 > 🧭 **[`README.md`](./README.md) is the lens — read it first.**
 > The list below will read wrong without it. The dispersion across these
 > repos is a **channel artifact, not a taxonomy** (§1); slugs are **gate
 > keys, not descriptions** (§2, [`gate_log.md`](./gate_log.md)); each
-> entry is a **marker, not a position** (§3). Reconsolidation is in
+> entry is a **marker, not a position** (§4); and where the only
+> available English word carries the wrong load, **the word is a
+> pointer, the definition is in the entry** (§3). Reconsolidation is in
 > progress ([`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md)) —
 > apparent independence between the repos below is largely apparent.
 

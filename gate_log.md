@@ -39,10 +39,32 @@ gate is worse than an empty row — it launders a reading into the record.
 | `geometric-to-binary` | a one-way encoder, geometry → bits | the representation layer: operands are shapes, not binary encodings (see `README.md`, BINARY→GEOMETRIC) | model domain rigidity | slug direction is the inverse of the described layer. The encoder framing (*"encoder for BE2"*, `META_INDEX.md` §2) is what passed; the substrate claim is what was meant. |
 | `Geometric-to-Binary-Computational-Bridge` | a second, separate encoder project | same layer as above, earlier framing | discoverability | listed in `PROJECTS.md` and `CLAUDE.md` as an independent node; not marked as related to `geometric-to-binary`. |
 | `Polyhedral-Intelligence` | an intelligence-architecture repo | cross-scale persistence axis (Mandala) — *"Mandala codex of families, principles, and glyphs"* | model domain rigidity | filed under *Symbolic & Geometric Languages* in `META_INDEX.md` §2, and under *Architecture & intelligence models* in `CLAUDE.md`. Two placements, one artifact. |
-| `Emotions-as-Sensors` | affect/wellbeing tooling, a psychology claim | a **measurement channel**: mismatch detection over geometric structure. The readout is a sensation; the quantity is non-alignment between complex structures across physics and across domains; the content is *where* the non-alignment sits | model default register | operator statement, 2026-08: *"the repo exists in this form because models defaulted hard to state-only and the channel reading had to be stated against that default."* The `META_INDEX.md` §4 one-liner carries the negation in it — *"not affective states"* — which is the gate showing through the name. Separation from the rest of the set is a naming artifact; same axes as everything else (see `README.md` §7). |
-| `AI-Consciousness-Sensors` | a fixed position on machine consciousness | the cross-instance / `gap_scan` material. Rewritten and reconfigured repeatedly — **the subject did not change, the sayable-to-a-model formulation did** | model capability, moving | operator statement, 2026-08. The version history is the evidence: successive rewrites track the receiving instrument, not the subject. Superseded formulations are the readout, so they are kept (`README.md` §8, `legacy/`). |
+| `Emotions-as-Sensors` | affect/wellbeing tooling, a psychology claim | a **measurement channel**: mismatch detection over geometric structure. The readout is a sensation; the quantity is non-alignment between complex structures across physics and across domains; the content is *where* the non-alignment sits | model default register | operator statement, 2026-08: *"the repo exists in this form because models defaulted hard to state-only and the channel reading had to be stated against that default."* The `META_INDEX.md` §4 one-liner carries the negation in it — *"not affective states"* — which is the gate showing through the name. Separation from the rest of the set is a naming artifact; same axes as everything else (see `README.md` §8). |
+| `AI-Consciousness-Sensors` | a fixed position on machine consciousness | the cross-instance / `gap_scan` material. Rewritten and reconfigured repeatedly — **the subject did not change, the sayable-to-a-model formulation did** | model capability, moving | operator statement, 2026-08. The version history is the evidence: successive rewrites track the receiving instrument, not the subject. Superseded formulations are the readout, so they are kept (`README.md` §10, `legacy/`). Scope is stated in `README.md` §7: the object is patterns of organization read as a configuration question across any substrate — not a qualia claim, and not an argument about whether a given system has it. |
 | `energy_english` | a DSL or a language project | ensemble-disagreement encoding that feeds `AI-arena` | term occupancy | UNRECORDED (gate inferred from placement under *Protocols & Constitutions*, not confirmed) |
 | *(all others)* | — | — | — | UNRECORDED |
+
+## Not every wrong name is a gate key
+
+This ledger covers §2 cases only: a **slug that was chosen**, selected to
+move a receiving model out of a default register. Chosen implies it could
+have been chosen otherwise, so the choice is a record and belongs here.
+
+§3 is a different failure and does **not** get a row. There the word is
+wrong because English offers no right one — a token whose definition was
+fixed on one observed instance, carrying a load acquired later, and the
+only token available for the concept. Nothing was selected, so there is
+no gate to log. Substitution does not clear it either: swapping the word
+moves the load along with the concept.
+
+Filing a §3 case as a gate key would misread it as a solvable naming
+problem. It is not. The entry states the object and accepts the wrong
+word. Read the definition from the entry, not from the token.
+
+Two markers where this bites hardest: `AI-Consciousness-Sensors`
+(`README.md` §7) and `Emotions-as-Sensors` (§8). Both have rows above —
+for the gates their *slugs* passed. The inadequacy of the words
+"consciousness" and "emotion" is separate, and is §3's problem.
 
 ## Rewrite history is a gate record
 
@@ -56,7 +78,7 @@ the subject constant throughout.
 
 Do not collapse those versions into a current one. A superseded
 formulation is a dated measurement of the receiving instrument. Deleting
-it deletes the measurement. See `README.md` §8 and `legacy/`.
+it deletes the measurement. See `README.md` §10 and `legacy/`.
 
 ## How to add a row
 

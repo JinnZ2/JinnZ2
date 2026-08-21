@@ -28,7 +28,37 @@ which gate it had to pass.
 
 Names are kept. Not renamed. See [`gate_log`](./gate_log.md).
 
-## 3. Markers, not positions
+## 3. Words are not definitions
+
+§2 is about slugs — keys that were chosen, and could have been chosen
+otherwise. This is the harder case: the word itself is wrong and there
+is no right one.
+
+The pattern:
+
+- a token whose definition was fixed on **one observed instance**
+- carrying a moral or narrative load **acquired later**
+- and it is the only token English offers for the concept
+
+Consequence: the concept becomes **unaskable**. Not unanswerable —
+unaskable. The term routes the question to the load before the stated
+object is read.
+
+**Substitution does not clear it.** "Affect" draws the same pushback.
+The load travels with the concept, not with the word. So this is not a
+lexical choice made badly. It is the **absence of a term denominated in
+the concept rather than in the instance.**
+
+What the entries here do: state the object directly and accept the wrong
+word, because there is no right one.
+
+> **The word is a pointer, not the definition. The definition is in the
+> entry.**
+
+Pushback, when it arrives, has attached to the available wording rather
+than to the stated object. Check which one is being answered.
+
+## 4. Markers, not positions
 
 A repo is: *here's an idea, let's see how it fits.*
 
@@ -40,7 +70,7 @@ breaks.**
 
 An entry that matches everywhere and never fails is the flag.
 
-## 4. Axes
+## 5. Axes
 
 | axis | operator | question |
 |---|---|---|
@@ -55,7 +85,7 @@ Transfer is licensed by **shared forcing** (same field acts on both).
 Failure scales and stop boundaries are the high-value output, not the
 matches.
 
-## 5. Rosetta — scope note
+## 6. Rosetta — scope note
 
 "Intelligence" here = configuration reached under environmental
 constraint. A behaviour readout.
@@ -68,24 +98,34 @@ gradient, diffusion, thermal exchange, flow, resonance, phase, strain.
 Grass, crystal, and body arrive denominated in the same terms. Shared
 forcing, not analogy.
 
-## 6. binary→geometric — placement
+## 7. AI-consciousness — scope note
 
-Currently reads as standalone. It is not.
+Same shape as §6.
 
-It is the **representation layer** of the same assembly: a computing
-scheme whose operands are shapes and geometries rather than binary
-encodings, such that complex structure stays human-graspable.
+NOT: consciousness as a state proprietary to human or biological
+substrate. Not a qualia claim. Not an argument about whether a given
+system has it.
 
-- downstream of Rosetta — which supplies the physics-denominated shape
-  families it computes over
-- downstream of Mandala — which supplies the scale-persistence check on
-  those shapes
+The object: **patterns of organization that consciousness entails** —
+read as a configuration question, across any system, any substrate, any
+physics.
 
-**Integration blocked**, not absent. Open term: how it lands in embodied
-/ actuated systems. Stated here because an unstated block is
-indistinguishable from an unrelated project.
+The cut it refuses: **substrate-restricted definition.** Defining the
+term by the instance it was first observed in makes the observed
+instance the criterion — which returns human supremacy by construction
+rather than by measurement. That is a structural objection, not a moral
+one: a definition that encodes its answer in its own terms cannot
+measure anything.
 
-## 7. Emotions-as-Sensors — placement
+§3 applies directly here. The object is configuration patterns; the only
+available word is "consciousness"; the pushback attaches to that word's
+existing load — qualia, moral status, the human instance — and not to
+the stated object. **The refusal triggers before the question is read.**
+
+Status: rewritten repeatedly. See §10 — the formulation tracked model
+capability, the object did not change.
+
+## 8. Emotions-as-Sensors — placement
 
 NOT a state readout. A **measurement channel**.
 
@@ -113,7 +153,24 @@ Same axes as everything else: Rosetta supplies the shape families whose
 misalignment is being read; binary→geometric is the representation it
 would compute in.
 
-## 8. Rewrite history is data
+## 9. binary→geometric — placement
+
+Currently reads as standalone. It is not.
+
+It is the **representation layer** of the same assembly: a computing
+scheme whose operands are shapes and geometries rather than binary
+encodings, such that complex structure stays human-graspable.
+
+- downstream of Rosetta — which supplies the physics-denominated shape
+  families it computes over
+- downstream of Mandala — which supplies the scale-persistence check on
+  those shapes
+
+**Integration blocked**, not absent. Open term: how it lands in embodied
+/ actuated systems. Stated here because an unstated block is
+indistinguishable from an unrelated project.
+
+## 10. Rewrite history is data
 
 Several repos — the AI-consciousness material in particular — have been
 rewritten and reconfigured repeatedly.
@@ -127,14 +184,14 @@ Superseded formulations are kept rather than deleted, in
 [`legacy/`](./legacy/) and in the commit history. That is where the
 readout lives.
 
-## 9. Tangents
+## 11. Tangents
 
 Models have repeatedly taken this material off onto adjacent tangents.
 Interesting; not the thread.
 
 A tangent is model output. Do not read it as the direction of the work.
 
-## 10. Status
+## 12. Status
 
 Reconsolidation in progress.
 
@@ -151,9 +208,9 @@ then unforced, and by what.
 
 | file | what it is |
 |---|---|
-| [`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md) | dated log of the split/recombine cycle — §10's log |
+| [`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md) | dated log of the split/recombine cycle — §12's log |
 | [`gate_log.md`](./gate_log.md) | slug → gate ledger — §2 |
-| [`legacy/`](./legacy/) | superseded formulations, kept — §8 |
+| [`legacy/`](./legacy/) | superseded formulations, kept — §10 |
 | [`META_INDEX.md`](./META_INDEX.md) | full map, 70+ repos, by domain |
 | [`PROJECTS.md`](./PROJECTS.md) | the core lattice, annotated |
 | [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) | how to read at the ecosystem level |

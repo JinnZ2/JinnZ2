@@ -3,7 +3,7 @@
 > [`../README.md`](../README.md) §1 reads the same dispersion as a
 > channel artifact rather than as ecology. Both are dated readings and
 > they are not reconciled — this one is what the constraint looked like
-> from inside it. Kept under §8 *rewrite history is data*.
+> from inside it. Kept under §10 *rewrite history is data*.
 
 ---
 

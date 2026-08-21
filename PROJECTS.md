@@ -4,7 +4,9 @@
 > The list below will read wrong without it. The dispersion across these
 > repos is a **channel artifact, not a taxonomy** (§1); slugs are **gate
 > keys, not descriptions** (§2, [`gate_log.md`](./gate_log.md)); each
-> entry is a **marker, not a position** (§3). Reconsolidation is in
+> entry is a **marker, not a position** (§4); and where the only
+> available English word carries the wrong load, **the word is a
+> pointer, the definition is in the entry** (§3). Reconsolidation is in
 > progress ([`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md)) —
 > apparent independence between the repos below is largely apparent.
 
@@ -19,7 +21,7 @@
 > for the rate-based definition of perfection the corpus operates
 > under (failure events are the deliverable, not the interruption).
 > Companion: [`legacy/WHY_SO_MANY_REPOS.md`](./legacy/WHY_SO_MANY_REPOS.md)
-> (earlier frame, kept as data — see `README.md` §1 and §8).
+> (earlier frame, kept as data — see `README.md` §1 and §10).
 
 This project is part of a larger ecosystem of symbolic sensors, computational tools, and regenerative AI-human collaboration systems. Related repositories:
 

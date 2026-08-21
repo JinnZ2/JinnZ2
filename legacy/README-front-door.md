@@ -1,6 +1,6 @@
 > **LEGACY — superseded 2026-08.**
 > This was the front-door text of `README.md` until the reading-protocol
-> page replaced it. Kept unedited under §8 *rewrite history is data*:
+> page replaced it. Kept unedited under §10 *rewrite history is data*:
 > the formulation is a dated readout of what was sayable at the time.
 > Current lens: [`../README.md`](../README.md).
 >

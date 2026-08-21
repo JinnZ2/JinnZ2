@@ -58,7 +58,7 @@ LOG ENTRY — <what>, dated <YYYY-MM>
 ### What "expected to iterate" means here
 
 Not a disclaimer. The first consolidation attempt is a marker in the
-sense of §3 of the landing page: *here's an idea, let's see how it
+sense of §4 of the landing page: *here's an idea, let's see how it
 fits.* If T1–T6 turn out to be the wrong seams, that is a result, and
 it gets logged here with a date — it does not get quietly rewritten
 out of the history.
@@ -76,7 +76,8 @@ out of the history.
   why now  : first pass stated the constraint set but left two repos
              reading as unrelated, and left no stated home for
              superseded formulations
-  artifact : README.md sections 1-10; legacy/ opened
+  artifact : README.md sections 1-10 (reordered to 1-12 in the
+             third pass below); legacy/ opened
   status   : in progress
   value to a later reader: the rewrite history is itself the readout.
              see below
@@ -132,3 +133,78 @@ Moved, not deleted:
 │  Not reconciled with §1 on purpose.
 └─ `political_financial_vectors` v1–v9 — v10 states its own corrections
    to them. v10 stays at root.
+
+---
+
+## LOG ENTRY — landing page, third pass, dated 2026-08
+
+```
+  what     : promoted WORDS ARE NOT DEFINITIONS to its own section;
+             added the AI-consciousness scope note; reordered the
+             page to 1-12
+  why now  : the two scope notes (Rosetta, AI-consciousness) turned
+             out to share a failure that is not §2. §2 covers slugs
+             that were chosen. this one is the absence of a term.
+             it needed stating once, ahead of the entries that hit it
+  artifact : README.md sections 1-12
+  status   : in progress
+  value to a later reader: records that the pushback was measured
+             against the WORD, not the question
+```
+
+### The generalized pattern (now §3)
+
+```
+  pattern     : a token whose definition was fixed on one observed
+                instance, carrying a moral or narrative load acquired
+                later, is the only token English offers for the concept
+  consequence : the concept becomes UNASKABLE. not unanswerable.
+                the term routes the question to the load before the
+                stated object is read
+  test        : substitution does not clear it. "affect" draws the same
+                pushback as "emotion". so it is not lexical choice,
+                it is the absence of a term denominated in the concept
+                rather than in the instance
+  what the repos do : state the object directly, accept the wrong word,
+                because there is no right one
+```
+
+This is a **measurement**, not a complaint. The pushback attaching to
+the available wording rather than to the stated object is an observation
+about the receiving instrument, and it is the same class of readout as
+§10.
+
+### AI-consciousness — scope note (now §7)
+
+```
+  NOT        : consciousness as a state proprietary to human/biological
+               substrate. not a qualia claim. not an argument about
+               whether a given system has it
+  the object : patterns of organization that consciousness entails,
+               read as a configuration question across any system,
+               any substrate, any physics
+  refuses    : substrate-restricted definition. defining the term by
+               the instance it was first observed in makes the observed
+               instance the criterion, which returns human supremacy by
+               construction rather than by measurement
+  status     : rewritten repeatedly; the formulation tracked model
+               capability, the object did not change
+```
+
+Same shape as the Rosetta NOT (§6): both refuse a definition that
+smuggles its answer into its own terms, and both state the object as a
+configuration question instead.
+
+Note the interaction with §3 — the refusal triggers *before* the
+question is read, because the word arrives first. That is why the scope
+note has to be on the landing page rather than only in the repo: by the
+time a reader reaches the repo, the token has already routed them.
+
+### Section renumbering
+
+The page went from 1-10 to 1-12. Cross-references were updated in
+`gate_log.md`, `PROJECTS.md`, `META_INDEX.md`, `legacy/README.md`,
+`legacy/README-front-door.md`, `legacy/WHY_SO_MANY_REPOS.md` and
+earlier entries in this log. Moved: markers §3→§4, axes §4→§5, Rosetta
+§5→§6, Emotions §7→§8, binary→geometric §6→§9, rewrite history §8→§10,
+tangents §9→§11, status §10→§12.

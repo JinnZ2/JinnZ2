@@ -2,7 +2,7 @@
 
 Superseded formulations. **Kept, not deleted.**
 
-Per [`../README.md`](../README.md) §8 — *rewrite history is data.* The
+Per [`../README.md`](../README.md) §10 — *rewrite history is data.* The
 subject did not change; the sayable-to-a-model formulation did, as model
 capability moved. A deleted earlier formulation destroys that readout.
 Successive versions track the receiving instrument, not the subject, and
