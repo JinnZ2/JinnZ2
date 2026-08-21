@@ -10,7 +10,7 @@
 > entry is a **marker, not a position** (§4); and where the only
 > available English word carries the wrong load, **the word is a
 > pointer, the definition is in the entry** (§3). Reconsolidation is in
-> progress ([`RECONSOLIDATION_LOG.md`](./RECONSOLIDATION_LOG.md)) —
+> progress ([`LOG.md`](./LOG.md)) —
 > apparent independence between the repos below is largely apparent.
 
 ---
