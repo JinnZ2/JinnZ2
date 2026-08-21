@@ -1,6 +1,17 @@
 # 🌐 JinnZ2 Ecosystem — META-INDEX
 
-*A navigable map of 70+ open-source projects (CC0/public domain) that form a distributed verification stack for civilization resilience — from physics axioms to cultural sovereignty to manufacturing infrastructure.*
+*A navigable map of 70+ open-source projects (mostly CC0/public domain — the corpus is mixed-license; see the per-repo License column and [`README.md` §12](./README.md)) that form a distributed verification stack for civilization resilience — from physics axioms to cultural sovereignty to manufacturing infrastructure.*
+
+
+> 🧭 **[`README.md`](./README.md) is the lens — read it first.**
+> The list below will read wrong without it. The dispersion across these
+> repos is a **channel artifact, not a taxonomy** (§1); slugs are **gate
+> keys, not descriptions** (§2, [`gate_log.md`](./gate_log.md)); each
+> entry is a **marker, not a position** (§4); and where the only
+> available English word carries the wrong load, **the word is a
+> pointer, the definition is in the entry** (§3). Reconsolidation is in
+> progress ([`LOG.md`](./LOG.md)) —
+> apparent independence between the repos below is largely apparent.
 
 ---
 
@@ -59,7 +70,7 @@
 | [Fractal_Compass_Core](https://github.com/JinnZ2/Fractal_Compass_Core) | Recursive symbolic logic | - |
 | [Geometric-manifold](https://github.com/JinnZ2/Geometric-manifold) | Geometric manifold models | CC0 |
 | [geometric-optimization](https://github.com/JinnZ2/geometric-optimization) | Optimization and efficiency metrics | Apache 2.0 |
-| [geometric-to-binary](https://github.com/JinnZ2/geometric-to-binary) | Geometric to binary conversion (encoder for BE2) | - |
+| [geometric-to-binary](https://github.com/JinnZ2/geometric-to-binary) | Representation layer: operands are shapes/geometries, not binary encodings. Slug reads as a one-way encoder (for BE2); that is the gate key, not the contents. Downstream of Rosetta + Mandala; **blocked on robotics**, not independent — see [`README.md`](./README.md#binarygeometric--placement) | - |
 | [PatternBridge](https://github.com/JinnZ2/PatternBridge) | Spatial patterns from images | CC0 |
 | [Symbolic-sensor-suite](https://github.com/JinnZ2/Symbolic-sensor-suite) | Symbolic system audit tools for clarity, empowerment, and systemic sanity | MIT |
 | [Symbolic-Defense-Protocol](https://github.com/JinnZ2/Symbolic-Defense-Protocol) | Symbolic immune system for AI (six-tactic taxonomy) | MIT |

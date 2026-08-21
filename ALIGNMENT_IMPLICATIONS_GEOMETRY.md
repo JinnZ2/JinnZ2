@@ -1,5 +1,10 @@
 # ALIGNMENT_IMPLICATIONS_GEOMETRY
 
+
+> Version note: `political_financial_vectors` v1–v9 now live in
+> [`legacy/`](./legacy/); v10 remains at root. The citations below to
+> `v1`–`v9` are historical and resolve there. See `legacy/README.md`.
+
 **Five structural observations connecting the protection-layer geometry
 (developed in `political_financial_vectors_v1` through `v8`) to AI
 alignment problems.**

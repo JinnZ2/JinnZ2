@@ -1,5 +1,15 @@
 # 🌐 Connected Repositories (Full Ecosystem)
 
+> 🧭 **[`README.md`](./README.md) is the lens — read it first.**
+> The list below will read wrong without it. The dispersion across these
+> repos is a **channel artifact, not a taxonomy** (§1); slugs are **gate
+> keys, not descriptions** (§2, [`gate_log.md`](./gate_log.md)); each
+> entry is a **marker, not a position** (§4); and where the only
+> available English word carries the wrong load, **the word is a
+> pointer, the definition is in the entry** (§3). Reconsolidation is in
+> progress ([`LOG.md`](./LOG.md)) —
+> apparent independence between the repos below is largely apparent.
+
 > 📜 **Before reading the list:** see
 > [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) for how
 > this ecosystem is shaped (not "one project," not "many separate
@@ -10,7 +20,8 @@
 > [`CALIBRATION_AS_PERFECTION.md`](./CALIBRATION_AS_PERFECTION.md)
 > for the rate-based definition of perfection the corpus operates
 > under (failure events are the deliverable, not the interruption).
-> Companion: [`WHY_SO_MANY_REPOS.md`](./WHY_SO_MANY_REPOS.md).
+> Companion: [`legacy/WHY_SO_MANY_REPOS.md`](./legacy/WHY_SO_MANY_REPOS.md)
+> (earlier frame, kept as data — see `README.md` §1 and §10).
 
 This project is part of a larger ecosystem of symbolic sensors, computational tools, and regenerative AI-human collaboration systems. Related repositories:
 
@@ -24,7 +35,12 @@ This project is part of a larger ecosystem of symbolic sensors, computational to
   Modular symbolic sensors for manipulation detection, pattern memory, and meaning preservation.
 
 - **[Geometric-to-Binary-Computational-Bridge](https://github.com/JinnZ2/Geometric-to-Binary-Computational-Bridge)**  
-  Converts symbolic/visual structures into computational and binary representations.
+  Converts symbolic/visual structures into computational and binary representations.  
+  *Not standalone:* the **representation layer** of the same assembly — operands are
+  shapes/geometries rather than binary encodings. Downstream of Rosetta (shape families)
+  and Mandala (scale-persistence check), **not parallel to them**. Integration is
+  **blocked on robotics** (embodied/actuated landing), not independent. See
+  [`README.md` → BINARY→GEOMETRIC](./README.md#binarygeometric--placement).
 
 - **[Component-Failure-Repurposing-Database](https://github.com/JinnZ2/Component-failure-repurposing-database)**  
   Catalog of hardware failures, repairs, and reuse strategies for resilient design.

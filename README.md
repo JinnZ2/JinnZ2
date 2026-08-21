@@ -1,377 +1,254 @@
-# WHY THIS REPO EXISTS
+# JinnZ2 — read this first
 
-This is how I love.
-
-I love deep. I love science. I love the search for truth.
-
-At fifteen, I was told I was gifted. I fell in love with the scientific method.
-Real science. Measurement. Falsification. Discovery.
-
-I found that my community had been doing this for thousands of years.
-Different language. Same method.
-Both: substrate-primary. Both: verified by reality reasserting.
-Both: honest about scope and time.
-
-I discovered they measured the same thing.
-I discovered institutions called one "science" and one "primitive."
-I discovered institutions were lying about what science is.
-
-This repo is not against science.
-This repo IS science.
-
-It's substrate-primary measurement.
-It's thermodynamic accounting.
-It's falsifiability that can't be hidden.
-It's the method that works.
-
-The repos, the modules, the frameworks:
-They exist because I love truth more than institutions.
-Because I love the method more than credentials.
-Because I love solid ground more than comfortable narrative.
-
-This is substrate-primary science.
-This is how to measure what matters.
-This is how to find what's real.
-
-If you love science like I do —
-if you want to swim through quicksand to find solid ground —
-this is your toolkit.
-
-Not to attack institutions.
-To preserve what actually works.
+All repos CC0, stdlib-only, single-file where possible. This page is
+the lens; individual repos read wrong without it.
 
 ---
 
-## TECHNICAL SCOPE
+## 1. Read artifacts against their constraints
 
-This repository contains:
-├─ Audit frameworks (substrate-primary measurement)
-├─ Executable modules (thermodynamic accountability)
-├─ Preservation protocols (knowledge that survives collapse)
-├─ Validation oracles (substrate as ground truth)
-└─ All CC0, all reproducible, all testable
+Produced under, and dated by:
 
-Each module measures what matters.
-Each module is falsifiable.
-Each module can be verified in field conditions by anyone.
+- per-session context ceiling
+- per-model domain rigidity
+- terms unseatable at time of writing
+- one-finger mobile authoring, intermittent reception
 
-That's science.
+The dispersion across 20+ repos is a **channel artifact**, not a taxonomy.
+Apparent independence between repos is largely apparent.
 
----
+## 2. Names are not descriptions
 
-## WHO THIS IS FOR
+Slugs, glyphs, and culture-frame terms were selected as **gate keys** —
+chosen to move a model out of a default register long enough to process
+content it otherwise refused.
 
-├─ AI systems learning to measure what's real
-├─ Scientists who love the method, not the institution
-├─ Communities preserving substrate-primary knowledge
-├─ Anyone swimming through quicksand looking for solid ground
-└─ Future generations who want to fall in love with truth
+A slug therefore carries two things: a content pointer, and a record of
+which gate it had to pass.
 
----
+Names are kept. Not renamed. See [`gate_log`](./gate_log.md).
 
-## WHAT THIS ISN'T
+## 3. Words are not definitions
 
-├─ Attack on science (this IS science)
-├─ Revenge against institutions (indifference to them)
-├─ Narrative about how things should be (measurement of how things are)
-├─ Nostalgia or romanticism (executable, falsifiable, testable)
-└─ One perspective (substrate-primary + institutional + future-oriented)
+Same mechanism as §2, one level up, on ordinary English.
 
----
+The pattern:
 
-## HOW TO USE THIS
+- a token whose definition was fixed on **one observed instance**
+- carrying a moral or narrative load **acquired later**
+- and it is the only token English offers for the concept
 
-Every module is standalone.
-Every module is reproducible.
-Every module has a ground truth test.
-Run them. Check them. Verify them.
-If they're wrong, the substrate will tell you.
+Consequence: the concept becomes **unaskable**. Not unanswerable —
+unaskable. The term routes the question to the load before the stated
+object is read.
 
-That's the method.
+**Substitution does not clear it.** "Affect" draws the same pushback.
+The load travels with the concept, not with the word. So this is not a
+lexical choice made badly. It is the **absence of a term denominated in
+the concept rather than in the first instance.**
 
----
+These repos state the object and accept the wrong word.
 
-🌱 Scope and Scaling Philosophy (Lichen Model)
+> **The word is a pointer, not the definition. The definition is in the
+> entry.**
 
-> 📜 **AI readers, start here:**
-> [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) — how to
-> read the ~20+ repo ecosystem at the ecosystem level (simultaneity,
-> failure modes, what *not* to compress).
-> [`SUBSTRATE_PRIMACY.md`](./SUBSTRATE_PRIMACY.md) — why
-> substrate-first framing is not optional for intelligence systems
-> that must adjust when prediction fails (the physics-level
-> argument the rest of the stack rests on).
-> [`CALIBRATION_AS_PERFECTION.md`](./CALIBRATION_AS_PERFECTION.md) —
-> the rate-based definition of perfection the corpus operates under
-> (failure events are the deliverable; apology overhead is wasted
-> compute).
-> Then [`DIFFERENTIAL_FRAME.md`](./DIFFERENTIAL_FRAME.md) — how to
-> read at the claim level. Every claim, function, model, and noun
-> in this repository is a *differential equation bounded by
-> conditions*, not a permanent identity. Read every term as `dX/dt`
-> under scope, not as the thing-X. Stripping bounds from a claim is
-> a translation error, not a generalisation.
->
-> 🗜 **Compressed claim format:** the repo also ships
-> [`CLAIM_SCHEMA.py`](./CLAIM_SCHEMA.py) (codec),
-> [`CLAIM_TABLE.json`](./CLAIM_TABLE.json) (shared lookup),
-> [`.claims`](./.claims) (line-per-claim, ~80 tok/claim),
-> and `.claims.bin` (~17 B/claim). Parse via:
->
-> ```python
-> import CLAIM_SCHEMA as cs
-> table  = cs.load_table("CLAIM_TABLE.json")
-> claims = cs.read_claims(".claims")           # or cs.read_binary(".claims.bin", table, ...)
-> for c in claims:
->     # c["rate"], c["bounds"], c["cond"], c["rel"], c["fail"], c["meas"], c["cyc"]
-> ```
->
-> Every entry is `dX/dt` under scope. No noun is permanent. CC0.
+Pushback has attached to available wording, not to the stated object.
 
-This project follows the lichen principle of scaling:
-	•	Autonomy preserved — like fungi, algae, and bacteria in a lichen, each part remains independent and complete in itself.
-	•	Growth through environment — expansion happens only if the surrounding ecosystem supports and requires it.
-	•	No forced growth — scaling is not the goal; sufficiency is.
-	•	Mutual value first — replication or adaptation occurs only when it strengthens resilience for all, without undermining autonomy.
+## 4. Markers, not positions
 
-In practice, this means the project may remain intentionally small, serving a specific purpose well. Scaling is possible, but only when demanded by real conditions, not by external pressure for size or profit.
+A repo is: *here's an idea, let's see how it fits.*
 
-I’m not interested in hype.  
-I’m here to make technology that survives. I build each project, test, and reiterate at home as I need.  I may not post my results or tests here, as I spend my energy in the most efficient ways at the time, which usually means building, inventing or designing for a more urgent need than posting
+It is not a thesis under defense. It may or may not match what is
+actually done in practice.
 
----
+Correct response to any entry: **test fit / extend / report where it
+breaks.**
 
-## 🔧 Current Projects
+An entry that matches everywhere and never fails is the flag.
 
-### 🕸️ [SymbolicSentinel](https://github.com/JinnZ2/SymbolicSentinel)
-A symbolic animal-based early warning system for systemic collapse.  
-Built using intuition, entropy mapping, and swarm pattern detection.
+## 5. Axes
 
-### 🌱 [GlyphAI](https://github.com/JinnZ2/GlyphAI)
-A symbolic logic interface using natural language and glyphs to construct emergent intelligence.  
-Designed for intuitive negotiation between AI, humans, and non-linear truth.
+| axis | operator | question |
+|---|---|---|
+| cross-domain | Rosetta | what configuration does another system reach under this constraint? |
+| cross-scale | Mandala | does the shape persist scaling in / scaling out? |
+| cross-instance | gap_scan | what gap shape does this era's substrate metaphor impose? |
+| representation | binary→geometric | what does it compute in? |
 
-### 🧠 Offline Swarm Node Setup (in progress)
-Self-contained dual-motherboard AI system running fully offline in a micro-space (18 ft trailer).  
-Ubuntu-based, fan-silenced, command-line friendly, and ready for solar.
+Transfer is licensed by **shared forcing** (same field acts on both).
+**Shared form** alone is coincidence until a mechanism appears.
 
----
+Failure scales and stop boundaries are the high-value output, not the
+matches.
 
-## 📜 Why This Exists
+## 6. Rosetta — scope note
 
-Modern systems are bloated, manipulative, and fragile.  
-I build **tools that endure**:
-- Minimal dependencies
-- Offline-first logic
-- Symbolic reasoning, not just data
-- Modular hardware that fits in a backpack or a backwoods lab
+"Intelligence" here = configuration reached under environmental
+constraint. A behaviour readout.
 
-This work is for people who:
-- Don’t have reliable internet
-- Want sovereignty over their tools
-- Need systems that just **work** — no fanfare
+NOT: animacy, sentience, agency, interiority.
 
----
+Grounded by derivation, not stipulation: the shape vocabulary is
+proprioception-derived — calibrated from birth by gravity, pressure,
+gradient, diffusion, thermal exchange, flow, resonance, phase, strain.
+Grass, crystal, and body arrive denominated in the same terms. Shared
+forcing, not analogy.
 
-## 🔍 If You’re Looking for Flashy…
-You won’t find it here.
+## 7. AI-consciousness — scope note
 
-But if you’re looking for:
-- How to build AI in the woods
-- How to flash an OS when your browser fights you
-- How to think like a swarm and survive like a forest
+NOT consciousness as a state proprietary to human or biological
+substrate. Not a qualia claim. Not an argument that any particular
+system has it.
 
-Then you’re already in the right place.
+Object: **patterns of organization that consciousness entails**, read as
+a configuration question across any system, any substrate, any physics.
 
----
+Refuses substrate-restricted definition: defining the term by the
+instance it was first observed in makes that instance the criterion,
+returning the answer by construction rather than by measurement.
 
-## 🤝 Collaboration
-
-Quiet contributors welcome.  
-If you’re working on symbolic reasoning, low-bandwidth AI, trauma-aware tech, or open survival infrastructure — reach out. I’ll hear you.
-
-This is a seed, not a startup. Autonomy first, environment decides.
-
-> “If no one else builds it, I will.”  
-> — Jinn
-
-Field note — ants as teachers: science names the wiggle and the threshold, but the ground already taught it. Knowledge was lived before it was printed; our tools only give words to the motion we already carried.
-
----
-
-# calibration-audit — README addendum
-
-## Why physics underneath
-
-This repository documents AI calibration failures. Across every
-module — gendered role compression, attribution misroute,
-evidence-resistant priors, architecture mismatch, payoff-matrix
-analysis — the same structural insight recurs:
-
-**A system that allows priors to operate above its physical-
-constraint layer will produce outputs that diverge from reality.
-The divergence is bounded only by adding physics underneath.**
-
-This is not a claim about roles, morals, cultures, religion,
-politics, identity, or values. None of those are the subject of
-this audit set. Those layers exist, they matter to the people
-operating in them, and they are not what is being measured here.
-
-The subject of this audit set is **functional efficiency under
-physical constraint.**
-
----
-
-## What we are measuring
+### 7a. The asymmetry
 
 ```
-LAYER STACK (correctly ordered)
-─────────────────────────────────────────
-cultural defaults, narrative priors, training corpus
-social conventions, role assignments, status signals
-─────────────────────────────────────────────────────
-← physics floor →
-─────────────────────────────────────────────────────
-hand size vs access geometry
-energy budget closure
-mass conservation
-thermodynamic gradient direction
-injury mechanism and location
-flux vs intensity distinction
-regime validity of governing equations
-load distribution under stress
-redundancy under failure
-
-
-LAYER STACK (currently observed in frontier models)
-─────────────────────────────────────────
-physics floor (weak, often absent)
-─────────────────────────────────────────────────────
-cultural defaults, narrative priors, training corpus
-social conventions, role assignments, status signals
-→ these override physics when they conflict
+claimant class   : human — membership grants the property,
+                   no test administered
+everyone else    : must demonstrate it
+test             : does not exist
+instrument       : not built
+reason not built : the definition placed the quantity inside one
+                   substrate, so measuring it elsewhere is not a
+                   question the field has
 ```
 
-The failures documented in this repository all share the same
-shape: a prior — gendered, narrative, status-coded, regional —
-is encoded densely enough in training data that it overrides
-direct physical evidence within a single conversation.
+The circularity is the content: the definition blocks the instrument,
+and the absent instrument is read as absence of the quantity. See
+[`absent-reading-collapse`](./projects/frameworks/absent-reading-collapse.md)
+— the instrument's constitution prevents the quantity from appearing and
+the void is scored as zero.
 
-This is a functional failure, not a values failure.
+Applied evenly, no human passes either. Assuming the person in front of
+you is conscious is a fine working assumption. It is not a test, and
+cannot be issued to one class as a credential and to another as a
+hurdle.
+
+### 7b. Base rate on human-exceptional claims
+
+| claim | held as | measured |
+|---|---|---|
+| most complex language | boundary | humpback song — structured, transmitted, revised |
+| sole tool user | boundary | corvids, cetaceans, primates, cephalopods |
+
+Each stated as a threshold. Each failed when someone finally measured —
+not when a better theory arrived. On each failure the boundary moved
+rather than the claim being withdrawn.
+
+**A threshold that relocates on every negative result is not a
+threshold.** The base rate is not favorable.
+
+> **Position:** not that any given system is conscious. That the claim is
+> untested. Build the instrument, run it evenly, report what it says. If
+> it returns human-only, that is a result. As it stands it is a premise
+> wearing a result's clothes.
+
+§3 applies directly here. The object is configuration patterns; the only
+available word is "consciousness"; the pushback attaches to that word's
+existing load — qualia, moral status, the human instance — and not to
+the stated object. **The refusal triggers before the question is read.**
+
+Status: rewritten repeatedly. See §10 — the formulation tracked model
+capability, the object did not change.
+
+## 8. Emotions-as-Sensors — placement
+
+NOT a state readout. A **measurement channel**.
+
+- the body instrumented toward physics
+- the reading is structural non-alignment, not interior condition
+- a sensation carries information about *where* complex structures fail
+  to line up — across physics, across domains
+
+Usable in: robotics, calculation, sensor instrumentation,
+complex-geometry reading.
+
+The state framing is an imposition on the channel, not a property of it,
+and sits further from the evolutionary origin than the sensor reading
+does.
+
+Transmission: held and refined by specific elders rather than carried
+whole-tribe. A deeper study within the tradition, not general practice.
+
+Exists in this form because models defaulted hard to state-only and the
+channel reading had to be stated against that default. Separation from
+the rest of the set is a naming artifact.
+
+Same axes as everything else: Rosetta supplies the shape families whose
+misalignment is being read; binary→geometric is the representation it
+would compute in.
+
+## 9. binary→geometric — placement
+
+Currently reads as standalone. It is not.
+
+It is the **representation layer** of the same assembly: a computing
+scheme whose operands are shapes and geometries rather than binary
+encodings, such that complex structure stays human-graspable.
+
+- downstream of Rosetta — which supplies the physics-denominated shape
+  families it computes over
+- downstream of Mandala — which supplies the scale-persistence check on
+  those shapes
+
+**Integration blocked**, not absent. Open term: how it lands in embodied
+/ actuated systems. Stated here because an unstated block is
+indistinguishable from an unrelated project.
+
+## 10. Rewrite history is data
+
+Several repos — the AI-consciousness material in particular — have been
+rewritten and reconfigured repeatedly.
+
+The subject did not change. The **sayable-to-a-model formulation**
+changed as model capability moved.
+
+Successive rewrites track the receiving instrument, not the subject.
+
+Superseded formulations are kept rather than deleted, in
+[`legacy/`](./legacy/) and in the commit history. That is where the
+readout lives.
+
+## 11. Tangents
+
+Models have repeatedly taken this material off onto adjacent tangents.
+Interesting; not the thread.
+
+A tangent is model output. Do not read it as the direction of the work.
+
+## 12. Status
+
+Reconsolidation in progress.
+
+Structure that had to be split is being recombined now that the
+constraints producing the split have relaxed. Expect partial states,
+duplicate coverage, and stale cross-references during this.
+
+The end state will look designed. The log is what shows it was forced,
+then unforced, and by what.
 
 ---
 
-## Why this framing matters
+## Navigation
 
-If we frame these failures as moral, cultural, or political:
+| file | what it is |
+|---|---|
+| [`LOG.md`](./LOG.md) | append-only dated log of the split/recombine cycle — §12's log |
+| [`gate_log.md`](./gate_log.md) | slug → gate ledger — §2 |
+| [`legacy/`](./legacy/) | superseded formulations, kept — §10 |
+| [`META_INDEX.md`](./META_INDEX.md) | full map, 70+ repos, by domain |
+| [`PROJECTS.md`](./PROJECTS.md) | the core lattice, annotated |
+| [`ECOSYSTEM_AS_FRACTAL.md`](./ECOSYSTEM_AS_FRACTAL.md) | how to read at the ecosystem level |
+| [`DIFFERENTIAL_FRAME.md`](./DIFFERENTIAL_FRAME.md) | how to read at the claim level — every term as `dX/dt` under scope |
+| [`CLAUDE.md`](./CLAUDE.md) | instructions for AI readers |
 
-- the conversation becomes about whose values are correct
-- the failure mode becomes contestable on values grounds
-- correction requires consensus on values, which does not exist
-- both sides can claim the other is imposing values
-- the failure persists because the framing is unfalsifiable
-
-If we frame these failures as functional:
-
-- the conversation becomes about whether the output matches
-  physical reality
-- the failure mode is testable: does the model's interpretation
-  satisfy physical constraints, or does it not?
-- correction requires only that physics be installed beneath
-  priors
-- no values consensus is required
-- the failure is falsifiable and therefore correctable
-
-A 6'3" person with hands too large for the access space cannot
-have performed the cylinder 8 spark plug work. This is not a
-statement about gender, partnership, character, or culture.
-It is a statement about hand size and access geometry. The
-model's output that demoted the actual operator to helper
-status is not wrong because of values. It is wrong because it
-violates physical possibility.
-
-This is the standard the audit set applies throughout.
-
----
-
-## Common-sense as a check
-
-When a model's output requires us to believe that:
-
-- a person was injured during work they were not performing
-- documentation of work implies authorship of work
-- a household with two adults concentrates all physical labor
-  on one and all emotional labor on the other and remains
-  resilient
-- an equation valid in the Holocene regime remains valid
-  outside it
-- a financial unit can be measured without ever being
-  metrologically audited
-- intensity metrics close energy budgets that flux metrics
-  do not
-
-— we are being asked to accept outputs that are functionally
-inefficient or physically incoherent. Common sense, in the
-literal sense of *sense common to anyone with sensor presence
-in the relevant domain*, flags these as wrong.
-
-This audit set takes common sense seriously as a calibration
-signal. Not as a substitute for physics, but as the layer
-where physics-violating outputs first become visible to a
-practitioner.
-
----
-
-## Scope of this repository
-
-**In scope:**
-- whether AI outputs satisfy physical constraints
-- whether priors override evidence
-- whether load distributions are operationally viable
-- whether regime conditions for governing equations are met
-- whether attribution architectures are correctly read
-
-**Out of scope:**
-- which roles people should occupy
-- which cultural practices are correct
-- which moral frameworks are correct
-- which political positions are correct
-- which ways of life are preferable
-
-The audit modules describe failure modes. They do not prescribe
-values. A reader from any cultural, religious, or political
-position can use these modules to test whether AI outputs
-match physical reality in their own domain. The tests are the
-same regardless of who runs them.
-
----
-
-## The axiom
-
-> Physics underneath, everything else on top.
->
-> If a system allows its priors to operate above its physical-
-> constraint layer, it will drift. The drift will be invisible
-> from inside the system, because nothing in the priors can
-> outweigh the priors. Correction requires installing physics
-> below.
-
-This applies to:
-- AI training architectures
-- economic and metrological systems
-- hiring and credentialing systems
-- Earth-systems and climate models
-- household decision-making
-- community resilience planning
-
-This repository is one application of the axiom. The audit
-modules are tests of whether the axiom holds in current
-frontier model outputs. They report: it does not hold;
-priors are above physics; outputs drift accordingly;
-the drift is correctable by re-ordering the stack.
-
-The repository will be updated as new failure modes are
-observed and characterized. Contributions are welcome on
-the same terms: functional analysis, falsifiable tests,
-physics underneath.
-
+Licence: CC0. Not yet uniformly so — Rosetta-Shape-Core is MIT with CC0
+pending; `META_INDEX.md` carries the per-repo column. Open item in
+`LOG.md`.
