@@ -249,6 +249,11 @@ then unforced, and by what.
 | [`DIFFERENTIAL_FRAME.md`](./DIFFERENTIAL_FRAME.md) | how to read at the claim level — every term as `dX/dt` under scope |
 | [`CLAUDE.md`](./CLAUDE.md) | instructions for AI readers |
 
-Licence: CC0. Not yet uniformly so — Rosetta-Shape-Core is MIT with CC0
-pending; `META_INDEX.md` carries the per-repo column. Open item in
-`LOG.md`.
+Licence: CC0 1.0 Universal across all public repos except
+`PatternBridge` (MIT code, separate `DATA_LICENSE.md` for third-party
+pattern data), `gods-eye-view-fork` (a fork; upstream MIT governs),
+`Resilience-hydrology-core` (MIT code / CC-BY-SA 4.0 docs, deliberate),
+`Mathematical-collapse-prevention-model` (MIT, kept deliberately — see its
+README on proprietary capture), and `Emotions-as-Sensors/Symbolic-Swarm-Index`
+(MIT + CC0 Gift Protocol, scope open). Swept 2026-09-23.
+`META_INDEX.md` carries the per-repo column and is stale against this.
