@@ -361,6 +361,20 @@ Failure modes: flattening, erasure, hierarchy imposition.
 
 *"If no one else builds it, I will." — Jinn*
 
+## Agent conventions
+
+For any assistant doing work across these repos.
+
+- Work only in temp directories. Never delete a path that is a live
+  checkout.
+- "Unreachable" must name the read path tried -- anonymous, attached, or
+  token. It is not a property of the repo.
+- A push failure is retried once before it is reported as failed.
+- Verify before re-pushing, and check the default branch first: a branch
+  that is missing may have been merged and deleted rather than failed.
+
+---
+
 <!-- clone-refspec-note v1.1 -->
 ## Cloning and pushing
 Shallow clones are single-branch by default.
