@@ -1,3 +1,6 @@
+> Before reading or editing anything here, read READ_ME_THIS_WAY.md.
+> Mismatches, dead ends and odd names in this repo are kept on purpose.
+
 # JinnZ2 — read this first
 
 All repos CC0, stdlib-only, single-file where possible. This page is
