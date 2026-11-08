@@ -7,7 +7,7 @@
     "PROPOSED",
     "UNMEASURED"
   ],
-  "status_note": "status maps each part of an entry to a tag; an entry can carry more than one; weld is a list of 2+ measurands; context_any (optional) limits a hit to sentences holding one of its words; source_check PENDING marks sources not yet located",
+  "status_note": "status maps each part of an entry to a tag; an entry can carry more than one; weld is a list of 2+ measurands; context_any (optional) limits a hit to sentences holding one of its words; source_check PENDING marks sources not yet located; source_check: FOUND / PARTIAL / ORIGIN (co-authored, no external anchor) / PENDING",
   "entries": [
     {
       "id": "W01",
@@ -52,14 +52,18 @@
       "dropped": "which of the three the speaker means; they move independently",
       "scope_tested": "single-sense usage",
       "check_question": "Which of the three: legal declaration, operational hostilities, or mobilization?",
-      "example_case": "operational hostilities without a legal declaration",
+      "example_case": "operational hostilities (Hormuz closure 2026-02-28) and mobilization (FORTRESS memo) without a legal declaration since WWII",
       "status": {
         "three senses separate": "MEASURED"
       },
       "sources": [
-        "operator seed list 2026-11-08"
+        "https://www.senate.gov/about/powers-procedures/declarations-of-war.htm (legal declaration; last formal declaration WWII)",
+        "https://www.trend.az/iran/4159065.html (operational hostilities: Hormuz closure 2026-02-28)",
+        "https://hornreview.org/?p=10126 (operational hostilities)",
+        "https://static.carahsoft.com/concrete/files/9917/9147/9980/Memorandum_Establishment_of_FORTRESS_America.pdf (vendor reprint; mobilization; same as W08)",
+        "https://defensescoop.com/2026/10/07/pentagon-memo-operationalize-fortress-america-program-office/ (mobilization; same as W08)"
       ],
-      "source_check": "PENDING"
+      "source_check": "FOUND"
     },
     {
       "id": "W03",
@@ -84,9 +88,9 @@
         "entry": "PROPOSED"
       },
       "sources": [
-        "operator seed list 2026-11-08"
+        "co-authored structure; no external anchor found"
       ],
-      "source_check": "PENDING"
+      "source_check": "ORIGIN"
     },
     {
       "id": "W04",
@@ -255,9 +259,9 @@
         "entry": "PROPOSED"
       },
       "sources": [
-        "operator seed list 2026-11-08"
+        "co-authored structure; no external anchor found"
       ],
-      "source_check": "PENDING"
+      "source_check": "ORIGIN"
     },
     {
       "id": "W10",
@@ -275,15 +279,16 @@
       ],
       "dropped": "the load computation; prevention work is uncounted",
       "scope_tested": "loads seen so far",
-      "check_question": "Was the load computed?",
+      "check_question": "Was the load computed, and was the no-prevention counterfactual measured or assumed?",
       "example_case": "a structure standing because its design load has not yet arrived",
       "status": {
         "entry": "PROPOSED"
       },
       "sources": [
-        "operator seed list 2026-11-08"
+        "https://buttondown.com/yyahn/archive/preparedness-paradox-research-advice-and-open/ (named concept: preparedness paradox; secondary)"
       ],
-      "source_check": "PENDING"
+      "source_check": "PARTIAL",
+      "counter_evidence": "Y2K: countries reported to have invested little or nothing in remediation (South Korea, Italy, Russia) reportedly had similarly negligible failures to countries that spent heavily. Secondhand (forum-quoted encyclopedia text); status UNVERIFIED. Cuts both ways: no failure proves neither sound design NOR effective prevention. Only a computed load rating, plus a measured (not assumed) no-prevention counterfactual, separates them."
     },
     {
       "id": "W11",
@@ -307,9 +312,10 @@
         "entry": "PROPOSED"
       },
       "sources": [
-        "operator seed list 2026-11-08"
+        "https://doi.org/10.1086/256940 (Alchian 1950, J. Political Economy 58(3):211-221; historical anchor)",
+        "four-cut test: co-authored origin"
       ],
-      "source_check": "PENDING"
+      "source_check": "PARTIAL"
     },
     {
       "id": "W12",
@@ -327,14 +333,15 @@
       "dropped": "what happens on day N+1",
       "scope_tested": "window length only",
       "check_question": "What resupplies day N+1?",
-      "example_case": "a 30-day window with no named resupply path",
+      "example_case": "FORTRESS 90-day self-sufficiency goal (Fox-reported documents, not memo text)",
       "status": {
         "entry": "PROPOSED"
       },
       "sources": [
-        "operator seed list 2026-11-08"
+        "https://www.twz.com/nuclear/90-days-no-help-fortress-americas-goal-to-make-bases-resilient-bastions-in-a-crisis (FORTRESS 90-day figure; Fox-reported documents)",
+        "recovery-inside-N mechanism: co-authored origin"
       ],
-      "source_check": "PENDING"
+      "source_check": "PARTIAL"
     },
     {
       "id": "W13",
@@ -381,14 +388,16 @@
       "dropped": "the milestones behind the date",
       "scope_tested": "conditions at the time the date was set",
       "check_question": "Which milestones stand behind the date?",
-      "example_case": "RoughRider ND rezoning Oct 2026",
+      "example_case": "RoughRider ND: rezoning approved Oct 2026, target 2029; depends on a proposed CO2 pipeline and a proposed storage site",
       "status": {
         "entry": "MEASURED"
       },
       "sources": [
-        "operator seed list 2026-11-08"
+        "https://www.world-grain.com/articles/23423-north-dakota-ethanol-plant-under-development",
+        "https://bioenergytimes.com/?p=22386",
+        "https://www.qcintel.com/biofuels/article/roughrider-gains-approval-for-ethanol-production-plant-in-north-dakota-76241.html"
       ],
-      "source_check": "PENDING"
+      "source_check": "FOUND"
     }
   ]
 }

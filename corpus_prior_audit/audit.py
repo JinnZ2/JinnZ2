@@ -29,6 +29,7 @@ README = os.path.join(HERE, "README.md")
 TAGS = ("MEASURED", "DERIVED", "PROPOSED", "UNMEASURED")
 FIELDS = ("id", "claim_as_found", "trigger_phrases", "weld", "dropped",
           "scope_tested", "check_question", "example_case", "status", "sources")
+SOURCE_CHECKS = ("FOUND", "PARTIAL", "ORIGIN", "PENDING")
 RULE = "a hit is a prompt to check, never a finding that the text is wrong"
 
 
@@ -51,6 +52,9 @@ def problems(entries):
         w = e.get("weld")
         if not isinstance(w, list) or len(w) < 2 or not all(isinstance(x, str) and x for x in w):
             out.append("%s: weld must be a list of 2 or more measurands" % tag)
+        sc = e.get("source_check")
+        if sc is not None and sc not in SOURCE_CHECKS:
+            out.append("%s: source_check %r not in %s" % (tag, sc, SOURCE_CHECKS))
         ca = e.get("context_any")
         if ca is not None and (not isinstance(ca, list) or not ca):
             out.append("%s: context_any, when present, must be a non-empty list" % tag)
@@ -133,6 +137,8 @@ def selftest():
           "every weld is a list of len >= 2")
     w02 = [e for e in entries if e["id"] == "W02"][0]
     check(len(w02["weld"]) == 3, "W02 carries three measurands")
+    bad = [dict(entries[0], id="X", source_check="DONE")]
+    check(any("source_check" in p for p in problems(bad)), "unknown source_check refused")
     bad = [dict(entries[0], id="X", weld=["only one"])]
     check(any("weld must be" in p for p in problems(bad)), "one-item weld refused")
     bad = [dict(entries[0], id="X", check_question="")]
