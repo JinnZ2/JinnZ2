@@ -48,9 +48,12 @@ def problems(entries):
         if tag in seen:
             out.append("%s: duplicate id" % tag)
         seen.add(tag)
-        w = e.get("weld") or {}
-        if not w.get("measurand_a") or not w.get("measurand_b"):
-            out.append("%s: weld needs measurand_a and measurand_b" % tag)
+        w = e.get("weld")
+        if not isinstance(w, list) or len(w) < 2 or not all(isinstance(x, str) and x for x in w):
+            out.append("%s: weld must be a list of 2 or more measurands" % tag)
+        ca = e.get("context_any")
+        if ca is not None and (not isinstance(ca, list) or not ca):
+            out.append("%s: context_any, when present, must be a non-empty list" % tag)
         st = e.get("status") or {}
         if not isinstance(st, dict):
             out.append("%s: status must map part -> tag" % tag)
@@ -68,15 +71,36 @@ def _pattern(phrase):
                       re.IGNORECASE)
 
 
+SENTENCE_END = re.compile(r"[.!?;\n]")
+
+
+def _sentence(text, start, end):
+    """The sentence holding text[start:end], bounded by . ! ? ; or newline."""
+    left = 0
+    for m in SENTENCE_END.finditer(text, 0, start):
+        left = m.end()
+    m = SENTENCE_END.search(text, end)
+    return text[left:m.start() if m else len(text)]
+
+
+def _in_context(sentence, words):
+    return any(_pattern(w).search(sentence) for w in words)
+
+
 def scan(text, entries):
-    """One hit per (entry, phrase) found. Order: registry order, then phrase order."""
+    """One hit per (entry, phrase) found. Order: registry order, then phrase order.
+    An entry with context_any counts a trigger only in a sentence that also holds
+    one of those words (a trigger that is itself a context word always counts)."""
     hits = []
     for e in entries:
+        ctx = e.get("context_any")
         for p in e["trigger_phrases"]:
-            m = _pattern(p).search(text)
-            if m:
+            for m in _pattern(p).finditer(text):
+                if ctx and not _in_context(_sentence(text, m.start(), m.end()), ctx):
+                    continue
                 hits.append({"id": e["id"], "matched": m.group(0), "phrase": p,
                              "weld": e["weld"], "check_question": e["check_question"]})
+                break
     return hits
 
 
@@ -86,7 +110,7 @@ def render(hits):
     lines = ["%d hit(s). Each is a prompt to check, not a finding." % len(hits), ""]
     for h in hits:
         lines.append("%s  matched: %r" % (h["id"], h["matched"]))
-        lines.append("    weld:  %s  |  %s" % (h["weld"]["measurand_a"], h["weld"]["measurand_b"]))
+        lines.append("    weld:  %s" % " | ".join(h["weld"]))
         lines.append("    check: %s" % h["check_question"])
     return "\n".join(lines)
 
@@ -105,6 +129,12 @@ def selftest():
     entries = load()
     check(problems(entries) == [], "every entry has all fields: %s" % problems(entries))
     check(len(entries) >= 14, "seed entries present")
+    check(all(isinstance(e["weld"], list) and len(e["weld"]) >= 2 for e in entries),
+          "every weld is a list of len >= 2")
+    w02 = [e for e in entries if e["id"] == "W02"][0]
+    check(len(w02["weld"]) == 3, "W02 carries three measurands")
+    bad = [dict(entries[0], id="X", weld=["only one"])]
+    check(any("weld must be" in p for p in problems(bad)), "one-item weld refused")
     bad = [dict(entries[0], id="X", check_question="")]
     check(any("check_question" in p for p in problems(bad)), "missing field refused")
     bad = [dict(entries[0], id="X", status={"a": "TRUE"})]
@@ -117,6 +147,12 @@ def selftest():
     check({"W01", "W02"} <= {h["id"] for h in hits}, "multi-entry match")
     check(scan("The software toward the hardware.", entries) == [],
           "no hit inside other words (war in software / toward)")
+    ids = [h["id"] for h in scan("stocks rose 2% on earnings", entries)]
+    check("W04" not in ids, "W04 context_any: equity sentence does not fire")
+    ids = [h["id"] for h in scan("distillate stocks are 99.3 M bbl", entries)]
+    check("W04" in ids, "W04 context_any: fuel sentence fires")
+    ids = [h["id"] for h in scan("Stocks rose. Distillate inventory fell.", entries)]
+    check("W04" in ids, "unqualified trigger (inventory) still fires")
     check(scan("The goldfinch sat on the fence post.", entries) == [], "no-hit text returns empty")
 
     with open(README, encoding="utf-8") as f:

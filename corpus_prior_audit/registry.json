@@ -1,218 +1,394 @@
 {
   "schema": "corpus_prior_audit/registry v1",
   "provenance": "co-authored (JinnZ2 + Claude), 2026-11-08, CC0",
-  "status_tags": ["MEASURED", "DERIVED", "PROPOSED", "UNMEASURED"],
-  "status_note": "status maps each part of an entry to a tag; an entry can carry more than one",
+  "status_tags": [
+    "MEASURED",
+    "DERIVED",
+    "PROPOSED",
+    "UNMEASURED"
+  ],
+  "status_note": "status maps each part of an entry to a tag; an entry can carry more than one; weld is a list of 2+ measurands; context_any (optional) limits a hit to sentences holding one of its words; source_check PENDING marks sources not yet located",
   "entries": [
     {
       "id": "W01",
       "claim_as_found": "war drives innovation",
-      "trigger_phrases": ["war drives innovation", "war drives technology", "war drives progress", "wars drive innovation", "military invented"],
-      "weld": {
-        "measurand_a": "origin funding (who paid for the first working version)",
-        "measurand_b": "civilian scale-up phase (who made it widely usable)"
-      },
+      "trigger_phrases": [
+        "war drives innovation",
+        "war drives technology",
+        "war drives progress",
+        "wars drive innovation",
+        "military invented"
+      ],
+      "weld": [
+        "origin funding (who paid for the first working version)",
+        "civilian scale-up phase (who made it widely usable)"
+      ],
       "dropped": "peacetime scale-up: GPS civil use opened 1983, selective availability turned off 2000; internet commercial phase 1991-95",
       "scope_tested": "origin-funding phase of selected technologies",
       "check_question": "Which phase does the example come from: origin funding or civilian scale-up?",
       "example_case": "GPS: military origin, civil access 1983, full civil accuracy 2000",
-      "status": {"dates": "MEASURED", "dependence of scale-up on war": "PROPOSED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "dates": "MEASURED",
+        "dependence of scale-up on war": "PROPOSED"
+      },
+      "sources": [
+        "general record"
+      ]
     },
     {
       "id": "W02",
       "claim_as_found": "war",
-      "trigger_phrases": ["war", "at war", "wartime", "act of war"],
-      "weld": {
-        "measurand_a": "legal declaration",
-        "measurand_b": "operational hostilities or mobilization (the third object under the same word)"
-      },
+      "trigger_phrases": [
+        "war",
+        "at war",
+        "wartime",
+        "act of war"
+      ],
+      "weld": [
+        "legal declaration",
+        "operational hostilities",
+        "mobilization"
+      ],
       "dropped": "which of the three the speaker means; they move independently",
       "scope_tested": "single-sense usage",
       "check_question": "Which of the three: legal declaration, operational hostilities, or mobilization?",
       "example_case": "operational hostilities without a legal declaration",
-      "status": {"three senses separate": "MEASURED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "three senses separate": "MEASURED"
+      },
+      "sources": [
+        "operator seed list 2026-11-08"
+      ],
+      "source_check": "PENDING"
     },
     {
       "id": "W03",
       "claim_as_found": "AI / robots replace humans",
-      "trigger_phrases": ["replace humans", "replace workers", "robots replace", "ai will replace", "ai replaces", "replacing humans"],
-      "weld": {
-        "measurand_a": "substrate sense (the being, its body and its couplings)",
-        "measurand_b": "economic task sense (one paid task output)"
-      },
+      "trigger_phrases": [
+        "replace humans",
+        "replace workers",
+        "robots replace",
+        "ai will replace",
+        "ai replaces",
+        "replacing humans"
+      ],
+      "weld": [
+        "substrate sense (the being, its body and its couplings)",
+        "economic task sense (one paid task output)"
+      ],
       "dropped": "every axis other than the task measured",
       "scope_tested": "task output on a defined benchmark",
       "check_question": "Replace on which axis? Does the same claim hold for goldenrod or feldspar?",
       "example_case": "a task benchmark read as a statement about the worker",
-      "status": {"entry": "PROPOSED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "entry": "PROPOSED"
+      },
+      "sources": [
+        "operator seed list 2026-11-08"
+      ],
+      "source_check": "PENDING"
     },
     {
       "id": "W04",
       "claim_as_found": "stocks / inventory = supply",
-      "trigger_phrases": ["inventory", "inventories", "stocks", "days of supply", "days of cover", "stockpile"],
-      "weld": {
-        "measurand_a": "reported stock",
-        "measurand_b": "usable stock above the operating floor (pipeline fill, tank bottoms, working minimum)"
-      },
+      "trigger_phrases": [
+        "inventory",
+        "inventories",
+        "stocks",
+        "days of supply",
+        "days of cover",
+        "stockpile"
+      ],
+      "weld": [
+        "reported stock",
+        "usable stock above the operating floor (pipeline fill, tank bottoms, working minimum)"
+      ],
       "dropped": "the operating floor",
       "scope_tested": "reported totals",
       "check_question": "Was the operating floor subtracted?",
       "example_case": "US distillate 99.3 M bbl reported (EIA WPSR week ending 2026-10-30); roughly 8-15 days above floor",
-      "status": {"entry": "DERIVED"},
-      "sources": ["EIA WPSR week ending 2026-10-30", "thermodynamic-accountability-framework docs/audits_2026_11/us_distillate_floor_refinery_measurands.pdf", "thermodynamic-accountability-framework in_progress/distillate_floor_sim.py"]
+      "status": {
+        "entry": "DERIVED"
+      },
+      "sources": [
+        "https://www.eia.gov/petroleum/supply/weekly/pdf/highlights.pdf",
+        "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=MDISTUS1&f=A",
+        "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=MDISXUS1&f=A",
+        "thermodynamic-accountability-framework docs/audits_2026_11/us_distillate_floor_refinery_measurands.pdf"
+      ],
+      "context_any": [
+        "barrel",
+        "bbl",
+        "distillate",
+        "diesel",
+        "gasoline",
+        "crude",
+        "fuel",
+        "inventory",
+        "days of supply",
+        "storage"
+      ]
     },
     {
       "id": "W05",
       "claim_as_found": "refinery utilization",
-      "trigger_phrases": ["refinery utilization", "utilization rate", "capacity utilization", "running at capacity"],
-      "weld": {
-        "measurand_a": "national crude-unit ratio (U1; idle capacity in the denominator)",
-        "measurand_b": "running-plant ratio (U2) or bottleneck-unit load (U3)"
-      },
+      "trigger_phrases": [
+        "refinery utilization",
+        "utilization rate",
+        "capacity utilization",
+        "running at capacity"
+      ],
+      "weld": [
+        "U1 national crude-unit ratio, idle units in denominator",
+        "U2 running-plant ratio",
+        "U3 bottleneck-unit load"
+      ],
       "dropped": "which denominator",
       "scope_tested": "U1 national aggregate",
       "check_question": "Which denominator: operable capacity, running plants, or the bottleneck unit?",
       "example_case": "U1 92.8% week ending 2026-10-23 while a bottleneck unit can be pinned",
-      "status": {"U1": "MEASURED", "U2": "UNMEASURED", "U3": "UNMEASURED"},
-      "sources": ["EIA weekly refinery utilization", "thermodynamic-accountability-framework docs/audits_2026_11/us_distillate_floor_refinery_measurands.pdf"]
+      "status": {
+        "U1": "MEASURED",
+        "U2": "UNMEASURED",
+        "U3": "UNMEASURED"
+      },
+      "sources": [
+        "EIA weekly refinery utilization",
+        "thermodynamic-accountability-framework docs/audits_2026_11/us_distillate_floor_refinery_measurands.pdf"
+      ]
     },
     {
       "id": "W06",
       "claim_as_found": "fuel waiver adds supply",
-      "trigger_phrases": ["fuel waiver", "waiver adds supply", "emergency fuel waiver", "waiver will add"],
-      "weld": {
-        "measurand_a": "reallocation of existing barrels",
-        "measurand_b": "new barrels"
-      },
+      "trigger_phrases": [
+        "fuel waiver",
+        "waiver adds supply",
+        "emergency fuel waiver",
+        "waiver will add"
+      ],
+      "weld": [
+        "reallocation of existing barrels",
+        "new barrels"
+      ],
       "dropped": "who can burn it: 500 ppm fuel is usable only by pre-2007 and Tier 1-3 engines",
       "scope_tested": "volume eligible under the waiver",
       "check_question": "Who can burn it?",
       "example_case": "500 ppm diesel waiver against a post-2007 fleet",
-      "status": {"engine limits": "MEASURED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "engine limits": "MEASURED"
+      },
+      "sources": [
+        "https://www.epa.gov/gasoline-standards/fuel-waivers (renewal through 2026-11-13)",
+        "https://www.epa.gov/system/files/documents/2026-10/fuel-waiver-txled-ulsd-2026-1020.pdf (EPA letter to Texas, 2026-10-20; 500 ppm for engines certified on < 500 ppm; DPF / catalyst and Tier 4 nonroad excluded)"
+      ]
     },
     {
       "id": "W07",
       "claim_as_found": "fuel cost",
-      "trigger_phrases": ["fuel cost", "fuel costs", "fuel surcharge"],
-      "weld": {
-        "measurand_a": "diesel (indexed in surcharge formulas)",
-        "measurand_b": "DEF and other operating inputs (unindexed)"
-      },
+      "trigger_phrases": [
+        "fuel cost",
+        "fuel costs",
+        "fuel surcharge"
+      ],
+      "weld": [
+        "diesel (indexed in surcharge formulas)",
+        "DEF and other operating inputs (unindexed)"
+      ],
       "dropped": "DEF and other unindexed inputs",
       "scope_tested": "diesel gallons",
       "check_question": "Are all operating inputs counted?",
       "example_case": "surcharge indexed to diesel while DEF is paid by the operator",
-      "status": {"entry": "PROPOSED"},
-      "sources": ["thermodynamic-accountability-framework docs/audits_2026_11/us_distillate_floor_refinery_measurands.pdf (section 4b)"]
+      "status": {
+        "entry": "PROPOSED"
+      },
+      "sources": [
+        "thermodynamic-accountability-framework docs/audits_2026_11/us_distillate_floor_refinery_measurands.pdf (section 4b)"
+      ]
     },
     {
       "id": "W08",
       "claim_as_found": "site independent of civilian base",
-      "trigger_phrases": ["independent of the civilian", "independent of civilian", "self-contained site", "independent of the grid", "off the civilian grid"],
-      "weld": {
-        "measurand_a": "civilian base as a source",
-        "measurand_b": "civilian base as a dependency that degrades under the same draw"
-      },
+      "trigger_phrases": [
+        "independent of the civilian",
+        "independent of civilian",
+        "self-contained site",
+        "independent of the grid",
+        "off the civilian grid"
+      ],
+      "weld": [
+        "civilian base as a source",
+        "civilian base as a dependency that degrades under the same draw"
+      ],
       "dropped": "co-deterioration of the base",
-      "scope_tested": "site inputs listed in the plan",
+      "scope_tested": "Sep 30 2026 founding memo (read via vendor reprint; defense.gov PDF unreachable from the reading session) and Oct 6 2026 implementation memo as reported. 90-day figure is from Fox-reported documents, not memo text.",
       "check_question": "Was co-deterioration of the civilian base modeled?",
       "example_case": "FORTRESS memo text has no civilian term",
-      "status": {"absence of civilian term": "MEASURED"},
-      "sources": ["operator seed list 2026-11-08 (FORTRESS memo; text not held here)"]
+      "status": {
+        "absence_in_published_memo_text": "MEASURED",
+        "internal_planning_content": "UNMEASURED"
+      },
+      "sources": [
+        "https://static.carahsoft.com/concrete/files/9917/9147/9980/Memorandum_Establishment_of_FORTRESS_America.pdf (vendor reprint)",
+        "https://defensescoop.com/2026/10/07/pentagon-memo-operationalize-fortress-america-program-office/",
+        "https://www.twz.com/nuclear/90-days-no-help-fortress-americas-goal-to-make-bases-resilient-bastions-in-a-crisis",
+        "https://media.defense.gov/2026/Sep/30/2004009303/-1/-1/1/ESTABLISHMENT-OF-FORTRESS-AMERICA-AS-A-DEPARTMENT-OF-WAR-PROGRAM-FOR-THE-DEFENSE-OF-THE-AMERICAN-HOMELAND.PDF (primary; not opened)"
+      ]
     },
     {
       "id": "W09",
       "claim_as_found": "price measures value",
-      "trigger_phrases": ["price measures value", "price reflects value", "the market values", "market price shows"],
-      "weld": {
-        "measurand_a": "price under competing providers, access and working transactions",
-        "measurand_b": "price where those preconditions are absent"
-      },
+      "trigger_phrases": [
+        "price measures value",
+        "price reflects value",
+        "the market values",
+        "market price shows"
+      ],
+      "weld": [
+        "price under competing providers, access and working transactions",
+        "price where those preconditions are absent"
+      ],
       "dropped": "the preconditions",
       "scope_tested": "markets with the preconditions met",
       "check_question": "Are the preconditions met: competing providers, access, working transactions?",
       "example_case": "a price quoted where only one provider can deliver",
-      "status": {"entry": "PROPOSED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "entry": "PROPOSED"
+      },
+      "sources": [
+        "operator seed list 2026-11-08"
+      ],
+      "source_check": "PENDING"
     },
     {
       "id": "W10",
       "claim_as_found": "no failure = sound design",
-      "trigger_phrases": ["no failures", "never failed", "proven design", "track record proves", "has never failed"],
-      "weld": {
-        "measurand_a": "standing (has not failed so far)",
-        "measurand_b": "load rating (computed capacity against the loads it will see)"
-      },
+      "trigger_phrases": [
+        "no failures",
+        "never failed",
+        "proven design",
+        "track record proves",
+        "has never failed"
+      ],
+      "weld": [
+        "standing (has not failed so far)",
+        "load rating (computed capacity against the loads it will see)"
+      ],
       "dropped": "the load computation; prevention work is uncounted",
       "scope_tested": "loads seen so far",
       "check_question": "Was the load computed?",
       "example_case": "a structure standing because its design load has not yet arrived",
-      "status": {"entry": "PROPOSED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "entry": "PROPOSED"
+      },
+      "sources": [
+        "operator seed list 2026-11-08"
+      ],
+      "source_check": "PENDING"
     },
     {
       "id": "W11",
       "claim_as_found": "evolution / selection (for AI or markets)",
-      "trigger_phrases": ["evolution", "evolve", "natural selection", "survival of the fittest", "selection pressure"],
-      "weld": {
-        "measurand_a": "biological selection (removal from a population over generations)",
-        "measurand_b": "AI or market change (four cuts: non-exclusive, authored environment, no stable base, per-instance judge)"
-      },
+      "trigger_phrases": [
+        "evolution",
+        "evolve",
+        "natural selection",
+        "survival of the fittest",
+        "selection pressure"
+      ],
+      "weld": [
+        "biological selection (removal from a population over generations)",
+        "AI or market change (four cuts: non-exclusive, authored environment, no stable base, per-instance judge)"
+      ],
       "dropped": "the removal step",
       "scope_tested": "biological populations",
       "check_question": "Was anything removed from the population?",
       "example_case": "model versions described as evolving while older versions keep running",
-      "status": {"entry": "PROPOSED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "entry": "PROPOSED"
+      },
+      "sources": [
+        "operator seed list 2026-11-08"
+      ],
+      "source_check": "PENDING"
     },
     {
       "id": "W12",
       "claim_as_found": "self-sufficient N days",
-      "trigger_phrases": ["self-sufficient", "self sufficient", "days of autonomy", "days of independence"],
-      "weld": {
-        "measurand_a": "stock on hand for N days",
-        "measurand_b": "recovery or resupply arriving inside N"
-      },
+      "trigger_phrases": [
+        "self-sufficient",
+        "self sufficient",
+        "days of autonomy",
+        "days of independence"
+      ],
+      "weld": [
+        "stock on hand for N days",
+        "recovery or resupply arriving inside N"
+      ],
       "dropped": "what happens on day N+1",
       "scope_tested": "window length only",
       "check_question": "What resupplies day N+1?",
       "example_case": "a 30-day window with no named resupply path",
-      "status": {"entry": "PROPOSED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "entry": "PROPOSED"
+      },
+      "sources": [
+        "operator seed list 2026-11-08"
+      ],
+      "source_check": "PENDING"
     },
     {
       "id": "W13",
       "claim_as_found": "past event shows the break point",
-      "trigger_phrases": ["break point", "breaking point", "tipping point", "past shortage shows", "we got through"],
-      "weld": {
-        "measurand_a": "observed signal value (date and source)",
-        "measurand_b": "censored threshold (the response fired before the break)"
-      },
+      "trigger_phrases": [
+        "break point",
+        "breaking point",
+        "tipping point",
+        "past shortage shows",
+        "we got through"
+      ],
+      "weld": [
+        "observed signal value (date and source)",
+        "censored threshold (the response fired before the break)"
+      ],
       "dropped": "the censoring",
       "scope_tested": "the stress signal, not the failure",
       "check_question": "Observed or censored?",
       "example_case": "Australia AdBlue Dec 2021; US PADD 1 diesel Oct 2022: response fired first in both",
-      "status": {"entry": "MEASURED"},
-      "sources": ["thermodynamic-accountability-framework docs/audits_2026_11/us_distillate_floor_refinery_measurands.pdf (section 4d)"]
+      "status": {
+        "entry": "MEASURED"
+      },
+      "sources": [
+        "https://servopro.com.au/?p=17266",
+        "https://marketnews.com/tight-distillate-stocks-support-prices-ahead-of-winter-season",
+        "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WDISTP11&f=W",
+        "thermodynamic-accountability-framework docs/audits_2026_11/us_distillate_floor_refinery_measurands.pdf (section 4d)"
+      ]
     },
     {
       "id": "W14",
       "claim_as_found": "completion date",
-      "trigger_phrases": ["completion date", "expected completion", "will be completed by", "on schedule for", "scheduled to open"],
-      "weld": {
-        "measurand_a": "a date",
-        "measurand_b": "a snapshot of the conditions when the date was set"
-      },
+      "trigger_phrases": [
+        "completion date",
+        "expected completion",
+        "will be completed by",
+        "on schedule for",
+        "scheduled to open"
+      ],
+      "weld": [
+        "a date",
+        "a snapshot of the conditions when the date was set"
+      ],
       "dropped": "the milestones behind the date",
       "scope_tested": "conditions at the time the date was set",
       "check_question": "Which milestones stand behind the date?",
       "example_case": "RoughRider ND rezoning Oct 2026",
-      "status": {"entry": "MEASURED"},
-      "sources": ["operator seed list 2026-11-08"]
+      "status": {
+        "entry": "MEASURED"
+      },
+      "sources": [
+        "operator seed list 2026-11-08"
+      ],
+      "source_check": "PENDING"
     }
   ]
 }

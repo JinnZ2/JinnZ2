@@ -38,18 +38,21 @@ Matching is case-insensitive and whole-word ("war" does not fire inside
 | id | W01, W02, ... permanent; never renumbered |
 | claim_as_found | the phrase as it circulates |
 | trigger_phrases | strings that fire the entry |
-| weld | measurand_a, measurand_b: the objects carried by one phrase |
+| weld | list of 2 or more measurands carried by one phrase |
+| context_any | optional: a trigger counts only in a sentence holding one of these words |
 | dropped | what the phrase loses at the hop |
 | scope_tested | where the claim was actually tested |
 | check_question | the one question to ask at the hop |
 | example_case | a dated case |
 | status | part -> MEASURED / DERIVED / PROPOSED / UNMEASURED |
 | sources | where the entry came from |
+| source_check | PENDING when a source has not been located yet |
 
 ## Adding an entry
 
 1. Next free id. Ids are permanent; a retired entry keeps its id and gains a note.
 2. Fill every field. Unknowns are written as such, never filled with a guess.
+   A source not yet located stays "operator seed list" with source_check PENDING.
 3. Status per part, so a measured date and a proposed dependence sit side by side.
 4. Name objects and measurands only. No characterization of any person.
 5. Run `python3 audit.py --selftest`.
@@ -57,5 +60,6 @@ Matching is case-insensitive and whole-word ("war" does not fire inside
 ## Limits
 
 - A word list. A paraphrase steps around it; no hit is not a clean bill.
-- Broad triggers ("war", "stocks", "evolution") fire often by design.
+- Broad triggers ("war", "evolution") fire often by design. W04 "stocks" is held to
+  fuel / storage sentences by context_any.
 - Sources marked "operator seed list" were not re-checked when entered.
