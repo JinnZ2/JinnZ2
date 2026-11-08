@@ -46,7 +46,8 @@ Matching is case-insensitive and whole-word ("war" does not fire inside
 | example_case | a dated case |
 | status | part -> MEASURED / DERIVED / PROPOSED / UNMEASURED |
 | sources | where the entry came from |
-| source_check | PENDING when a source has not been located yet |
+| source_check | FOUND / PARTIAL / ORIGIN (co-authored, no external anchor) / PENDING (not yet located) |
+| counter_evidence | optional: counter-evidence found for the entry |
 
 ## Adding an entry
 
@@ -62,4 +63,4 @@ Matching is case-insensitive and whole-word ("war" does not fire inside
 - A word list. A paraphrase steps around it; no hit is not a clean bill.
 - Broad triggers ("war", "evolution") fire often by design. W04 "stocks" is held to
   fuel / storage sentences by context_any.
-- Sources marked "operator seed list" were not re-checked when entered.
+- Sources are as entered in the 2026-11-08 source pass; text-only sources carry no URL yet.
