@@ -63,4 +63,4 @@ Matching is case-insensitive and whole-word ("war" does not fire inside
 - A word list. A paraphrase steps around it; no hit is not a clean bill.
 - Broad triggers ("war", "evolution") fire often by design. W04 "stocks" is held to
   fuel / storage sentences by context_any.
-- Sources are as entered in the 2026-11-08 source pass; text-only sources carry no URL yet.
+- Sources are as entered in the 2026-11-08 source pass; links were not re-opened when entered.
