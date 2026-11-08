@@ -29,3 +29,5 @@ A holding place for unfinished or pending explorations. Items stay here until we
 	•	Reframe chemistry as resonance geometries.
 	•	Molecules as nested wave fields, not just atomic counts.
 	•	Show how geometry (fractal, torus, lattice) determines emergent properties.
+
+- corpus_prior_audit/ (2026-11-08, co-authored): registry of welded / scope-dropped corpus claims (W01-W14) + audit.py readout. A hit is a prompt to check, not a finding. `python3 corpus_prior_audit/audit.py --selftest`
