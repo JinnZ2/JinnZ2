@@ -64,3 +64,15 @@ Matching is case-insensitive and whole-word ("war" does not fire inside
 - Broad triggers ("war", "evolution") fire often by design. W04 "stocks" is held to
   fuel / storage sentences by context_any.
 - Sources are as entered in the 2026-11-08 source pass; links were not re-opened when entered.
+
+## Finds-by (ALIAS_PROPOSED, 2026-11-09)
+Note 2026-11-09: added by WORK ORDER TOOL FINDER part 1; aliases derived from this
+tool's stated scope only. Index: Simulators `TOOL_FINDER/TOOL_FINDER.md`.
+
+- common claim that bundles separate quantities
+- claim used outside the scope it was tested
+- check a forecast phrase
+- corpus prior in model output
+- avoided term: AVOIDED_TERM_UNSTATED
+- measures: "A registry of high-frequency corpus claims that get used in forecasts and decisions, including model-to-model forecast chains, where the claim bundles separate measurands under one phrase (a weld) or runs past the scope where it was tested."
+- breaks when: "A word list. A paraphrase steps around it; no hit is not a clean bill."
