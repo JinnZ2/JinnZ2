@@ -25,6 +25,7 @@ License: CC0
 Dependencies: Python stdlib only
 """
 
+import hashlib
 import json
 import os
 import time
@@ -140,16 +141,38 @@ class OperatorContext:
 DEFAULT_STORAGE_DIR = os.path.expanduser("~/.operator_context")
 SCHEMA_VERSION = "1.0.0"
 
-# The default operator id is the handle. The old default id is still accepted:
-# a context or cache saved under it on an operator's machine is read once and
-# re-written under the handle (the old file is left in place, not deleted).
+# The default operator id is the handle. The old default id is still accepted,
+# but it is not written here: it is matched by its sha256. A context or cache
+# saved under it on an operator's machine is found by hashing filename stems,
+# read once, and re-written under the handle (the old file is left in place).
 DEFAULT_OPERATOR_ID = "JinnZ2"
-LEGACY_OPERATOR_IDS = ("kavik",)
+LEGACY_OPERATOR_ID_SHA256 = frozenset({
+    "f61802159eb9c883c46db3852d2017195ff14ef3937e7782894269a4798248d4",
+})
+
+
+def _sha256(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def is_legacy_operator_id(operator_id: str) -> bool:
+    """True if operator_id is an old default id (compared by sha256)."""
+    return _sha256(operator_id) in LEGACY_OPERATOR_ID_SHA256
+
+
+def find_legacy_file(directory: str, suffix: str) -> Optional[str]:
+    """Path of a file '<old id><suffix>' in directory, found by hashing stems."""
+    if not os.path.isdir(directory):
+        return None
+    for name in sorted(os.listdir(directory)):
+        if name.endswith(suffix) and is_legacy_operator_id(name[: -len(suffix)]):
+            return os.path.join(directory, name)
+    return None
 
 
 def canonical_operator_id(operator_id: str) -> str:
     """Map an old default id to the handle; any other id is returned unchanged."""
-    return DEFAULT_OPERATOR_ID if operator_id in LEGACY_OPERATOR_IDS else operator_id
+    return DEFAULT_OPERATOR_ID if is_legacy_operator_id(operator_id) else operator_id
 
 
 def ensure_storage_dir(storage_dir: str = DEFAULT_STORAGE_DIR) -> str:
@@ -184,13 +207,10 @@ def load_context(operator_id: str,
         if operator_id != DEFAULT_OPERATOR_ID:
             return None
         # Fall back to a context saved under an old default id.
-        for legacy in LEGACY_OPERATOR_IDS:
-            legacy_path = os.path.join(storage_dir, f"{legacy}.json")
-            if os.path.exists(legacy_path):
-                path, migrated = legacy_path, True
-                break
-        else:
+        legacy_path = find_legacy_file(storage_dir, ".json")
+        if legacy_path is None:
             return None
+        path, migrated = legacy_path, True
 
     with open(path, "r") as f:
         data = json.load(f)
@@ -292,7 +312,7 @@ def context_to_bootstrap_prompt(context: OperatorContext) -> str:
 # JinnZ2 default context
 # ---------------------------------------------------------------------------
 
-def build_kavik_default_context() -> OperatorContext:
+def build_default_context() -> OperatorContext:
     """
     Construct the default JinnZ2 operator context.
     Edit this to update; save_context() to persist.
@@ -492,7 +512,7 @@ if __name__ == "__main__":
     cmd = sys.argv[1]
 
     if cmd == "init":
-        ctx = build_kavik_default_context()
+        ctx = build_default_context()
         path = save_context(ctx)
         print(f"Context saved to: {path}")
         print(f"Schema version: {ctx.schema_version}")
@@ -508,7 +528,7 @@ if __name__ == "__main__":
     elif cmd == "prompt":
         ctx = load_context(DEFAULT_OPERATOR_ID)
         if ctx is None:
-            ctx = build_kavik_default_context()
+            ctx = build_default_context()
         print(context_to_bootstrap_prompt(ctx))
 
     elif cmd == "list":

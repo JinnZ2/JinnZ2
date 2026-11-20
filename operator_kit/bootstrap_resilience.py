@@ -47,10 +47,10 @@ from typing import List, Dict, Optional
 # Import sibling modules
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from operator_context_persistence import (
-    OperatorContext, load_context, build_kavik_default_context,
+    OperatorContext, load_context, build_default_context,
     save_context, context_to_bootstrap_prompt, SCHEMA_VERSION,
     EmergencyClassPointer,
-    DEFAULT_OPERATOR_ID, LEGACY_OPERATOR_IDS, canonical_operator_id,
+    DEFAULT_OPERATOR_ID, canonical_operator_id, find_legacy_file,
 )
 
 
@@ -211,7 +211,7 @@ def initialize_session(operator_id: str = DEFAULT_OPERATOR_ID,
     if context is None:
         # No saved context - build default for JinnZ2, save it
         if operator_id == DEFAULT_OPERATOR_ID:  # old default ids were mapped above
-            context = build_kavik_default_context()
+            context = build_default_context()
             save_context(context)
         else:
             raise ValueError(
@@ -255,14 +255,13 @@ def quick_load(operator_id: str = DEFAULT_OPERATOR_ID,
     if operator_id == DEFAULT_OPERATOR_ID:
         # Fall back to a cache written under an old default id; re-write it
         # under the handle (the old file is left in place).
-        for legacy in LEGACY_OPERATOR_IDS:
-            legacy_path = os.path.join(cache_dir, f"{legacy}_{target_model}.txt")
-            if os.path.exists(legacy_path):
-                with open(legacy_path, "r") as f:
-                    text = f.read()
-                with open(cache_path, "w") as f:
-                    f.write(text)
-                return text
+        legacy_path = find_legacy_file(cache_dir, f"_{target_model}.txt")
+        if legacy_path is not None:
+            with open(legacy_path, "r") as f:
+                text = f.read()
+            with open(cache_path, "w") as f:
+                f.write(text)
+            return text
     # Cache miss - assemble
     s = initialize_session(operator_id, target_model, cache_dir)
     return s.payload.payload_text
