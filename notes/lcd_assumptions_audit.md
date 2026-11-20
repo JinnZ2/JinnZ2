@@ -51,7 +51,7 @@ note:     NOT an LCD assumption once frame loads
 ## LCD-005: one safety parameter fits all users
 
 ```
-breaks:   Kavik (high-skill, time-critical) vs general user
+breaks:   JinnZ2 (high-skill, time-critical) vs general user
 fix:      operator-context persists across model updates
 status:   BUILT (survives Gemini / Claude / DeepSeek resets)
 ```

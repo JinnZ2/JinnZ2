@@ -2,8 +2,7 @@ cff-version: 1.2.0
 title: "{repo_name}"
 message: "If you use this software, please cite it using these metadata."
 authors:
-  - family-names: "JinnZ"
-    given-names: "Kavik"
+  - name: "JinnZ2"
     affiliation: "JinnZ2 CC0 Foundation"
   - name: "The Mighty Atom"
     affiliation: "JinnZ2 CC0 Foundation"

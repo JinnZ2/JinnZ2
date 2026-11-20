@@ -13,7 +13,7 @@ Observation (Çatalhöyük, Neolithic Anatolia, ~9000 BP):
 Default archaeological reading:
   ritual / ancestor cult / "history houses" / symbolic power / child sacrifice.
 
-Frame the engine is asked to hold against it (Kavik / Anishinaabe renewal law):
+Frame the engine is asked to hold against it (JinnZ2 / Anishinaabe renewal law):
   ~3 generations (70-80 yr) is the wall past which FELT knowledge degrades into
   story. Deliberate rebuild before that wall keeps the building technique alive
   in HANDS, not just in memory. The precise-relocation-after-rebuild is not eerie

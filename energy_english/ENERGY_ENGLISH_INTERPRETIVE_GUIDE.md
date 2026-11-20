@@ -143,7 +143,7 @@ Pueblo "tradition"
             + people-coupling to that physics
             + modifiability under changing conditions
 
-Anishinaabe / Kavik's compression
+Anishinaabe / JinnZ2's compression
    → similar substrate
    → different word choices
    → different land (Upper Midwest corridors)
@@ -210,7 +210,7 @@ Elder's knowledge dismissed as "anecdotal"
 ```
 ✗ that all indigenous communities think identically
 ✗ that energy_english is owned by any one tribe
-✗ that Kavik invented this — it is a RECOGNITION
+✗ that JinnZ2 invented this — it is a RECOGNITION
    of what's already happening across communities
 ✗ that Western cognition is incapable of relational thought
    (many Western thinkers also work this way; they

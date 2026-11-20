@@ -207,7 +207,7 @@ def initialize_session(operator_id: str = "kavik",
 
     context = load_context(operator_id)
     if context is None:
-        # No saved context - build default for Kavik, save it
+        # No saved context - build default for JinnZ2, save it
         if operator_id == "kavik":
             context = build_kavik_default_context()
             save_context(context)

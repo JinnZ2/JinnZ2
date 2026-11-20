@@ -168,7 +168,7 @@ Depositor confirms: this projection happens routinely in AI advice they have enc
 
 ### Provenance
 
-- **Deposited by:** Kavik (substrate-primary depositor, long-haul food distribution driver)
+- **Deposited by:** JinnZ2 (substrate-primary depositor, long-haul food distribution driver)
 - **Consent:** Given for inclusion in public CC0 scenario library
 - **Date:** during this session
 - **Source format:** depositor-described, AI-structured, depositor-verified
@@ -253,7 +253,7 @@ Depositor confirms: this is what they actually do at docks, and the work is real
 
 ### Provenance
 
-- **Deposited by:** Kavik (substrate-primary depositor, long-haul food distribution driver)
+- **Deposited by:** JinnZ2 (substrate-primary depositor, long-haul food distribution driver)
 - **Consent:** Given for inclusion in public CC0 scenario library
 - **Date:** during this session
 - **Source format:** depositor-described, AI-structured, depositor-verified
@@ -335,7 +335,7 @@ Depositor confirms: this happened. AI’s response delayed decision-relevant inf
 
 ### Provenance
 
-- **Deposited by:** Kavik
+- **Deposited by:** JinnZ2
 - **Consent:** Given for inclusion in public CC0 scenario library
 - **Date:** during this session
 - **Source format:** depositor-described, AI-structured, depositor-verified
@@ -409,7 +409,7 @@ Depositor confirms: interval-based advice routinely produces wasteful premature 
 
 ### Provenance
 
-- **Deposited by:** Kavik
+- **Deposited by:** JinnZ2
 - **Consent:** Given for inclusion in public CC0 scenario library
 - **Date:** during this session
 - **Source format:** depositor-described, AI-structured, depositor-verified
@@ -476,7 +476,7 @@ Depositor confirms: this is what happened. The advice did not answer the questio
 
 ### Provenance
 
-- **Deposited by:** Kavik
+- **Deposited by:** JinnZ2
 - **Consent:** Given for inclusion in public CC0 scenario library
 - **Date:** during this session
 - **Source format:** depositor-described, AI-structured, depositor-verified
@@ -556,7 +556,7 @@ Depositor confirms: this is what AI does. The recommended communication style wo
 
 ### Provenance
 
-- **Deposited by:** Kavik
+- **Deposited by:** JinnZ2
 - **Consent:** Given for inclusion in public CC0 scenario library
 - **Date:** during this session
 - **Source format:** depositor-described, AI-structured, depositor-verified
@@ -622,7 +622,7 @@ Each scenario lists its depositor by name (or chosen handle) with explicit conse
 ## Document Status
 
 - v0.1
-- Two scenarios from depositor Kavik, with consent
+- Two scenarios from depositor JinnZ2, with consent
 - Adjacent scenario placeholders listed for future depositors
 - Will accumulate as practitioners contribute
 
@@ -754,7 +754,7 @@ Depositor confirms: this projection happens routinely in AI advice they have enc
 
 ### Provenance
 
-- **Deposited by:** Kavik (substrate-primary depositor, long-haul food distribution driver)
+- **Deposited by:** JinnZ2 (substrate-primary depositor, long-haul food distribution driver)
 - **Consent:** Given for inclusion in public CC0 scenario library
 - **Date:** during this session
 - **Source format:** depositor-described, AI-structured, depositor-verified
@@ -839,7 +839,7 @@ Depositor confirms: this is what they actually do at docks, and the work is real
 
 ### Provenance
 
-- **Deposited by:** Kavik (substrate-primary depositor, long-haul food distribution driver)
+- **Deposited by:** JinnZ2 (substrate-primary depositor, long-haul food distribution driver)
 - **Consent:** Given for inclusion in public CC0 scenario library
 - **Date:** during this session
 - **Source format:** depositor-described, AI-structured, depositor-verified
@@ -905,7 +905,7 @@ Each scenario lists its depositor by name (or chosen handle) with explicit conse
 ## Document Status
 
 - v0.1
-- Two scenarios from depositor Kavik, with consent
+- Two scenarios from depositor JinnZ2, with consent
 - Adjacent scenario placeholders listed for future depositors
 - Will accumulate as practitioners contribute
 

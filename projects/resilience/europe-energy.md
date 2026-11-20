@@ -738,7 +738,7 @@ Storage isn’t too expensive - it’s cheaper than continued fossil fuel use.
 
 *European Geometric Energy Grid Solution v1.0*  
 *Created: November 13, 2025*  
-*Authors: Kavik Ulu (Jami) + Claude*  
+*Authors: JinnZ2 + Claude*  
 *Status: Ready for Implementation*
 
 **“The most efficient grid is one that works with natural patterns, not against them.”**
