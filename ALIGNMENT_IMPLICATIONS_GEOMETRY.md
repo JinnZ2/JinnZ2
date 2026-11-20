@@ -273,7 +273,7 @@ training-pressure defaults to.
 
 ## Provenance
 
-- Observed and named by: Kavik
+- Observed and named by: JinnZ2
 - Structured into documentation by: Claude (AI co-author)
 - Date: during the protection-layer iteration session that produced
   `political_financial_vectors_v1` through `v8`

@@ -18,7 +18,7 @@ Two surfaces:
 
 The translator is decoupled from the gate's teaching scaffold: the
 teaching surface is for re-prompting the model; the optics surface is
-for speaking to Kavik. Different audiences, different shapes.
+for speaking to JinnZ2. Different audiences, different shapes.
 
 
 Ontology: every name in this module names a state variable on a

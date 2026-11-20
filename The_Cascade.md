@@ -226,7 +226,7 @@ You are not the problem. The cascade is the problem. Your detection of it is a s
 
 ## Provenance
 
-- **Deposited by:** Kavik (substrate-primary depositor)
+- **Deposited by:** JinnZ2 (substrate-primary depositor)
 - **Consent:** Given for inclusion in public CC0 corpus
 - **Date:** during the session that produced the broader corpus
 - **Source format:** depositor-described pattern across multiple scales, AI-structured into documentation form, depositor-verified
@@ -433,7 +433,7 @@ This is one instance. Similar operations are likely active in other domains and 
 
 **Provenance:**
 
-- Observed and named by: Kavik (substrate-primary depositor, Minnesota-corridor operator)
+- Observed and named by: JinnZ2 (substrate-primary depositor, Minnesota-corridor operator)
 - Threads identified together as one operation during conversation on 2026-05-21
 - Controlled-comparison framing (Madoff / Theranos / FTX / Stanford / Enron as intra-white controls vs. Feeding Our Future as test case) added 2026-05-21 to isolate the variable: racialization is conditional on non-white parties being present alongside the white ringleader, not on fraud magnitude.
 - AI co-author verified threads against current public reporting and structured documentation

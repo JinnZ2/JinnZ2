@@ -262,12 +262,12 @@ def context_to_bootstrap_prompt(context: OperatorContext) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Kavik default context
+# JinnZ2 default context
 # ---------------------------------------------------------------------------
 
 def build_kavik_default_context() -> OperatorContext:
     """
-    Construct the default Kavik operator context.
+    Construct the default JinnZ2 operator context.
     Edit this to update; save_context() to persist.
     """
     now = time.time()

@@ -245,7 +245,7 @@ class Document:
 
 
 # ---------------------------------------------------------------------------
-# Default operator frame for Kavik / JinnZ2 documents
+# Default operator frame for JinnZ2 documents
 # ---------------------------------------------------------------------------
 
 KAVIK_OPERATOR = OperatorFrame(

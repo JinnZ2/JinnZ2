@@ -90,7 +90,7 @@ def classify(node: Node) -> dict:
 
 # ----------------------------------------------------------------------
 # FALSIFICATION SET — the 5 substrates run live this session.
-# METHODOLOGY (Kavik's rule): these are FIELD observations. if the scorer
+# METHODOLOGY (JinnZ2's rule): these are FIELD observations. if the scorer
 # disagrees with the field, that's a real signal — examine, do NOT retune the
 # scorer to force a match. a mismatch is data, not a bug to paper over.
 # ----------------------------------------------------------------------
