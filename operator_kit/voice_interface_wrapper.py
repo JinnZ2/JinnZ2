@@ -545,7 +545,7 @@ def _handle_special_command(voice_input: str, c: ClassificationResult,
     if action == "load_context":
         try:
             from bootstrap_resilience import quick_load
-            payload = quick_load(st.get("operator_id", "kavik"),
+            payload = quick_load(st.get("operator_id", "JinnZ2"),
                                   st.get("target_model", "claude"))
             spoken = (
                 f"Operator context loaded. {len(payload)} characters. "

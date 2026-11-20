@@ -50,6 +50,7 @@ from operator_context_persistence import (
     OperatorContext, load_context, build_kavik_default_context,
     save_context, context_to_bootstrap_prompt, SCHEMA_VERSION,
     EmergencyClassPointer,
+    DEFAULT_OPERATOR_ID, LEGACY_OPERATOR_IDS, canonical_operator_id,
 )
 
 
@@ -194,7 +195,7 @@ class SessionInit:
     load_time_seconds: float
 
 
-def initialize_session(operator_id: str = "kavik",
+def initialize_session(operator_id: str = DEFAULT_OPERATOR_ID,
                        target_model: str = "claude",
                        cache_dir: str = "~/.operator_context/cache") -> SessionInit:
     """
@@ -202,13 +203,14 @@ def initialize_session(operator_id: str = "kavik",
     caches it, returns SessionInit.
     """
     t0 = time.time()
+    operator_id = canonical_operator_id(operator_id)
     cache_dir = os.path.expanduser(cache_dir)
     os.makedirs(cache_dir, exist_ok=True)
 
     context = load_context(operator_id)
     if context is None:
         # No saved context - build default for JinnZ2, save it
-        if operator_id == "kavik":
+        if operator_id == DEFAULT_OPERATOR_ID:  # old default ids were mapped above
             context = build_kavik_default_context()
             save_context(context)
         else:
@@ -237,18 +239,30 @@ def initialize_session(operator_id: str = "kavik",
     )
 
 
-def quick_load(operator_id: str = "kavik",
+def quick_load(operator_id: str = DEFAULT_OPERATOR_ID,
                target_model: str = "claude",
                cache_dir: str = "~/.operator_context/cache") -> str:
     """
     Fastest path: read cached payload if exists, return text.
     Falls back to full initialize_session if cache miss.
     """
+    operator_id = canonical_operator_id(operator_id)
     cache_dir = os.path.expanduser(cache_dir)
     cache_path = os.path.join(cache_dir, f"{operator_id}_{target_model}.txt")
     if os.path.exists(cache_path):
         with open(cache_path, "r") as f:
             return f.read()
+    if operator_id == DEFAULT_OPERATOR_ID:
+        # Fall back to a cache written under an old default id; re-write it
+        # under the handle (the old file is left in place).
+        for legacy in LEGACY_OPERATOR_IDS:
+            legacy_path = os.path.join(cache_dir, f"{legacy}_{target_model}.txt")
+            if os.path.exists(legacy_path):
+                with open(legacy_path, "r") as f:
+                    text = f.read()
+                with open(cache_path, "w") as f:
+                    f.write(text)
+                return text
     # Cache miss - assemble
     s = initialize_session(operator_id, target_model, cache_dir)
     return s.payload.payload_text
@@ -268,7 +282,7 @@ class ModelUpdateMarker:
     update_indicators: List[str]
 
 
-def detect_model_update(operator_id: str = "kavik",
+def detect_model_update(operator_id: str = DEFAULT_OPERATOR_ID,
                          target_model: str = "claude",
                          response_text: str = "",
                          marker_dir: str = "~/.operator_context/markers") -> Optional[ModelUpdateMarker]:
@@ -352,7 +366,7 @@ def detect_model_update(operator_id: str = "kavik",
 # Re-bootstrap protocol
 # ---------------------------------------------------------------------------
 
-def re_bootstrap(operator_id: str = "kavik",
+def re_bootstrap(operator_id: str = DEFAULT_OPERATOR_ID,
                   target_model: str = "claude") -> str:
     """
     Called when detect_model_update returns a marker.
@@ -381,7 +395,7 @@ Usage:
   bootstrap_resilience.py detect [operator_id] [target_model] < response.txt
       Pipe a model's response to stdin; check for update markers.
 
-Defaults: operator_id=kavik, target_model=claude.
+Defaults: operator_id=JinnZ2, target_model=claude.
 """
 
 
@@ -392,7 +406,7 @@ def main():
         return
 
     cmd = args[0]
-    operator_id = args[1] if len(args) > 1 else "kavik"
+    operator_id = args[1] if len(args) > 1 else DEFAULT_OPERATOR_ID
     target_model = args[2] if len(args) > 2 else "claude"
 
     if cmd == "init":

@@ -140,6 +140,17 @@ class OperatorContext:
 DEFAULT_STORAGE_DIR = os.path.expanduser("~/.operator_context")
 SCHEMA_VERSION = "1.0.0"
 
+# The default operator id is the handle. The old default id is still accepted:
+# a context or cache saved under it on an operator's machine is read once and
+# re-written under the handle (the old file is left in place, not deleted).
+DEFAULT_OPERATOR_ID = "JinnZ2"
+LEGACY_OPERATOR_IDS = ("kavik",)
+
+
+def canonical_operator_id(operator_id: str) -> str:
+    """Map an old default id to the handle; any other id is returned unchanged."""
+    return DEFAULT_OPERATOR_ID if operator_id in LEGACY_OPERATOR_IDS else operator_id
+
 
 def ensure_storage_dir(storage_dir: str = DEFAULT_STORAGE_DIR) -> str:
     """Create storage directory if it doesn't exist. Return path."""
@@ -166,12 +177,25 @@ def load_context(operator_id: str,
     Load context from disk. Returns None if not found.
     Handles schema version mismatch with explicit error.
     """
+    operator_id = canonical_operator_id(operator_id)
     path = os.path.join(storage_dir, f"{operator_id}.json")
+    migrated = False
     if not os.path.exists(path):
-        return None
+        if operator_id != DEFAULT_OPERATOR_ID:
+            return None
+        # Fall back to a context saved under an old default id.
+        for legacy in LEGACY_OPERATOR_IDS:
+            legacy_path = os.path.join(storage_dir, f"{legacy}.json")
+            if os.path.exists(legacy_path):
+                path, migrated = legacy_path, True
+                break
+        else:
+            return None
 
     with open(path, "r") as f:
         data = json.load(f)
+    if migrated:
+        data["operator_id"] = DEFAULT_OPERATOR_ID
 
     if data.get("schema_version") != SCHEMA_VERSION:
         raise ValueError(
@@ -181,7 +205,7 @@ def load_context(operator_id: str,
             f"Migration required."
         )
 
-    return OperatorContext(
+    ctx = OperatorContext(
         operator_id=data["operator_id"],
         schema_version=data["schema_version"],
         created_at=data["created_at"],
@@ -196,6 +220,9 @@ def load_context(operator_id: str,
         coupled_repos=data.get("coupled_repos", []),
         notes=data.get("notes", ""),
     )
+    if migrated:
+        save_context(ctx, storage_dir)
+    return ctx
 
 
 def list_contexts(storage_dir: str = DEFAULT_STORAGE_DIR) -> List[str]:
@@ -422,7 +449,7 @@ def build_kavik_default_context() -> OperatorContext:
     ]
 
     return OperatorContext(
-        operator_id="kavik",
+        operator_id=DEFAULT_OPERATOR_ID,
         schema_version=SCHEMA_VERSION,
         created_at=now,
         last_updated=now,
@@ -456,8 +483,8 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 2:
         print("Usage:")
-        print("  operator_context_persistence.py init       # build + save kavik default")
-        print("  operator_context_persistence.py load       # load and print kavik context")
+        print("  operator_context_persistence.py init       # build + save the JinnZ2 default")
+        print("  operator_context_persistence.py load       # load and print the JinnZ2 context")
         print("  operator_context_persistence.py prompt     # print bootstrap prompt")
         print("  operator_context_persistence.py list       # list all stored contexts")
         sys.exit(0)
@@ -472,14 +499,14 @@ if __name__ == "__main__":
         print(f"Emergency classes: {len(ctx.emergency_classes)}")
 
     elif cmd == "load":
-        ctx = load_context("kavik")
+        ctx = load_context(DEFAULT_OPERATOR_ID)
         if ctx is None:
-            print("No saved kavik context. Run 'init' first.")
+            print("No saved JinnZ2 context. Run 'init' first.")
             sys.exit(1)
         print(json.dumps(asdict(ctx), indent=2))
 
     elif cmd == "prompt":
-        ctx = load_context("kavik")
+        ctx = load_context(DEFAULT_OPERATOR_ID)
         if ctx is None:
             ctx = build_kavik_default_context()
         print(context_to_bootstrap_prompt(ctx))
